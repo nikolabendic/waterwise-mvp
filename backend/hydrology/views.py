@@ -4,6 +4,6 @@ from .serializer import StationSerializer
 
 # Create your views here.
 
-class StationViewSet(viewsets.ModelViewSet):
+class StationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Station.objects.all()
     serializer_class = StationSerializer
