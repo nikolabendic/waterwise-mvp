@@ -1,7 +1,11 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
-from .views import StationViewSet
+
+from .views import HistoryView, StationViewSet
 
 router = DefaultRouter()
 router.register('hydrology/stations', StationViewSet)
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('hydrology/history/', HistoryView.as_view()),
+] + router.urls
