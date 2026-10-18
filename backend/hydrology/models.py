@@ -12,6 +12,8 @@ class Station(models.Model):
     source_url = models.URLField(blank=True, null=True)
     coordinates_verified = models.BooleanField(default=False)
     available_parameters = models.JSONField(blank=True, default=list)
+    flood_defense_level_cm = models.IntegerField(null=True, blank=True)
+    threshold_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

@@ -91,3 +91,72 @@ class HistoryView(APIView):
                 },
             }
         )
+# TODO: dogovoriti sa koleginicom/profesorkom. Dok se ne dogovori,
+# "stable" je samo promena od tacno 0 cm.
+STABLE_THRESHOLD_CM = 0
+
+
+class LatestView(APIView):
+    def get(self, request):
+        station_id = request.query_params.get("station_id")
+        if not station_id:
+            return error_response(
+                "MISSING_STATION_ID", "Query parameter station_id is required.", 400
+            )
+
+        try:
+            station = Station.objects.get(id=station_id)
+        except Station.DoesNotExist:
+            return error_response(
+                "STATION_NOT_FOUND", "Station not found.", 404, {"station_id": station_id}
+            )
+
+        latest = station.observations.last()
+        if latest is None:
+            return error_response(
+                "NO_OBSERVATIONS", "Station has no observations.", 404,
+                {"station_id": station_id},
+            )
+
+        change = None
+        direction = "unknown"
+        if latest.water_level_cm is not None:
+            previous = station.observations.filter(
+                timestamp=latest.timestamp - timedelta(hours=24),
+                water_level_cm__isnull=False,
+            ).first()
+            if previous:
+                change = latest.water_level_cm - previous.water_level_cm
+                if abs(change) <= STABLE_THRESHOLD_CM:
+                    direction = "stable"
+                elif change > 0:
+                    direction = "rising"
+                else:
+                    direction = "falling"
+
+        return Response(
+            {
+                "station_id": station.id,
+                "station_name": station.name,
+                "river": station.river,
+                "measurement_time": latest.timestamp.isoformat(),
+                "measurements": {
+                    "water_level_cm": latest.water_level_cm,
+                    "water_temperature_c": latest.water_temperature_c,
+                    "flow_m3_s": latest.flow_m3_s,
+                },
+                "trends": {
+                    "water_level_change_24h_cm": change,
+                    "water_level_direction": direction,
+                },
+                "thresholds": {
+                    "flood_defense_level_cm": station.flood_defense_level_cm,
+                    "threshold_verified": station.threshold_verified,
+                },
+                "source": {
+                    "name": station.source_name,
+                    "url": station.source_url,
+                    "data_type": latest.data_type,
+                },
+            }
+        )
