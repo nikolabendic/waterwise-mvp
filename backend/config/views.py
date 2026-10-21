@@ -7,6 +7,11 @@ from rest_framework.views import APIView
 from events.models import WaterEvent
 from hydrology.models import Observation, Station
 
+from facilities.models import Facility
+
+# Vreme preuzimanja OSM snimka (iz fajla). Menja se kad se ponovo preuzme.
+FACILITIES_SNAPSHOT = "2026-10-21T13:07:25Z"
+
 OUTDATED_AFTER = timedelta(days=3)  # TODO: dogovoriti
 
 
@@ -55,10 +60,27 @@ class DataSourcesView(APIView):
             "update_method": "manual",
         })
 
+                # Ustanove (OpenStreetMap)
+        sources.append({
+            "id": "facilities",
+            "name": "Critical facilities",
+            "provider": "OpenStreetMap contributors (ODbL)",
+            "source_url": "https://www.openstreetmap.org/copyright",
+            "data_type": "reported",
+            "availability": "available" if Facility.objects.exists() else "unavailable",
+            "last_updated": FACILITIES_SNAPSHOT,
+            "update_method": "manual",
+            "limitations": [
+                "Volunteer-edited map data; coverage is incomplete.",
+                "Points are building centres, not entrances.",
+                "Private health facilities are excluded by project rule.",
+                "Entries outside the city (e.g. Beocin, Sremski Karlovci) are not filtered out.",
+            ],
+        })
+
         # Izvori koje jos nemamo. Kad ih dodamo, ovde se menjaju.
         for source_id, name in [
             ("population", "Population grid"),
-            ("facilities", "Critical facilities"),
             ("weather", "Weather data"),
         ]:
             sources.append({

@@ -1,0 +1,5137 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-10-21T13:07:25Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/305461",
+        "addr:housenumber": "76",
+        "addr:postcode": "21000",
+        "addr:street": "Футошка",
+        "amenity": "clinic",
+        "building": "hospital",
+        "healthcare": "clinic",
+        "healthcare:speciality": "biology",
+        "int_name": "Klinika za medicinsku rehabilitaciju",
+        "name": "Клиника за медицинску рехабилитацију",
+        "name:sr": "Клиника за медицинску рехабилитацију",
+        "name:sr-Latn": "Klinika za medicinsku rehabilitaciju",
+        "operator:type": "government",
+        "ref:RS:kucni_broj": "5513585",
+        "survey:date": "2014-07-23",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.822255,
+          45.2498512
+        ]
+      },
+      "id": "relation/305461"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/1976779",
+        "addr:housenumber": "16",
+        "addr:street": "Драгише Брашована",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "building:levels": "2",
+        "int_name": "Kalimero",
+        "name": "Калимеро",
+        "name:sr": "Калимеро",
+        "name:sr-Latn": "Kalimero",
+        "ref:RS:kucni_broj": "5499549",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8455107,
+          45.239852
+        ]
+      },
+      "id": "relation/1976779"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/1976851",
+        "addr:housenumber": "75",
+        "addr:postcode": "21102",
+        "addr:street": "Булевар цара Лазара",
+        "amenity": "clinic",
+        "building": "hospital",
+        "email": "menadzment@dzns.rs",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja Novi Sad",
+        "name": "Дом здравља Нови Сад",
+        "name:sr": "Дом здравља Нови Сад",
+        "name:sr-Latn": "Dom zdravlja Novi Sad",
+        "operator:type": "government",
+        "type": "multipolygon",
+        "website": "https://dzns.rs/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8303995,
+          45.2404645
+        ]
+      },
+      "id": "relation/1976851"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/1985098",
+        "amenity": "school",
+        "building": "yes",
+        "int_name": "OS „Zarko Zrenjanin”",
+        "name": "ОШ „Жарко Зрењанин”",
+        "name:sr": "ОШ „Жарко Зрењанин”",
+        "name:sr-Latn": "OŠ „Žarko Zrenjanin”",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8365456,
+          45.237255
+        ]
+      },
+      "id": "relation/1985098"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/1986040",
+        "addr:housenumber": "45",
+        "addr:postcode": "21000",
+        "addr:street": "Народног фронта",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Vrtic „Razlicak”",
+        "name": "Вртић „Различак”",
+        "name:sr": "Вртић „Различак”",
+        "name:sr-Latn": "Vrtić „Različak”",
+        "ref:RS:kucni_broj": "5501169",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8358572,
+          45.2382338
+        ]
+      },
+      "id": "relation/1986040"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/10676889",
+        "addr:city": "Сремски Карловци",
+        "amenity": "school",
+        "building": "school",
+        "building:levels": "3",
+        "int_name": "Srpska pravoslavna bogoslovija Svetog Arsenija",
+        "name": "Српска православна богословија Светог Арсенија",
+        "name:sr": "Српска православна богословија Светог Арсенија",
+        "name:sr-Latn": "Srpska pravoslavna bogoslovija Svetog Arsenija",
+        "type": "multipolygon",
+        "wikidata": "Q16208020",
+        "wikipedia": "sr:Српска православна богословија Светог Арсенија у Сремским Карловцима",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.9342346,
+          45.204273
+        ]
+      },
+      "id": "relation/10676889"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/12092155",
+        "amenity": "clinic",
+        "building": "hospital",
+        "building:colour": "silver",
+        "building:levels": "4",
+        "emergency": "yes",
+        "healthcare": "clinic",
+        "healthcare:speciality": "emergency",
+        "height": "25",
+        "int_name": "Urgentni centar",
+        "name": "Ургентни центар",
+        "name:en": "Emergency Department",
+        "name:sr": "Ургентни центар",
+        "name:sr-Latn": "Urgentni centar",
+        "opening_hours": "24/7",
+        "type": "multipolygon",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8210045,
+          45.2507927
+        ]
+      },
+      "id": "relation/12092155"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/12629370",
+        "amenity": "hospital",
+        "check_date": "2025-09-18",
+        "healthcare": "hospital",
+        "operator": "Универзитетски клинички центар Војводине, Нови Сад",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.873789,
+          45.2265157
+        ]
+      },
+      "id": "relation/12629370"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/18253312",
+        "amenity": "kindergarten",
+        "landuse": "education",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8505818,
+          45.2490666
+        ]
+      },
+      "id": "relation/18253312"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "relation/20191834",
+        "addr:housenumber": "2",
+        "addr:postcode": "21000",
+        "addr:street": "Др Илије Ђуричића",
+        "amenity": "kindergarten",
+        "building": "school",
+        "building:levels": "2",
+        "int_name": "Veseli vrtic",
+        "name": "Весели вртић",
+        "name:sr": "Весели вртић",
+        "name:sr-Latn": "Veseli vrtić",
+        "ref:RS:kucni_broj": "5499726",
+        "survey:date": "2014-11-07",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.849609,
+          45.2441386
+        ]
+      },
+      "id": "relation/20191834"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43094420",
+        "addr:housenumber": "2",
+        "addr:postcode": "21000",
+        "addr:street": "Владике Платона",
+        "amenity": "school",
+        "barrier": "fence",
+        "email": "gimnazis@mts.rs",
+        "int_name": "Gimnazija „Isidora Sekulic”",
+        "name": "Гимназија „Исидора Секулић”",
+        "name:sr": "Гимназија „Исидора Секулић”",
+        "name:sr-Latn": "Gimnazija „Isidora Sekulić”",
+        "website": "https://www.gimnazis.edu.rs/",
+        "wikidata": "Q12750196",
+        "wikipedia": "sr:Гимназија „Исидора Секулић” Нови Сад",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8481878,
+          45.2520088
+        ]
+      },
+      "id": "way/43094420"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43320082",
+        "addr:housenumber": "1",
+        "addr:postcode": "21137",
+        "addr:street": "Хајдук Вељкова",
+        "alt_name": "Клинички центар Војводине",
+        "alt_name:sr": "Клинички центар Војводине",
+        "alt_name:sr-Latn": "Klinički centar Vojvodine",
+        "amenity": "hospital",
+        "email": "uprava@kcv.rs",
+        "healthcare": "hospital",
+        "int_name": "Univerzitetski klinicki centar Vojvodine",
+        "name": "Универзитетски клинички центар Војводине",
+        "name:sr": "Универзитетски клинички центар Војводине",
+        "name:sr-Latn": "Univerzitetski klinički centar Vojvodine",
+        "operator": "Skupština Vojvodine",
+        "operator:type": "public",
+        "phone": "+381214843484",
+        "ref:RS:kucni_broj": "5474965",
+        "website": "https://www.kcv.rs/",
+        "wheelchair": "yes",
+        "wikidata": "Q5133750",
+        "wikipedia": "en:Clinical Center of Vojvodina",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8219668,
+          45.2517417
+        ]
+      },
+      "id": "way/43320082"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43320085",
+        "amenity": "clinic",
+        "building": "hospital",
+        "emergency": "yes",
+        "healthcare": "clinic",
+        "int_name": "Klinika za abdominalnu, endokrinu i transplatacionu hirurgiju",
+        "name": "Клиника за абдоминалну, ендокрину и трансплатациону хирургију",
+        "name:sr": "Клиника за абдоминалну, ендокрину и трансплатациону хирургију",
+        "name:sr-Latn": "Klinika za abdominalnu, endokrinu i translpantacionu hirurgiju",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.823258,
+          45.2498065
+        ]
+      },
+      "id": "way/43320085"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43320087",
+        "addr:housenumber": "1",
+        "addr:postcode": "21000",
+        "addr:street": "Хајдук Вељкова",
+        "amenity": "clinic",
+        "building": "hospital",
+        "healthcare": "clinic",
+        "healthcare:speciality": "urology;nuclear",
+        "int_name": "Klinika za urologiju i nuklearnu medicinu",
+        "name": "Клиника за урологију и нуклеарну медицину",
+        "name:sr": "Клиника за урологију и нуклеарну медицину",
+        "name:sr-Latn": "Klinika za urologiju i nuklearnu medicinu",
+        "opening_hours": "24/7",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8237425,
+          45.2502482
+        ]
+      },
+      "id": "way/43320087"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43320156",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "int_name": "Interna klinika",
+        "name": "Интерна клиника",
+        "name:sr": "Интерна клиника",
+        "name:sr-Latn": "Interna klinika",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8220976,
+          45.2504105
+        ]
+      },
+      "id": "way/43320156"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43320279",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "healthcare:speciality": "dermatology;haematology",
+        "int_name": "Klinika za kozne i venericne bolesti",
+        "name": "Клиника за кожне и венеричне болести",
+        "name:sr": "Клиника за кожне и венеричне болести",
+        "name:sr-Latn": "Klinika za kožne i venerične bolesti",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8232558,
+          45.2503164
+        ]
+      },
+      "id": "way/43320279"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43320286",
+        "amenity": "clinic",
+        "building": "hospital",
+        "healthcare": "clinic",
+        "healthcare:speciality": "orthopaedics;trauma",
+        "int_name": "Klinika za ortopediju i traumatologiju",
+        "name": "Клиника за ортопедију и трауматологију",
+        "name:sr": "Клиника за ортопедију и трауматологију",
+        "name:sr-Latn": "Klinika za ortopediju i traumatologiju",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8227627,
+          45.250525
+        ]
+      },
+      "id": "way/43320286"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43326932",
+        "amenity": "clinic",
+        "building": "hospital",
+        "healthcare": "clinic",
+        "int_name": "Ocna i ORL klinika",
+        "name": "Очна и ОРЛ клиника",
+        "name:sr": "Очна и ОРЛ клиника",
+        "name:sr-Latn": "Očna i ORL klinika",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8237199,
+          45.2505283
+        ]
+      },
+      "id": "way/43326932"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43341956",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "int_name": "Poliklinika",
+        "name": "Поликлиника",
+        "name:en": "Outpatient Clinic",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8228778,
+          45.2510608
+        ]
+      },
+      "id": "way/43341956"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43341958",
+        "addr:housenumber": "1",
+        "addr:postcode": "21137",
+        "addr:street": "Хајдук Вељкова",
+        "amenity": "clinic",
+        "building": "yes",
+        "email": "office@pasterovzavod.rs",
+        "healthcare": "centre",
+        "int_name": "Pasterov zavod",
+        "name": "Пастеров завод",
+        "name:sr": "Пастеров завод",
+        "name:sr-Latn": "Pasterov zavod",
+        "opening_hours": "Mo-Fr 07:00-15:00",
+        "phone": "+381216611003 ; +38121420528",
+        "website": "https://www.pasterovzavod.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.823222,
+          45.2510539
+        ]
+      },
+      "id": "way/43341958"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43342378",
+        "amenity": "clinic",
+        "building": "hospital",
+        "healthcare": "clinic",
+        "healthcare:speciality": "radiology",
+        "int_name": "Klinika za radiologiju",
+        "name": "Клиника за радиологију",
+        "name:sr": "Клиника за радиологију",
+        "name:sr-Latn": "Klinika za radiologiju",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8237824,
+          45.251418
+        ]
+      },
+      "id": "way/43342378"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43342383",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "int_name": "Institut za toksikologiju i molekularnu genetiku",
+        "name": "Институт за токсикологију и молекуларну генетику",
+        "name:sr": "Институт за токсикологију и молекуларну генетику",
+        "name:sr-Latn": "Institut za toksikologiju i molekularnu genetiku",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.823778,
+          45.2518706
+        ]
+      },
+      "id": "way/43342383"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43345554",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "healthcare:speciality": "psychiatry;neurology",
+        "int_name": "Klinika za psihijatriju i neurologiju",
+        "name": "Клиника за психијатрију и неурологију",
+        "name:sr": "Клиника за психијатрију и неурологију",
+        "name:sr-Latn": "Klinika za psihijatriju i neurologiju",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.820444,
+          45.2529159
+        ]
+      },
+      "id": "way/43345554"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43645340",
+        "addr:housenumber": "10",
+        "addr:postcode": "21000",
+        "addr:street": "Хајдук Вељкова",
+        "amenity": "clinic",
+        "beds": "350",
+        "building": "yes",
+        "email": "mail@izzzdiovns.rs",
+        "healthcare": "clinic",
+        "healthcare:speciality": "paediatrics;paediatric_surgery",
+        "int_name": "Institut za zdravstvenu zastitu dece i omladine Vojvodine",
+        "loc_name": "Дечја болница Нови Сад",
+        "mapillary": "957432659293376",
+        "name": "Институт за здравствену заштиту деце и омладине Војводине",
+        "name:sr": "Институт за здравствену заштиту деце и омладине Војводине",
+        "name:sr-Latn": "Institut za zdravstvenu zaštitu dece i omladine Vojvodine",
+        "operator": "Skupština Vojvodine",
+        "operator:type": "public",
+        "phone": "+381214880444",
+        "ref:RS:kucni_broj": "5499326",
+        "website": "https://www.izzzdiovns.rs/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8253553,
+          45.2504702
+        ]
+      },
+      "id": "way/43645340"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/43646607",
+        "addr:housenumber": "68",
+        "addr:postcode": "21112",
+        "addr:street": "Хајдук Вељкова",
+        "amenity": "hospital",
+        "barrier": "fence",
+        "email": "pitajtelekara@sbreum.co.rs",
+        "fax": "+38121547131",
+        "healthcare": "hospital",
+        "healthcare:speciality": "rheumatology",
+        "int_name": "Specijalna bolnica za reumatske bolesti",
+        "loc_name": "Јодна Бања",
+        "name": "Специјална болница за реуматске болести",
+        "name:sr": "Специјална болница за реуматске болести",
+        "name:sr-Latn": "Specijalna bolnica za reumetske bolesti",
+        "opening_hours": "Mo-Fr 06:30-20:00",
+        "operator": "Skupština Vojvodine",
+        "operator:type": "public",
+        "phone": "+38121547131;+38121547132;+38121547133",
+        "website": "https://sbreum.co.rs/",
+        "wikidata": "Q61133940",
+        "wikipedia": "sr:Јодна Бања",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8288157,
+          45.2498649
+        ]
+      },
+      "id": "way/43646607"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/44072963",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Jovan Popovic”",
+        "name": "ОШ „Јован Поповић”",
+        "name:sr": "ОШ „Јован Поповић”",
+        "name:sr-Latn": "OŠ „Jovan Popović”",
+        "wheelchair": "limited",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8497087,
+          45.2440625
+        ]
+      },
+      "id": "way/44072963"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/44128907",
+        "amenity": "kindergarten",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8503518,
+          45.2425981
+        ]
+      },
+      "id": "way/44128907"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/44129007",
+        "addr:housenumber": "9",
+        "addr:postcode": "21000",
+        "addr:street": "Јиречекова",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Mrvica",
+        "name": "Мрвица",
+        "name:sr": "Мрвица",
+        "name:sr-Latn": "Mrvica",
+        "operator": "Радосно детињство",
+        "operator:type": "public",
+        "ref:RS:kucni_broj": "5500446",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8501946,
+          45.2425901
+        ]
+      },
+      "id": "way/44129007"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/107078260",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "Gimnazija „Laza Kostic”",
+        "name": "Гимназија „Лаза Костић”",
+        "name:sr": "Гимназија „Лаза Костић”",
+        "name:sr-Latn": "Gimnazija „Laza Kostić”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8209507,
+          45.238551
+        ]
+      },
+      "id": "way/107078260"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/107078265",
+        "addr:housenumber": "28",
+        "addr:postcode": "21124",
+        "addr:street": "Шарпланинска",
+        "amenity": "school",
+        "fence_type": "metal",
+        "int_name": "OS „Jozef Atila”",
+        "name": "ОШ „Јожеф Атила”",
+        "name:hu": "József Attila Á.I.",
+        "name:sr": "ОШ „Јожеф Атила”",
+        "name:sr-Latn": "OŠ „Jožef Atila”",
+        "phone": "+381 21 505 141",
+        "ref:RS:kucni_broj": "5497623",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8075072,
+          45.2375742
+        ]
+      },
+      "id": "way/107078265"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/107465088",
+        "addr:housenumber": "14",
+        "addr:postcode": "21000",
+        "addr:street": "Саве Ковачевића",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "education": "kindergarten",
+        "int_name": "Zvoncica",
+        "name": "Звончица",
+        "name:sr": "Звончица",
+        "name:sr-Latn": "Zvončica",
+        "ref:RS:kucni_broj": "5497171",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8329909,
+          45.2637787
+        ]
+      },
+      "id": "way/107465088"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/122053153",
+        "amenity": "school",
+        "int_name": "Miroslav Antic",
+        "name": "Мирослав Антић",
+        "name:sr": "Мирослав Антић",
+        "name:sr-Latn": "Miroslav Antić",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7296087,
+          45.2398406
+        ]
+      },
+      "id": "way/122053153"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/135575807",
+        "amenity": "school",
+        "int_name": "Centar za osnovnu policijsku obuku",
+        "name": "Центар за основну полицијску обуку",
+        "name:sr": "Центар за основну полицијску обуку",
+        "name:sr-Latn": "Centar za osnovnu policijsku obuku",
+        "police": "academy",
+        "website": "https://www.copo.edu.rs/1-1-c",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8513076,
+          45.2206308
+        ]
+      },
+      "id": "way/135575807"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/139939867",
+        "addr:housenumber": "ББ",
+        "addr:street": "Бановић Страхиње",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Novosađanče",
+        "name": "Новосађанче",
+        "name:sr": "Новосађанче",
+        "name:sr-Latn": "Novosađanče",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8288851,
+          45.2388066
+        ]
+      },
+      "id": "way/139939867"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/139939889",
+        "addr:housenumber": "79a",
+        "addr:postcode": "21000",
+        "addr:street": "Булевар цара Лазара",
+        "amenity": "clinic",
+        "building": "commercial",
+        "building:levels": "4",
+        "healthcare": "clinic",
+        "int_name": "Poliklinika MC",
+        "name": "Поликлиника МЦ",
+        "name:sr": "Поликлиника МЦ",
+        "name:sr-Latn": "Poliklinika MC",
+        "opening_hours": "Mo-Fr 08:30-20:00; Sa 09:00-12:00; Su off",
+        "roof:colour": "grey",
+        "wheelchair": "limited",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8280038,
+          45.2402911
+        ]
+      },
+      "id": "way/139939889"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/140950584",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Cvrcak i Mrav",
+        "name": "Цврчак и Мрав",
+        "name:sr": "Цврчак и Мрав",
+        "name:sr-Latn": "Cvrčak i Mrav",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.813917,
+          45.2605064
+        ]
+      },
+      "id": "way/140950584"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/142655662",
+        "addr:housenumber": "32",
+        "addr:postcode": "21000",
+        "addr:street": "Фрушкогорска",
+        "amenity": "social_facility",
+        "building": "yes",
+        "name": "Дом за старе Лиман",
+        "name:sr": "Дом за старе Лиман",
+        "name:sr-Latn": "Dom za stare Liman",
+        "ref:RS:kucni_broj": "5478648",
+        "social_facility": "assisted_living",
+        "social_facility:for": "senior",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8470832,
+          45.2394336
+        ]
+      },
+      "id": "way/142655662"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/145053081",
+        "addr:housenumber": "28",
+        "addr:postcode": "21102",
+        "addr:street": "Пушкинова",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Sonja Marinkovic”",
+        "name": "ОШ „Соња Маринковић”",
+        "name:sr": "ОШ „Соња Маринковић”",
+        "name:sr-Latn": "OŠ „Sonja Marinković”",
+        "ref:RS:kucni_broj": "5492829",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8339824,
+          45.2438531
+        ]
+      },
+      "id": "way/145053081"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/146276165",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8451917,
+          45.2397877
+        ]
+      },
+      "id": "way/146276165"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/146460965",
+        "addr:housenumber": "42",
+        "addr:street": "Народног фронта",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Maslačak",
+        "name": "Маслачак",
+        "name:sr": "Маслачак",
+        "name:sr-Latn": "Maslačak",
+        "ref:RS:kucni_broj": "5473035",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8348524,
+          45.240199
+        ]
+      },
+      "id": "way/146460965"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/154374555",
+        "addr:housenumber": "2",
+        "addr:street": "Калмана Ланга",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "building:levels": "6",
+        "int_name": "Detelina sa 4 lista",
+        "name": "Детелина са 4 листа",
+        "name:sr": "Детелина са 4 листа",
+        "name:sr-Latn": "Detelina sa 4 lista",
+        "ref:RS:kucni_broj": "5516094",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8143689,
+          45.2637221
+        ]
+      },
+      "id": "way/154374555"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/158043235",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Dositej Obradovic”",
+        "name": "ОШ „Доситеј Обрадовић”",
+        "name:sr": "ОШ „Доситеј Обрадовић”",
+        "name:sr-Latn": "OŠ „Dositej Obradović”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8119848,
+          45.2664623
+        ]
+      },
+      "id": "way/158043235"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/158043236",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Svetozar Markovic Toza”",
+        "name": "ОШ „Светозар Марковић Тоза”",
+        "name:sr": "ОШ „Светозар Марковић Тоза”",
+        "name:sr-Latn": "OŠ „Svetozar Marković Toza”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8085109,
+          45.2629848
+        ]
+      },
+      "id": "way/158043236"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/192591394",
+        "addr:housenumber": "22",
+        "addr:street": "Светозара Милетића",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "building:levels": "1",
+        "check_date": "2025-07-20",
+        "int_name": "Plavi zec",
+        "name": "Плави зец",
+        "name:sr": "Плави зец",
+        "name:sr-Latn": "Plavi zec",
+        "ref:RS:kucni_broj": "5497546",
+        "roof:levels": "1",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.844919,
+          45.25748
+        ]
+      },
+      "id": "way/192591394"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/192592249",
+        "addr:housenumber": "1",
+        "addr:street": "Трг Марије Трандафил",
+        "amenity": "school",
+        "building": "yes",
+        "check_date": "2026-07-30",
+        "int_name": "Srednja ugostiteljska skola „Svetozar Miletic”",
+        "name": "Средња угоститељска школа „Светозар Милетић”",
+        "name:sr": "Средња угоститељска школа „Светозар Милетић”",
+        "name:sr-Latn": "Srednja ugostiteljska škola „Svetozar Miletić”",
+        "ref:RS:kucni_broj": "5498124",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8444547,
+          45.2591308
+        ]
+      },
+      "id": "way/192592249"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217755357",
+        "amenity": "school",
+        "int_name": "Gimnazija „Svetozar Markovic”",
+        "name": "Гимназија „Светозар Марковић”",
+        "name:etymology:wikidata": "Q376036",
+        "name:sr": "Гимназија „Светозар Марковић”",
+        "name:sr-Latn": "Gimnazija „Svetozar Marković”",
+        "religion": "no",
+        "toilets:wheelchair": "no",
+        "website": "https://s-markovic.edu.rs/",
+        "wheelchair": "no",
+        "wikidata": "Q7652632",
+        "wikipedia": "sr:Гимназија „Светозар Марковић” Нови Сад",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8429852,
+          45.2572359
+        ]
+      },
+      "id": "way/217755357"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/218422650",
+        "addr:housenumber": "26",
+        "addr:street": "Светозара Милетића",
+        "amenity": "social_facility",
+        "building": "yes",
+        "ref:RS:kucni_broj": "5491517",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8446039,
+          45.2575859
+        ]
+      },
+      "id": "way/218422650"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/219388320",
+        "addr:housenumber": "32",
+        "addr:postcode": "21102",
+        "addr:street": "Браће Рибникар",
+        "amenity": "school",
+        "building": "yes",
+        "int_name": "OS „Dr Milan Petrovic”",
+        "name": "ОШ „Др Милан Петровић”",
+        "name:sr": "ОШ „Др Милан Петровић”",
+        "name:sr-Latn": "OŠ „Dr Milan Petrović”",
+        "ref:RS:kucni_broj": "5498846",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8360957,
+          45.2485467
+        ]
+      },
+      "id": "way/219388320"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/219388751",
+        "amenity": "school",
+        "int_name": "Osnovna skola „Branko Radicevic”",
+        "name": "Основна школа „Бранко Радичевић”",
+        "name:sr-Latn": "Osnovna škola „Branko Radičević”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8361109,
+          45.250811
+        ]
+      },
+      "id": "way/219388751"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/219579721",
+        "addr:housenumber": "54",
+        "addr:postcode": "21000",
+        "addr:street": "Максима Горког",
+        "amenity": "school",
+        "building": "yes",
+        "int_name": "OS „Djordje Natosevic”",
+        "name": "ОШ „Ђорђе Натошевић”",
+        "name:sr": "ОШ „Ђорђе Натошевић”",
+        "name:sr-Latn": "OŠ „Đorđe Natošević”",
+        "ref:RS:kucni_broj": "5468617",
+        "survey:date": "2014-07-30",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8537105,
+          45.2513481
+        ]
+      },
+      "id": "way/219579721"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/219579725",
+        "amenity": "school",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8535247,
+          45.2513025
+        ]
+      },
+      "id": "way/219579725"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/219748359",
+        "addr:housenumber": "19a",
+        "addr:street": "Радничка",
+        "amenity": "school",
+        "building": "yes",
+        "int_name": "Muzicka skola „Josip Slavenski”",
+        "name": "Музичка школа „Јосип Славенски”",
+        "name:sr": "Музичка школа „Јосип Славенски”",
+        "name:sr-Latn": "Muzička škola „Josip Slavenski”",
+        "ref:RS:kucni_broj": "5501840",
+        "survey:date": "2014-07-30",
+        "toilets:wheelchair": "no",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8480918,
+          45.2494781
+        ]
+      },
+      "id": "way/219748359"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/221266605",
+        "addr:housenumber": "23",
+        "addr:postcode": "21000",
+        "addr:street": "Булевар Михајла Пупина",
+        "amenity": "clinic",
+        "building": "yes",
+        "building:levels": "3",
+        "healthcare": "clinic",
+        "healthcare:speciality": "general;blood_check;dentistry",
+        "int_name": "Dom zdravlja „Bulevar”",
+        "name": "Дом здравља „Булевар”",
+        "name:sr": "Дом здравља „Булевар”",
+        "name:sr-Latn": "Dom zdravlja „Bulevar”",
+        "opening_hours": "Mo-Fr 07:00-20:00",
+        "phone": "+381214879520",
+        "ref:RS:kucni_broj": "5476622",
+        "website": "https://dzns.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8523266,
+          45.254505
+        ]
+      },
+      "id": "way/221266605"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/221667343",
+        "addr:housenumber": "7",
+        "addr:postcode": "21000",
+        "addr:street": "Јеврејска",
+        "amenity": "school",
+        "building": "yes",
+        "building:levels": "3",
+        "int_name": "Muzicko baletska skola „Josif Slavenski”",
+        "name": "Музичко балетска школа „Јосиф Славенски”",
+        "name:en": "Music - ballet school “Josif Slavenski”",
+        "name:sr": "Музичко балетска школа „Јосиф Славенски”",
+        "name:sr-Latn": "Baletska škola",
+        "ref:RS:kucni_broj": "5478715",
+        "roof:levels": "1",
+        "roof:shape": "gabled",
+        "survey:date": "2014-07-16",
+        "toilets:wheelchair": "no",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8410721,
+          45.2532841
+        ]
+      },
+      "id": "way/221667343"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/221976198",
+        "addr:housenumber": "34",
+        "addr:postcode": "21102",
+        "addr:street": "Алексе Шантића",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Vrtic „Suncokret”",
+        "name": "Вртић „Сунцокрет”",
+        "name:sr": "Вртић „Сунцокрет”",
+        "name:sr-Latn": "Vrtić „Suncokret”",
+        "ref:RS:kucni_broj": "5498527",
+        "survey:date": "2014-07-26",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8343075,
+          45.2435014
+        ]
+      },
+      "id": "way/221976198"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/222222485",
+        "addr:housenumber": "5",
+        "addr:street": "Лазе Костића",
+        "amenity": "kindergarten",
+        "building": "apartments",
+        "int_name": "Vrtic „Pcelica”",
+        "name": "Вртић „Пчелица”",
+        "name:sr-Latn": "Vrtić „Pčelica”",
+        "ref:RS:kucni_broj": "5513680",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8401833,
+          45.2497295
+        ]
+      },
+      "id": "way/222222485"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/222579803",
+        "addr:housenumber": "7",
+        "addr:postcode": "21000",
+        "addr:street": "Народних хероја",
+        "amenity": "school",
+        "email": "najboljaskola@open.telekom.rs",
+        "int_name": "Srednja ekonomska skola „Svetozar Miletic”",
+        "name": "Средња економска школа „Светозар Милетић”",
+        "name:sr": "Средња економска школа „Светозар Милетић”",
+        "name:sr-Latn": "Srednja ekonomska škola „Svetozar Miletić”",
+        "phone": "021423655",
+        "ref:RS:kucni_broj": "5472724",
+        "website": "https://ekosmile.edu.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8433518,
+          45.2524823
+        ]
+      },
+      "id": "way/222579803"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/222743894",
+        "addr:housenumber": "40",
+        "addr:postcode": "21000",
+        "addr:street": "Бранимира Ћосића",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Palcica",
+        "name": "Палчица",
+        "name:sr": "Палчица",
+        "name:sr-Latn": "Palčica",
+        "ref:RS:kucni_broj": "5498044",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8314947,
+          45.2580586
+        ]
+      },
+      "id": "way/222743894"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/222747724",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "int_name": "Porodiliste „Betanija”",
+        "name": "Породилиште „Бетанија”",
+        "name:sr": "Породилиште „Бетанија”",
+        "name:sr-Latn": "Porodilište „Betanija”",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8291454,
+          45.258142
+        ]
+      },
+      "id": "way/222747724"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/222748001",
+        "addr:housenumber": "2a",
+        "addr:street": "Мајевичка",
+        "amenity": "clinic",
+        "building": "yes",
+        "check_date": "2025-10-11",
+        "check_date:opening_hours": "2025-10-11",
+        "healthcare": "hospital",
+        "int_name": "Poliklinika za plucne bolesti - dispanzer",
+        "name": "Поликлиника за плућне болести - диспанзер",
+        "name:sr": "Поликлиника за плућне болести - диспанзер",
+        "name:sr-Latn": "Poliklinika za plućne bolesti - dispanzer",
+        "opening_hours": "Mo-Fr 07:00-15:00",
+        "ref:RS:kucni_broj": "5500985",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8291378,
+          45.2588255
+        ]
+      },
+      "id": "way/222748001"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/223075877",
+        "addr:housenumber": "1",
+        "addr:postcode": "21102",
+        "addr:street": "Војводе Книћанина",
+        "amenity": "school",
+        "check_date": "2026-06-03",
+        "int_name": "Srednja medicinska skola „7. april”",
+        "name": "Средња медицинска школа „7. април”",
+        "name:sr": "Средња медицинска школа „7. април”",
+        "name:sr-Latn": "Srednja medicinska škola „7. april”",
+        "ref:RS:kucni_broj": "5514709",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8273559,
+          45.2438316
+        ]
+      },
+      "id": "way/223075877"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/262199577",
+        "amenity": "school",
+        "int_name": "OS „Vasa Stajic”",
+        "landuse": "education",
+        "name": "ОШ „Васа Стајић”",
+        "name:sr": "ОШ „Васа Стајић”",
+        "name:sr-Latn": "OŠ „Vasa Stajić”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8265727,
+          45.2464273
+        ]
+      },
+      "id": "way/262199577"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/263374951",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Jovan Popovic”",
+        "name": "ОШ „Јован Поповић”",
+        "name:sr": "ОШ „Јован Поповић”",
+        "name:sr-Latn": "OŠ „Jovan Popović”",
+        "website": "https://www.jovanpopovic.edu.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8456303,
+          45.2412681
+        ]
+      },
+      "id": "way/263374951"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/269647004",
+        "addr:housenumber": "4",
+        "addr:postcode": "21000",
+        "addr:street": "Златне греде",
+        "amenity": "school",
+        "education": "school",
+        "int_name": "Gimnazija „Jovan Jovanovic Zmaj”",
+        "name": "Гимназија „Јован Јовановић Змај”",
+        "name:etymology:wikidata": "Q362089",
+        "name:sr": "Гимназија „Јован Јовановић Змај”",
+        "name:sr-Latn": "Gimnazija „Jovan Jovanović Zmaj”",
+        "old_name": "Петроварадинска рождество-богородична гимназија српско-латинска, Државна гимназија Јозефа II, Римокатоличка гимназија, Српска православна велика гимназија, Државна мушка гимназија, Државна мушка реална гимназија краља Александра I, Мађарска краљевска држа",
+        "ref:RS:kucni_broj": "5498499",
+        "school": "secondary",
+        "source": "http://www.facebook.com/jjzmaj",
+        "toilets:wheelchair": "no",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8479362,
+          45.258054
+        ]
+      },
+      "id": "way/269647004"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/270102674",
+        "addr:housenumber": "бб",
+        "addr:postcode": "21000",
+        "addr:street": "Стојана Новаковића",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.806415,
+          45.2560517
+        ]
+      },
+      "id": "way/270102674"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/287365047",
+        "addr:housenumber": "1",
+        "addr:street": "Палмотићева",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Cvrcak",
+        "name": "Цврчак",
+        "name:sr": "Цврчак",
+        "name:sr-Latn": "Cvrčak",
+        "ref:RS:kucni_broj": "5510203",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8807319,
+          45.2463104
+        ]
+      },
+      "id": "way/287365047"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/290034458",
+        "addr:housenumber": "110",
+        "addr:postcode": "21000",
+        "addr:street": "Јанка Чмелика",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Veseli vozic",
+        "name": "Весели возић",
+        "name:sr": "Весели возић",
+        "name:sr-Latn": "Veseli vozić",
+        "ref:RS:kucni_broj": "5499561",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8078944,
+          45.2661949
+        ]
+      },
+      "id": "way/290034458"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/290660708",
+        "addr:housenumber": "2",
+        "addr:street": "Анђе Ранковић",
+        "amenity": "school",
+        "building": "school",
+        "building:levels": "3",
+        "grades": "1-8",
+        "int_name": "OS „Milos Crnjanski”",
+        "name": "ОШ „Милош Црњански”",
+        "name:sr": "ОШ „Милош Црњански”",
+        "name:sr-Latn": "OŠ „Miloš Crnjanski”",
+        "ref:RS:kucni_broj": "5514696",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7953937,
+          45.2473753
+        ]
+      },
+      "id": "way/290660708"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/290660709",
+        "addr:housenumber": "2",
+        "addr:street": "Антуна Урбана",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Spomenak",
+        "name": "Споменак",
+        "name:sr": "Споменак",
+        "name:sr-Latn": "Spomenak",
+        "ref:RS:kucni_broj": "5467632",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7975116,
+          45.247049
+        ]
+      },
+      "id": "way/290660709"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/292064164",
+        "addr:housenumber": "50",
+        "addr:street": "Лазе Нанчића",
+        "amenity": "kindergarten",
+        "building": "commercial",
+        "education": "kindergarten",
+        "preschool": "yes",
+        "ref:RS:kucni_broj": "5515855",
+        "survey:date": "2014-07-08",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8199493,
+          45.2474481
+        ]
+      },
+      "id": "way/292064164"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/292494797",
+        "addr:housenumber": "3",
+        "addr:postcode": "21000",
+        "addr:street": "Булевар Јаше Томића",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Kolibri",
+        "name": "Колибри",
+        "name:sr": "Колибри",
+        "name:sr-Latn": "Kolibri",
+        "ref:RS:kucni_broj": "5502771",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8268788,
+          45.2633046
+        ]
+      },
+      "id": "way/292494797"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/293024864",
+        "addr:housenumber": "7",
+        "addr:postcode": "21000",
+        "addr:street": "Саве Ковачевића",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "education": "kindergarten",
+        "int_name": "Cuperak",
+        "name": "Чуперак",
+        "name:sr": "Чуперак",
+        "name:sr-Latn": "Čuperak",
+        "ref:RS:kucni_broj": "5497174",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8321876,
+          45.2632079
+        ]
+      },
+      "id": "way/293024864"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/293174679",
+        "addr:housenumber": "2a",
+        "addr:street": "Краљевића Марка",
+        "amenity": "school",
+        "building": "school",
+        "grades": "1-8",
+        "int_name": "OS „Ivo Lola Ribar”",
+        "name": "ОШ „Иво Лола Рибар”",
+        "name:en": "Ivo Lola Ribar",
+        "name:sr": "ОШ „Иво Лола Рибар”",
+        "name:sr-Latn": "OŠ „Ivo Lola Ribar”",
+        "ref:RS:kucni_broj": "5500674",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8363803,
+          45.2596526
+        ]
+      },
+      "id": "way/293174679"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/293186220",
+        "addr:housenumber": "13",
+        "addr:street": "Змај Огњена Вука",
+        "amenity": "social_facility",
+        "building": "civic",
+        "check_date": "2023-10-17",
+        "int_name": "Centar za socijalni rad Grada Novog Sada",
+        "name": "Центар за социјални рад Града Новог Сада",
+        "name:sr": "Центар за социјални рад Града Новог Сада",
+        "name:sr-Latn": "Centar za socijalni rad Grada Novog Sada",
+        "ref:RS:kucni_broj": "5488616",
+        "social_facility": "outreach",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8380445,
+          45.2619002
+        ]
+      },
+      "id": "way/293186220"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/293284509",
+        "addr:housenumber": "9",
+        "addr:street": "Павла Папа",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "check_date": "2023-06-12",
+        "int_name": "Bubica",
+        "name": "Бубица",
+        "name:sr": "Бубица",
+        "name:sr-Latn": "Bubica",
+        "ref:RS:kucni_broj": "5471251",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8396832,
+          45.2547408
+        ]
+      },
+      "id": "way/293284509"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/296190050",
+        "addr:housenumber": "55",
+        "addr:street": "Карађорђева",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "check_date": "2026-10-19",
+        "int_name": "Bambi",
+        "name": "Бамби",
+        "name:sr": "Бамби",
+        "name:sr-Latn": "Bambi",
+        "ref:RS:kucni_broj": "5500259",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.839971,
+          45.2683552
+        ]
+      },
+      "id": "way/296190050"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/297183253",
+        "addr:housenumber": "15",
+        "addr:postcode": "21000",
+        "addr:street": "Доситејева",
+        "amenity": "school",
+        "building": "school",
+        "education": "school",
+        "int_name": "Privatna osnovna skola „Miroslav Mika Antic”",
+        "name": "Приватна основна школа „Мирослав Мика Антић”",
+        "phone": "+381 21 442058",
+        "ref:RS:kucni_broj": "5515198",
+        "survey:date": "2014-08-08",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8416816,
+          45.2629765
+        ]
+      },
+      "id": "way/297183253"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/297300161",
+        "addr:housenumber": "2",
+        "addr:street": "Епископа Висариона",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Veverica",
+        "name": "Веверица",
+        "name:sr": "Веверица",
+        "name:sr-Latn": "Veverica",
+        "ref:RS:kucni_broj": "5477877",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8538148,
+          45.2590956
+        ]
+      },
+      "id": "way/297300161"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/297828572",
+        "addr:housenumber": "7",
+        "addr:postcode": "21000",
+        "addr:street": "Александра Тишме",
+        "amenity": "clinic",
+        "building": "apartments",
+        "healthcare": "clinic",
+        "healthcare:speciality": "mental_health",
+        "int_name": "Specijalna bolnica Vita",
+        "name": "Специјална болница Вита",
+        "name:sr": "Специјална болница Вита",
+        "name:sr-Latn": "Specijalna bolnica Vita",
+        "opening_hours": "Mo-Fr 08:00-20:00; Sa-Su 09:00-15:00",
+        "ref:RS:kucni_broj": "5499375",
+        "website": "https://www.bolnica-vita.co.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8488025,
+          45.2592889
+        ]
+      },
+      "id": "way/297828572"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/298430849",
+        "addr:housenumber": "41",
+        "addr:street": "Суботичка",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "name": "Паркс",
+        "name:en": "Parks",
+        "name:sr": "Паркс",
+        "name:sr-Latn": "Parks",
+        "official_name": "Специјална хируршка болница \"Паркс - др Драги\"",
+        "opening_hours": "Mo-Fr 08:00-20:00; Sa 08:00-14:00",
+        "phone": "+381 021 402539;+381 021 403420;+381 021 4790268",
+        "ref:RS:kucni_broj": "5496676",
+        "survey:date": "2014-08-15",
+        "website": "https://www.parks.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8149594,
+          45.2437707
+        ]
+      },
+      "id": "way/298430849"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/298503044",
+        "addr:housenumber": "3",
+        "addr:street": "Булевар Европе",
+        "amenity": "clinic",
+        "building": "apartments",
+        "email": "ordinacijanikolic@yahoo.com",
+        "healthcare": "clinic",
+        "healthcare:speciality": "paediatrics;paediatric_surgery;dermatology",
+        "name": "Dr Nikolić",
+        "opening_hours": "Mo-Fr 08:00-20:00; Sa 08:00-13:00; Su off",
+        "phone": "+381216541495;+381213004875;+38163521216",
+        "ref:RS:kucni_broj": "5515086",
+        "survey:date": "2014-08-15",
+        "website": "https://ordinacijanikolic.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8217613,
+          45.2402972
+        ]
+      },
+      "id": "way/298503044"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/298777484",
+        "addr:housenumber": "28",
+        "addr:street": "Вршачка",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja „Vrsacka”",
+        "name": "Дом здравља „Вршачка”",
+        "ref:RS:kucni_broj": "5486380",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8087052,
+          45.2446377
+        ]
+      },
+      "id": "way/298777484"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/299244528",
+        "addr:housenumber": "27",
+        "addr:postcode": "21000",
+        "addr:street": "Петефи Шандора",
+        "amenity": "kindergarten",
+        "building": "commercial",
+        "int_name": "Zemlja cuda",
+        "name": "Земља чуда",
+        "name:sr": "Земља чуда",
+        "name:sr-Latn": "Zemlja čuda",
+        "ref:RS:kucni_broj": "5472059",
+        "survey:date": "2014-08-21",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8130015,
+          45.2393338
+        ]
+      },
+      "id": "way/299244528"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/303613855",
+        "addr:housenumber": "46",
+        "addr:street": "Бранка Ћопића",
+        "amenity": "kindergarten",
+        "building": "commercial",
+        "int_name": "Tufnica",
+        "name": "Туфница",
+        "name:sr": "Туфница",
+        "name:sr-Latn": "Tufnica",
+        "ref:RS:kucni_broj": "5475161",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.796595,
+          45.2352964
+        ]
+      },
+      "id": "way/303613855"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/304627478",
+        "addr:housenumber": "1",
+        "addr:street": "Јернеја Копитара",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Svrca",
+        "name": "Шврћа",
+        "name:sr": "Шврћа",
+        "name:sr-Latn": "Švrća",
+        "ref:RS:kucni_broj": "5500430",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8185814,
+          45.2378114
+        ]
+      },
+      "id": "way/304627478"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/304919318",
+        "amenity": "social_facility",
+        "int_name": "Dom za decu i omladinu ometenu u razvoju Veternik",
+        "name": "Дом за децу и омладину ометену у развоју Ветерник",
+        "name:sr": "Дом за децу и омладину ометену у развоју Ветерник",
+        "name:sr-Latn": "Dom za decu i omladinu ometenu u razvoju Veternik",
+        "social_facility": "group_home",
+        "social_facility:for": "child",
+        "website": "http://www.domveternik.org.rs",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7386538,
+          45.2433746
+        ]
+      },
+      "id": "way/304919318"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/305689006",
+        "amenity": "school",
+        "barrier": "fence",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7674422,
+          45.2422939
+        ]
+      },
+      "id": "way/305689006"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/307612338",
+        "addr:housenumber": "бб",
+        "addr:postcode": "21000",
+        "addr:street": "Симе Шолаје",
+        "amenity": "kindergarten",
+        "building": "public",
+        "int_name": "Radosnica",
+        "name": "Радосница",
+        "name:sr": "Радосница",
+        "name:sr-Latn": "Radosnica",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7861898,
+          45.23424
+        ]
+      },
+      "id": "way/307612338"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/307718458",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "int_name": "Radosnica",
+        "landuse": "education",
+        "name": "Радосница",
+        "name:sk": "Radosnica",
+        "name:sr": "Радосница",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7862438,
+          45.2342574
+        ]
+      },
+      "id": "way/307718458"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/308868644",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Dusan Radovic”",
+        "name": "ОШ „Душан Радовић”",
+        "name:sr": "ОШ „Душан Радовић”",
+        "name:sr-Latn": "OŠ „Dušan Radović”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.836905,
+          45.2783689
+        ]
+      },
+      "id": "way/308868644"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/309170683",
+        "addr:housenumber": "15",
+        "addr:street": "Јана Хуса",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Vidovdanski zvoncic",
+        "name": "Видовдански звончић",
+        "name:sr": "Видовдански звончић",
+        "name:sr-Latn": "Vidovdanski zvončić",
+        "ref:RS:kucni_broj": "5499377",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8348456,
+          45.2788554
+        ]
+      },
+      "id": "way/309170683"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/312042273",
+        "addr:housenumber": "26a",
+        "addr:postcode": "21107",
+        "addr:street": "Булевар патријарха Павла",
+        "amenity": "clinic",
+        "building": "hospital",
+        "email": "uprava@hitnans.rs",
+        "emergency": "ambulance_station",
+        "fax": "+38121403580",
+        "healthcare": "clinic",
+        "healthcare:speciality": "emergency",
+        "int_name": "Zavod za hitnu medicinsku pomoc Novi Sad",
+        "name": "Завод за хитну медицинску помоћ Нови Сад",
+        "name:en": "Emergency Infirmary",
+        "name:sr": "Завод за хитну медицинску помоћ Нови Сад",
+        "name:sr-Latn": "Zavod za hitnu medicinsku pomoć Novi Sad",
+        "opening_hours": "24/7",
+        "operator:type": "government",
+        "phone": "+381216400125;+381212156310",
+        "ref:RS:kucni_broj": "5495677",
+        "website": "https://hitnapomocns.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8035505,
+          45.2417708
+        ]
+      },
+      "id": "way/312042273"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/312042277",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8038355,
+          45.241812
+        ]
+      },
+      "id": "way/312042277"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/314021802",
+        "addr:housenumber": "32",
+        "addr:postcode": "21000",
+        "addr:street": "Јоже Влаховића",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Cigra",
+        "name": "Чигра",
+        "name:sr": "Чигра",
+        "name:sr-Latn": "Čigra",
+        "ref:RS:kucni_broj": "5492738",
+        "survey:date": "2014-11-22",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8766053,
+          45.2476259
+        ]
+      },
+      "id": "way/314021802"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/314023938",
+        "addr:housenumber": "8",
+        "addr:street": "Јоже Влаховића",
+        "amenity": "clinic",
+        "building": "hospital",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja Petrovaradin",
+        "name": "Дом здравља Петроварадин",
+        "name:sr": "Дом здравља Петроварадин",
+        "name:sr-Latn": "Dom zdravlja Petrovaradin",
+        "ref:RS:kucni_broj": "5510426",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.874419,
+          45.2492538
+        ]
+      },
+      "id": "way/314023938"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/314154166",
+        "addr:housenumber": "1b",
+        "addr:postcode": "21000",
+        "addr:street": "Вука Исаковича",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Vrtic „Cvetic”",
+        "name": "Вртић „Цветић”",
+        "name:sr": "Вртић „Цветић”",
+        "name:sr-Latn": "Vrtić „Cvetić”",
+        "ref:RS:kucni_broj": "5508068",
+        "survey:date": "2014-11-23",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8858577,
+          45.237683
+        ]
+      },
+      "id": "way/314154166"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/320401173",
+        "addr:housenumber": "2",
+        "addr:postcode": "21208",
+        "addr:street": "23. октобра",
+        "amenity": "kindergarten",
+        "building": "commercial",
+        "int_name": "Vrtic „Zmaj”",
+        "name": "Вртић „Змај”",
+        "name:sr": "Вртић „Змај”",
+        "name:sr-Latn": "Vrtić „Zmaj”",
+        "ref:RS:kucni_broj": "5506153",
+        "survey:date": "2014-12-25",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8385462,
+          45.2228203
+        ]
+      },
+      "id": "way/320401173"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/330106048",
+        "amenity": "social_facility",
+        "barrier": "fence",
+        "email": "decijeseloinfo@gmail.com",
+        "int_name": "Decije selo",
+        "landuse": "residential",
+        "name": "Дечије село",
+        "name:en": "Children's village",
+        "name:sr": "Дечије село",
+        "name:sr-Latn": "Dečije selo",
+        "official_name": "СОС Дечје село Др Милорад Павловић",
+        "official_name:de": "SOS Kinderdorf Dr Milorad Pavlovic",
+        "official_name:sr": "СОС Дечје село Др Милорад Павловић",
+        "official_name:sr-Latn": "SOS Dečje selo Dr Milorad Pavlović",
+        "phone": "+381 062 461187",
+        "residential": "student",
+        "social_facility": "group_home",
+        "social_facility:for": "juvenile",
+        "website": "http://decijeselo.org.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8459601,
+          45.2259885
+        ]
+      },
+      "id": "way/330106048"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/330296647",
+        "addr:housenumber": "15",
+        "addr:postcode": "21208",
+        "addr:street": "Владимира Назора",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Vrtic „Plavi Cuperak”",
+        "name": "Вртић „Плави Чуперак”",
+        "name:sr-Latn": "Vrtić „Plavi Čuperak”",
+        "ref:RS:kucni_broj": "5502286",
+        "survey:date": "2014-11-27",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8530699,
+          45.223884
+        ]
+      },
+      "id": "way/330296647"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/332713062",
+        "addr:housenumber": "32",
+        "addr:street": "Симе Милутиновића Сарајлије",
+        "amenity": "school",
+        "building": "house",
+        "fax": "+381216500767",
+        "name": "Clever School",
+        "note": "Izbrisano iz RGZ-a 2026-09-05",
+        "phone": "+381652087860",
+        "removed:ref:RS:kucni_broj": "5501766",
+        "survey:date": "2014-11-07",
+        "website": "https://cleveris.org/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8002743,
+          45.2337648
+        ]
+      },
+      "id": "way/332713062"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/332899199",
+        "addr:housenumber": "6",
+        "addr:street": "Сувоборска",
+        "amenity": "school",
+        "building": "school",
+        "grades": "9-12",
+        "int_name": "Srednja skola „Dositej Obradovic”",
+        "name": "Средња школа „Доситеј Обрадовић”",
+        "name:sr": "Средња школа „Доситеј Обрадовић”",
+        "name:sr-Latn": "Srednja škola „Dositej Obradović”",
+        "ref:RS:kucni_broj": "5497868",
+        "survey:date": "2022-11-08",
+        "website": "https://dositejobradovicns.edu.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7852446,
+          45.2419961
+        ]
+      },
+      "id": "way/332899199"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/333508673",
+        "addr:housenumber": "62",
+        "addr:postcode": "21203",
+        "addr:street": "Краља Александра",
+        "amenity": "kindergarten",
+        "building": "yes",
+        "int_name": "Vrtic„Zlatokosa”",
+        "name": "Вртић„Златокоса”",
+        "name:sr": "Вртић„Златокоса”",
+        "name:sr-Latn": "Vrtić„Zlatokosa”",
+        "ref:RS:kucni_broj": "5498903",
+        "survey:date": "2014-11-19",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7543838,
+          45.2559591
+        ]
+      },
+      "id": "way/333508673"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/333515540",
+        "amenity": "school",
+        "barrier": "fence",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7556094,
+          45.2533849
+        ]
+      },
+      "id": "way/333515540"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/351668143",
+        "addr:housenumber": "6",
+        "addr:postcode": "21101",
+        "addr:street": "Улица VIII",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "int_name": "Duga",
+        "name": "Дуга",
+        "name:sr": "Дуга",
+        "name:sr-Latn": "Duga",
+        "ref:RS:kucni_broj": "5489340",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8740274,
+          45.2729028
+        ]
+      },
+      "id": "way/351668143"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/351668145",
+        "addr:housenumber": "2",
+        "addr:street": "Улица VIII",
+        "amenity": "school",
+        "barrier": "fence",
+        "grades": "1-8",
+        "int_name": "Osnovna skola „Veljko Vlahovic”",
+        "name": "Основна школа „Вељко Влаховић”",
+        "name:sr": "Основна школа „Вељко Влаховић”",
+        "name:sr-Latn": "Osnovna škola „Veljko Vlahović”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8751558,
+          45.2735516
+        ]
+      },
+      "id": "way/351668145"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/355433638",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Dusan Radovic”",
+        "name": "ОШ „Душан Радовић”",
+        "name:sr": "ОШ „Душан Радовић”",
+        "name:sr-Latn": "OŠ „Dušan Radović”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8261606,
+          45.2957156
+        ]
+      },
+      "id": "way/355433638"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/355667854",
+        "addr:housenumber": "100",
+        "addr:postcode": "21000",
+        "addr:street": "Сентандрејски пут",
+        "building": "yes",
+        "healthcare": "centre",
+        "healthcare:speciality": "general",
+        "int_name": "Dom zdravlja „Klisa”",
+        "name": "Дом здравља „Клиса”",
+        "name:sr": "Дом здравља „Клиса”",
+        "name:sr-Latn": "Dom zdravlja „Klisa”",
+        "survey:date": "2014-08-31",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8254972,
+          45.290092
+        ]
+      },
+      "id": "way/355667854"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/356027199",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Dusan Radovic”",
+        "name": "ОШ „Душан Радовић”",
+        "name:sr": "ОШ „Душан Радовић”",
+        "name:sr-Latn": "OŠ „Dušan Radović”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8264099,
+          45.2892506
+        ]
+      },
+      "id": "way/356027199"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/356038185",
+        "addr:housenumber": "50",
+        "addr:street": "Ченејска",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Bubamara",
+        "name": "Бубамара",
+        "name:sr": "Бубамара",
+        "name:sr-Latn": "Bubamara",
+        "ref:RS:kucni_broj": "5516922",
+        "survey:date": "2024-02-06",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8281004,
+          45.2886299
+        ]
+      },
+      "id": "way/356038185"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/357007216",
+        "addr:housenumber": "51a",
+        "addr:postcode": "21137",
+        "addr:street": "Сељачких буна",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Prva vojvodjanska brigada”",
+        "name": "ОШ „Прва војвођанска бригада”",
+        "name:en": "Elementary school Prva vojvodjanska brigada",
+        "name:hu": "Első Vajdasági Brigád Á.I.",
+        "name:rue": "ОШ „Перша войводянска бриґада“",
+        "name:sr": "ОШ „Прва војвођанска бригада”",
+        "name:sr-Latn": "OŠ „Prva vojvođanska brigada”",
+        "ref:RS:kucni_broj": "5499109",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7979086,
+          45.2540191
+        ]
+      },
+      "id": "way/357007216"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/383961986",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "Skola za osnovno i srednje obrazovanje „Milan Petrovic”",
+        "name": "Школа за основно и средње образовање „Милан Петровић”",
+        "name:sr": "Школа за основно и средње образовање „Милан Петровић”",
+        "name:sr-Latn": "Škola za osnovno i srednje obrazovanje „Milan Petrović”",
+        "short_name": "ШОСО Милан Петровић",
+        "short_name:sr": "ШОСО Милан Петровић",
+        "short_name:sr-Latn": "ŠOSO Milan Petrović",
+        "website": "https://www.smp.edu.rs/",
+        "wikidata": "Q116771756",
+        "wikipedia": "sr:ШОСО „Милан Петровић” Нови Сад",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8359554,
+          45.2484181
+        ]
+      },
+      "id": "way/383961986"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/383961995",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "Tehnicka skola „Mileva Maric Ajnstajn”",
+        "name": "Техничка школа „Милева Марић Ајнштајн”",
+        "name:sr": "Техничка школа „Милева Марић Ајнштајн”",
+        "name:sr-Latn": "Tehnička škola „Mileva Marić Ajnštajn”",
+        "wikidata": "Q16085002",
+        "wikipedia": "sr:Техничка школа „Милева Марић-Ајнштајн” Нови Сад",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8350859,
+          45.2486859
+        ]
+      },
+      "id": "way/383961995"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/383962427",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "Srednja elektrotehnicka skola „Mihajlo Pupin”",
+        "name": "Средња електротехничка школа „Михајло Пупин”",
+        "name:sr": "Средња електротехничка школа „Михајло Пупин”",
+        "name:sr-Latn": "Srednja elektrotehnička škola „Mihajlo Pupin”",
+        "wikidata": "Q6845206",
+        "wikipedia": "sr:Електротехничка школа „Михајло Пупин” Нови Сад",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8347234,
+          45.249635
+        ]
+      },
+      "id": "way/383962427"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/385815045",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Petefi Sandor”",
+        "name": "ОШ „Петефи Шандор”",
+        "name:sr": "ОШ „Петефи Шандор”",
+        "name:sr-Latn": "OŠ „Petefi Šandor”",
+        "wheelchair": "limited",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.829641,
+          45.2541418
+        ]
+      },
+      "id": "way/385815045"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/386190710",
+        "amenity": "school",
+        "barrier": "fence",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8280387,
+          45.2611333
+        ]
+      },
+      "id": "way/386190710"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/386934099",
+        "addr:housenumber": "15",
+        "addr:street": "Змај Јовина",
+        "amenity": "school",
+        "building": "school",
+        "int_name": "Jovan Jovanovic Zmaj",
+        "name": "Јован Јовановић Змај",
+        "name:sr": "Јован Јовановић Змај",
+        "name:sr-Latn": "Jovan Jovanović Zmaj",
+        "ref:RS:kucni_broj": "5507876",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8037801,
+          45.2095908
+        ]
+      },
+      "id": "way/386934099"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/386934105",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Carobnjak",
+        "name": "Чаробњак",
+        "name:sr": "Чаробњак",
+        "name:sr-Latn": "Čarobnjak",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8034361,
+          45.2094715
+        ]
+      },
+      "id": "way/386934105"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/387663726",
+        "addr:housenumber": "9a",
+        "addr:street": "Банатска",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "int_name": "Carobni svet",
+        "name": "Чаробни свет",
+        "name:sr": "Чаробни свет",
+        "name:sr-Latn": "Čarobni svet",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8126965,
+          45.2644442
+        ]
+      },
+      "id": "way/387663726"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/389364998",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "Srednja umetnicka skola „Bogdan Suput”",
+        "name": "Средња уметничка школа „Богдан Шупут”",
+        "name:sr": "Средња уметничка школа „Богдан Шупут”",
+        "name:sr-Latn": "Srednja umetnička škola „Bogdan Šuput”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8145589,
+          45.2611586
+        ]
+      },
+      "id": "way/389364998"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/392084565",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Nikola Tesla”",
+        "name": "ОШ „Никола Тесла”",
+        "name:hu": "Nikola Tesla Á.I.",
+        "name:sr": "ОШ „Никола Тесла”",
+        "name:sr-Latn": "OŠ „Nikola Tesla”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8138987,
+          45.2469836
+        ]
+      },
+      "id": "way/392084565"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/396089169",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Dusan Radovic”",
+        "name": "ОШ „Душан Радовић”",
+        "name:sr": "ОШ „Душан Радовић”",
+        "name:sr-Latn": "OŠ „Dušan Radović”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.82095,
+          45.2973999
+        ]
+      },
+      "id": "way/396089169"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/396301606",
+        "addr:housenumber": "ББ",
+        "addr:postcode": "21137",
+        "addr:street": "Бате Бркића",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "SOSO „Milan Petrovic”",
+        "name": "ШОСО „Милан Петровић”",
+        "name:sr": "ШОСО „Милан Петровић”",
+        "name:sr-Latn": "ŠOSO „Milan Petrović”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7949827,
+          45.2530424
+        ]
+      },
+      "id": "way/396301606"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/399600886",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "int_name": "Vrtic „Svitac”",
+        "name": "Вртић „Свитац”",
+        "name:sr": "Вртић „Свитац”",
+        "name:sr-Latn": "Vrtić „Svitac”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8064659,
+          45.2560199
+        ]
+      },
+      "id": "way/399600886"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/402900808",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "int_name": "Vrtic „Bajka”",
+        "name": "Вртић „Бајка”",
+        "name:sr": "Вртић „Бајка”",
+        "name:sr-Latn": "Vrtić „Bajka”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8027533,
+          45.2488658
+        ]
+      },
+      "id": "way/402900808"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/422604053",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7548987,
+          45.2558785
+        ]
+      },
+      "id": "way/422604053"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/584379778",
+        "amenity": "school",
+        "barrier": "fence",
+        "education": "school",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8358002,
+          45.2644108
+        ]
+      },
+      "id": "way/584379778"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/584379780",
+        "addr:housenumber": "2",
+        "addr:postcode": "21000",
+        "addr:street": "Берислава Берића",
+        "amenity": "school",
+        "building": "school",
+        "education": "school",
+        "int_name": "OS „Kosta Trifkovic”",
+        "name": "ОШ „Коста Трифковић”",
+        "name:sr": "ОШ „Коста Трифковић”",
+        "name:sr-Latn": "OŠ „Kosta Trifković”",
+        "ref:RS:kucni_broj": "5497200",
+        "wheelchair": "no",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8357808,
+          45.2642975
+        ]
+      },
+      "id": "way/584379780"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/596495319",
+        "addr:housenumber": "6",
+        "addr:street": "Прерадовићева",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Jovan Ducic”",
+        "name": "ОШ „Јован Дучић”",
+        "name:sr": "ОШ „Јован Дучић”",
+        "name:sr-Latn": "OŠ „Jovan Dučić”",
+        "ref:RS:kucni_broj": "5510855",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8714582,
+          45.2517831
+        ]
+      },
+      "id": "way/596495319"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/598075183",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8765842,
+          45.2476226
+        ]
+      },
+      "id": "way/598075183"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/605290119",
+        "addr:housenumber": "2a",
+        "addr:street": "Фрање Малина",
+        "amenity": "school",
+        "barrier": "fence",
+        "int_name": "OS „Jovan Ducic” (Malinova)",
+        "name": "ОШ „Јован Дучић” (Малинова)",
+        "name:sr": "ОШ „Јован Дучић” (Малинова)",
+        "name:sr-Latn": "OŠ „Jovan Dučić” (Malinova)",
+        "ref:RS:kucni_broj": "5510790",
+        "survey:date": "2014-11-22",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8814425,
+          45.2419675
+        ]
+      },
+      "id": "way/605290119"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/681223831",
+        "addr:housenumber": "2",
+        "addr:street": "Трг Патријарха Бранковића",
+        "amenity": "school",
+        "building": "school",
+        "int_name": "Bogoslovski seminar",
+        "name": "Богословски семинар",
+        "name:sr": "Богословски семинар",
+        "name:sr-Latn": "Bogoslovski seminar",
+        "ref:RS:kucni_broj": "4408262",
+        "wikidata": "Q20435136",
+        "wikipedia": "sr:Богословски семинар у Сремским Карловцима",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.9346053,
+          45.2047211
+        ]
+      },
+      "id": "way/681223831"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/692650127",
+        "addr:housenumber": "9",
+        "addr:street": "Гундулићева",
+        "amenity": "school",
+        "check_date": "2026-02-03",
+        "education": "school",
+        "email": "gundulic@gundulic.edu.rs",
+        "grades": "1-8",
+        "int_name": "OS „Ivan Gundulic”",
+        "name": "ОШ „Иван Гундулић”",
+        "name:sr": "ОШ „Иван Гундулић”",
+        "name:sr-Latn": "OŠ „Ivan Gundulić”",
+        "operator:type": "government",
+        "website": "https://gundulic.edu.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8455591,
+          45.2647227
+        ]
+      },
+      "id": "way/692650127"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/692650128",
+        "addr:city": "Нови Сад",
+        "addr:housenumber": "19",
+        "addr:postcode": "21101",
+        "addr:street": "Душана Васиљева",
+        "amenity": "school",
+        "barrier": "fence",
+        "grades": "1-8",
+        "int_name": "OS „Djura Danicic”",
+        "mapillary": "500918131109108",
+        "mobile": "+381 21 452 962",
+        "name": "ОШ „Ђура Даничић”",
+        "name:sr": "ОШ „Ђура Даничић”",
+        "ref:RS:kucni_broj": "5498693",
+        "website": "https://djura-danicic.edu.rs/",
+        "wikidata": "Q12756821",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8531213,
+          45.2608583
+        ]
+      },
+      "id": "way/692650128"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/692650129",
+        "amenity": "school",
+        "barrier": "fence",
+        "check_date": "2025-07-20",
+        "int_name": "Srednja saobracajna skola „Pinki”",
+        "name": "Средња саобраћајна школа „Пинки”",
+        "name:sr": "Средња саобраћајна школа „Пинки”",
+        "name:sr-Latn": "Srednja saobraćajna škola „Pinki”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8517068,
+          45.2599565
+        ]
+      },
+      "id": "way/692650129"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/692650131",
+        "amenity": "kindergarten",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8096582,
+          45.2377253
+        ]
+      },
+      "id": "way/692650131"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/692650132",
+        "amenity": "school",
+        "int_name": "Srednja tehnicka skola „Pavle Savic”",
+        "name": "Средња техничка школа „Павле Савић”",
+        "name:sr": "Средња техничка школа „Павле Савић”",
+        "name:sr-Latn": "Srednja tehnička škola „Pavle Savić”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8366362,
+          45.2731234
+        ]
+      },
+      "id": "way/692650132"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/692650133",
+        "amenity": "school",
+        "int_name": "Srednja skola „Milan Petrovic”",
+        "name": "Средња школа „Милан Петровић”",
+        "name:sr": "Средња школа „Милан Петровић”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8320038,
+          45.2790577
+        ]
+      },
+      "id": "way/692650133"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/696431878",
+        "addr:housenumber": "1",
+        "addr:postcode": "21000",
+        "addr:street": "Хајдук Вељкова",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "healthcare:speciality": "plastic_surgery",
+        "int_name": "Klinika za plasticnu i rekonstrukcionu hirurgiju",
+        "name": "Клиника за пластицну и реконструкциону хирургију",
+        "name:sr": "Клиника за пластицну и реконструкциону хирургију",
+        "name:sr-Latn": "Klinika za plasticnu i rekonstrukcionu hirurgiju",
+        "opening_hours": "24/7",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8241171,
+          45.250276
+        ]
+      },
+      "id": "way/696431878"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/754558225",
+        "amenity": "school",
+        "education": "school",
+        "int_name": "Osnovna skola „Jovan Grcic Milenko”",
+        "name": "Основна школа „Јован Грчић Миленко”",
+        "name:sr": "Основна школа „Јован Грчић Миленко”",
+        "name:sr-Latn": "Osnovna škola „Jovan Grčić Milenko”",
+        "wikipedia": "sr:ОШ „Јован Грчић Миленко” Беочин",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7212463,
+          45.2094567
+        ]
+      },
+      "id": "way/754558225"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/754558269",
+        "addr:housenumber": "8b",
+        "addr:postcode": "21300",
+        "addr:street": "Светосавска",
+        "amenity": "clinic",
+        "building": "yes",
+        "email": "dzbeocin@gmail.com",
+        "emergency": "yes",
+        "fax": "021870052",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja „Dr Dusan Savic Doda”",
+        "name": "Дом здравља „Др Душан Савић Дода”",
+        "name:sr": "Дом здравља „Др Душан Савић Дода”",
+        "name:sr-Latn": "Dom zdravlja „Dr Dušan Savić Doda“",
+        "operator:type": "govenrment",
+        "phone": "021870055",
+        "ref:RS:kucni_broj": "4229606",
+        "website": "https://dzbeocin.com/",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7254977,
+          45.2074752
+        ]
+      },
+      "id": "way/754558269"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/814255528",
+        "addr:housenumber": "5",
+        "addr:postcode": "21000",
+        "addr:street": "Трг Владике Николаја",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "int_name": "Vojnomedicinski centar Novi Sad",
+        "name": "Војномедицински центар Нови Сад",
+        "name:sr": "Војномедицински центар Нови Сад",
+        "name:sr-Latn": "Vojnomedicinski centar Novi Sad",
+        "ref:RS:kucni_broj": "5511957",
+        "start_date": "1786",
+        "wikidata": "Q61129581",
+        "wikipedia": "sr:Војномедицински центар Нови Сад",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8614032,
+          45.2558643
+        ]
+      },
+      "id": "way/814255528"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/990216095",
+        "addr:housenumber": "4",
+        "addr:postcode": "21204",
+        "addr:street": "Пут доктора Голдмана",
+        "alt_name": "Institut Sremska Kamenica",
+        "amenity": "hospital",
+        "email": "sekretarijat@ikvbv.ns.ac.rs",
+        "healthcare": "hospital",
+        "healthcare:speciality": "cardiology",
+        "int_name": "Institut za kardiovaskularne bolesti Vojvodine - Sremska Kamenica",
+        "name": "Институт за кардиоваскуларне болести Војводине - Сремска Каменица",
+        "name:sr": "Институт за кардиоваскуларне болести Војводине - Сремска Каменица",
+        "name:sr-Latn": "Institut za kardiovaskularne bolesti Vojvodine - Sremska Kamenica",
+        "operator:type": "government",
+        "phone": "+381214805100",
+        "ref:RS:kucni_broj": "5511049",
+        "website": "https://www.ikvbv.ns.ac.rs/",
+        "wikidata": "Q7585747",
+        "wikipedia": "en:Sremska Kamenica Institute",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8562291,
+          45.2178737
+        ]
+      },
+      "id": "way/990216095"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1026689463",
+        "addr:housenumber": "3",
+        "addr:street": "Смедеревска",
+        "amenity": "doctors",
+        "building": "yes",
+        "healthcare": "centre",
+        "int_name": "Dom zdravlja Adice",
+        "name": "Дом здравља Адице",
+        "name:en": "Adice health centre",
+        "name:sr": "Дом здравља Адице",
+        "name:sr-Latn": "Dom zdravlja Adice",
+        "ref:RS:kucni_broj": "7230958",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7854659,
+          45.2342067
+        ]
+      },
+      "id": "way/1026689463"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1101031100",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "name": "Камичак",
+        "name:en": "Kamičak",
+        "name:sr": "Камичак",
+        "name:sr-Latn": "Kamičak",
+        "operator": "Радосно детињство",
+        "operator:type": "public",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7617818,
+          45.2489534
+        ]
+      },
+      "id": "way/1101031100"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1121002496",
+        "amenity": "school",
+        "int_name": "OS „Jovan Jovanovic Zmaj”",
+        "name": "ОШ „Јован Јовановић Змај”",
+        "name:sr": "ОШ „Јован Јовановић Змај”",
+        "name:sr-Latn": "OŠ „Jovan Jovanović Zmaj”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8432223,
+          45.2250397
+        ]
+      },
+      "id": "way/1121002496"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1186784261",
+        "amenity": "kindergarten",
+        "int_name": "Vrtic",
+        "name": "Вртић",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.9415059,
+          45.3004541
+        ]
+      },
+      "id": "way/1186784261"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1186784263",
+        "addr:housenumber": "9",
+        "addr:postcode": "21241",
+        "addr:street": "Краља Петра I",
+        "amenity": "school",
+        "int_name": "OS „Djura Jaksic”",
+        "name": "ОШ „Ђура Јакшић”",
+        "name:sr": "ОШ „Ђура Јакшић”",
+        "name:sr-Latn": "OŠ „Đura Jakšić”",
+        "ref:RS:kucni_broj": "5463546",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.9407324,
+          45.3000051
+        ]
+      },
+      "id": "way/1186784263"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1242256735",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7433292,
+          45.2924841
+        ]
+      },
+      "id": "way/1242256735"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1242256737",
+        "amenity": "school",
+        "int_name": "Osnovna skola „Sveti Sava”",
+        "name": "Основна школа „Свети Сава”",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7481633,
+          45.2955284
+        ]
+      },
+      "id": "way/1242256737"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1257921771",
+        "amenity": "school",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8480714,
+          45.2494528
+        ]
+      },
+      "id": "way/1257921771"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1257921774",
+        "amenity": "school",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8502812,
+          45.2494987
+        ]
+      },
+      "id": "way/1257921774"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1262497019",
+        "addr:housenumber": "74",
+        "addr:postcode": "21102",
+        "addr:street": "Мише Димитријевића",
+        "amenity": "kindergarten",
+        "building": "kindergarten",
+        "building:levels": "2",
+        "int_name": "Jezeva kucica",
+        "name": "Јежева кућица",
+        "name:sr": "Јежева кућица",
+        "name:sr-Latn": "Ježeva kućica",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8263095,
+          45.2419448
+        ]
+      },
+      "id": "way/1262497019"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1267735382",
+        "amenity": "school",
+        "int_name": "OS Jovan Grcic Milenko",
+        "isced:level": "1",
+        "name": "ОШ Јован Грчић Миленко",
+        "name:sr": "ОШ Јован Грчић Миленко",
+        "name:sr-Latn": "OŠ Jovan Grčić Milenko",
+        "note": "u istoj zgradi ima i vrtić; OŠ je izdvojeno odeljenje škole u Beočinu, I-IV razred",
+        "operator:type": "public",
+        "ref": "Раковац",
+        "website": "https://jgmilenko.mojaskola.org/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7668263,
+          45.2058813
+        ]
+      },
+      "id": "way/1267735382"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1290506910",
+        "addr:housenumber": "1",
+        "addr:postcode": "21205",
+        "addr:street": "Карловачких ђака",
+        "amenity": "school",
+        "check_date": "2026-08-01",
+        "email": "karlgimnazija@yahoo.com",
+        "int_name": "Karlovacka gimnazija",
+        "name": "Карловачка гимназија",
+        "name:en": "Karlovci Grammar School",
+        "name:hr": "Karlovačka gimnazija",
+        "name:sr": "Карловачка гимназија",
+        "name:sr-Latn": "Karlovačka gimnazija",
+        "phone": "+381 21 881 659",
+        "ref:RS:kucni_broj": "4407337",
+        "website": "https://www.karlovackagimnazija.rs",
+        "wikidata": "Q5624208",
+        "wikipedia": "sr:Карловачка гимназија",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.9336796,
+          45.2017927
+        ]
+      },
+      "id": "way/1290506910"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1313726394",
+        "amenity": "school",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8080925,
+          45.266103
+        ]
+      },
+      "id": "way/1313726394"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1341034874",
+        "addr:city": "Нови Сад",
+        "addr:housenumber": "1",
+        "addr:postcode": "21000",
+        "addr:street": "Соње Маринковић",
+        "amenity": "kindergarten",
+        "education": "kindergarten",
+        "int_name": "Carolija",
+        "name": "Чаролија",
+        "name:sr": "Чаролија",
+        "name:sr-Latn": "Čarolija",
+        "website": "https://www.predskolska.rs/sonje-marinkovic-1-carolija/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8531073,
+          45.2536377
+        ]
+      },
+      "id": "way/1341034874"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1344583320",
+        "amenity": "school",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.9336748,
+          45.2048093
+        ]
+      },
+      "id": "way/1344583320"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1355410293",
+        "amenity": "kindergarten",
+        "barrier": "fence",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8537053,
+          45.2590005
+        ]
+      },
+      "id": "way/1355410293"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1359597984",
+        "amenity": "kindergarten",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.7967094,
+          45.2353851
+        ]
+      },
+      "id": "way/1359597984"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1377064990",
+        "addr:housenumber": "9",
+        "addr:street": "Александра Невског",
+        "amenity": "clinic",
+        "building": "yes",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja Klisa",
+        "name": "Дом здравља Клиса",
+        "name:sr": "Дом здравља Клиса",
+        "name:sr-Latn": "Dom zdravlja Klisa",
+        "ref:RS:kucni_broj": "7256715",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8371416,
+          45.2828349
+        ]
+      },
+      "id": "way/1377064990"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1380255454",
+        "amenity": "kindergarten",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.849677,
+          45.2584341
+        ]
+      },
+      "id": "way/1380255454"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1413451752",
+        "amenity": "kindergarten",
+        "education": "kindergarten",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8428675,
+          45.2243599
+        ]
+      },
+      "id": "way/1413451752"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1415284573",
+        "amenity": "kindergarten",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8531033,
+          45.2238745
+        ]
+      },
+      "id": "way/1415284573"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1420948150",
+        "amenity": "kindergarten",
+        "surface": "grass",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8479006,
+          45.2586706
+        ]
+      },
+      "id": "way/1420948150"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1428152049",
+        "addr:housenumber": "19",
+        "addr:street": "Змај Огњена Вука",
+        "alt_name": "Dom zdravlja \"Zmaj Ognjena Vuka\"",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja „Jovan Jovanovic Zmaj”",
+        "name": "Дом здравља „Јован Јовановић Змај”",
+        "name:sr": "Дом здравља „Јован Јовановић Змај”",
+        "name:sr-Latn": "Dom zdravlja „Jovan Jovanović Zmaj”",
+        "ref:RS:kucni_broj": "5488619",
+        "wheelchair": "yes",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8374568,
+          45.2615799
+        ]
+      },
+      "id": "way/1428152049"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1525888373",
+        "amenity": "kindergarten",
+        "education": "kindergarten",
+        "email": "info@ruzingaj.rs",
+        "int_name": "Vrtic „Ruzin gaj”",
+        "name": "Вртић „Ружин гај”",
+        "name:sr": "Вртић „Ружин гај”",
+        "name:sr-Latn": "Vrtić „Ružin gaj”",
+        "operator:type": "private",
+        "phone": "+381 63 84 62 662",
+        "preschool": "yes",
+        "ref:vatin": "RS109721427",
+        "website": "https://ruzingaj.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8152334,
+          45.2454137
+        ]
+      },
+      "id": "way/1525888373"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1542352809",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Genesis",
+        "name:en": "Genesis",
+        "name:sr": "Генезис",
+        "name:sr-Latn": "Genezis"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8291456,
+          45.2533497
+        ]
+      },
+      "id": "node/1542352809"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1561098761",
+        "amenity": "kindergarten",
+        "education": "kindergarten",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8245731,
+          45.2980042
+        ]
+      },
+      "id": "way/1561098761"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1561832878",
+        "addr:housenumber": "121",
+        "addr:postcode": "21000",
+        "addr:street": "Футошка",
+        "amenity": "clinic",
+        "building": "yes",
+        "check_date": "2024-11-21",
+        "email": "izjzv@izjzv.org.rs",
+        "emergency": "no",
+        "fax": "+381216613989",
+        "healthcare": "clinic",
+        "int_name": "Institut za javno zdravlje Vojvodine",
+        "loc_name": "Higijenski zavod",
+        "name": "Институт за јавно здравље Војводине",
+        "name:sr": "Институт за јавно здравље Војводине",
+        "name:sr-Latn": "Institut za javno zdravlje Vojvodine",
+        "opening_hours": "Mo-Fr 06:30-20:00",
+        "operator": "Skupština Vojvodine",
+        "operator:type": "public",
+        "phone": "+381214897800",
+        "ref:RS:kucni_broj": "5497684",
+        "short_name": "Higijensko",
+        "website": "http://www.izjzv.org.rs/",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8180062,
+          45.2482983
+        ]
+      },
+      "id": "way/1561832878"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2955493894",
+        "addr:housenumber": "4a",
+        "addr:street": "Руђера Бошковића",
+        "amenity": "kindergarten",
+        "int_name": "Carobna kuca",
+        "name": "Чаробна кућа",
+        "name:sr": "Чаробна кућа",
+        "name:sr-Latn": "Čarobna kuća",
+        "opening_hours": "Mo-Fr 07:00-17:00",
+        "ref:RS:kucni_broj": "5470267",
+        "website": "http://www.vrticcarobnakuca.co.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8229052,
+          45.2482736
+        ]
+      },
+      "id": "node/2955493894"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2977651212",
+        "addr:housenumber": "10",
+        "addr:postcode": "21000",
+        "addr:street": "Гагаринова",
+        "amenity": "kindergarten",
+        "int_name": "Sunce",
+        "name": "Сунце",
+        "name:sr": "Сунце",
+        "name:sr-Latn": "Sunce",
+        "ref:RS:kucni_broj": "5498973"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8300509,
+          45.2612041
+        ]
+      },
+      "id": "node/2977651212"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3636789716",
+        "addr:city": "Novi Sad",
+        "addr:country": "RS",
+        "addr:postcode": "21000",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "survey:date": "2015-07-06"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8584585,
+          45.279964
+        ]
+      },
+      "id": "node/3636789716"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4031231090",
+        "addr:housenumber": "73a",
+        "addr:postcode": "21102",
+        "addr:street": "Народног фронта",
+        "amenity": "clinic",
+        "atm": "yes",
+        "check_date:opening_hours": "2026-09-04",
+        "healthcare": "clinic",
+        "name": "Healthmedic",
+        "opening_hours": "Mo-Fr 08:00-20:00; Sa 08:00-12:00",
+        "website": "https://www.healthmedic.rs/",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.829726,
+          45.237745
+        ]
+      },
+      "id": "node/4031231090"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4340867289",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "medical_system:western": "gynecology",
+        "name": "Ferona Bolnica",
+        "opening_hours": "Mo-Fr 08:00-20:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8090739,
+          45.2391889
+        ]
+      },
+      "id": "node/4340867289"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4342750290",
+        "addr:housenumber": "38",
+        "addr:postcode": "21000",
+        "addr:street": "Булевар краља Петра I",
+        "amenity": "school",
+        "email": "mashinska@neobee.net",
+        "int_name": "Srednja masinska skola Novi Sad",
+        "name": "Средња машинска школа Нови Сад",
+        "name:sr": "Средња машинска школа Нови Сад",
+        "name:sr-Latn": "Srednja mašinska škola Novi Sad",
+        "phone": "021442057",
+        "website": "https://www.masinskans.edu.rs/",
+        "wikidata": "Q898413"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8282013,
+          45.2600445
+        ]
+      },
+      "id": "node/4342750290"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4342750291",
+        "addr:housenumber": "1",
+        "addr:postcode": "21000",
+        "addr:street": "Гагаринова",
+        "amenity": "school",
+        "email": "mileva.ajnstajn021@gmail.com",
+        "grades": "9-12",
+        "int_name": "Tehnicka skola „Mileva Maric”",
+        "name": "Техничка школа „Милева Марић”",
+        "name:en": "Mileva Marić Technical School",
+        "name:sr": "Техничка школа „Милева Марић”",
+        "name:sr-Latn": "Tehnička škola „Mileva Marić”",
+        "phone": "021443444",
+        "website": "https://mmaricajnstajn.edu.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8280068,
+          45.2618571
+        ]
+      },
+      "id": "node/4342750291"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4713794090",
+        "addr:housenumber": "7",
+        "addr:street": "Огњена Прице",
+        "amenity": "school",
+        "check_date": "2024-10-20",
+        "name": "Sveti Sava",
+        "name:sr": "Свети Сава",
+        "name:sr-Latn": "Sveti Sava"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8362056,
+          45.2524944
+        ]
+      },
+      "id": "node/4713794090"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4773450630",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "int_name": "Sveti Luka",
+        "name": "Свети Лука",
+        "name:sr": "Свети Лука",
+        "name:sr-Latn": "Sveti Luka"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8730332,
+          45.2513241
+        ]
+      },
+      "id": "node/4773450630"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4990638424",
+        "addr:housenumber": "1",
+        "addr:postcode": "21000",
+        "addr:street": "Хајдук Вељкова",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "healthcare:speciality": "neurosurgery",
+        "int_name": "Klinika za neurohirurgiju",
+        "name": "Клиника за неурохирургију",
+        "name:sr": "Клиника за неурохирургију",
+        "name:sr-Latn": "Klinika za neurohirurgiju",
+        "opening_hours": "24/7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8225484,
+          45.2501128
+        ]
+      },
+      "id": "node/4990638424"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4990641226",
+        "addr:housenumber": "1",
+        "addr:postcode": "21000",
+        "addr:street": "Хајдук Вељкова",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "healthcare:speciality": "intensive",
+        "int_name": "Klinika za intenzivnu terapiju",
+        "name": "Клиника за интензивну терапију",
+        "name:sr": "Клиника за интензивну терапију",
+        "name:sr-Latn": "Klinika za intenzivnu terapiju",
+        "opening_hours": "24/7"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8229461,
+          45.2501154
+        ]
+      },
+      "id": "node/4990641226"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4990645021",
+        "addr:floor": "0",
+        "addr:housenumber": "87",
+        "addr:postcode": "21000",
+        "addr:street": "Народног фронта",
+        "amenity": "clinic",
+        "check_date": "2026-09-04",
+        "healthcare": "clinic",
+        "int_name": "Ordinacija za fizikalnu medicinu Jakovljevic",
+        "level": "0",
+        "name": "Ординација за физикалну медицину Јаковљевић",
+        "name:en": "Physician ordination Jakovljevic",
+        "name:sr": "Ординација за физикалну медицину Јаковљевић",
+        "name:sr-Latn": "Ordinacija za fizikalnu medicinu Jakovljević",
+        "opening_hours": "Mo-Fr 12:00-20:00; Sa 10:00-14:00; Su off",
+        "phone": "+381(631) 068-868",
+        "ref:RS:kucni_broj": "5473072",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8281131,
+          45.236684
+        ]
+      },
+      "id": "node/4990645021"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5091686197",
+        "addr:housenumber": "23",
+        "addr:postcode": "21000",
+        "addr:street": "Булевар Михајла Пупина",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja „Bulevar”",
+        "name": "Дом здравља „Булевар”",
+        "name:sr": "Дом здравља „Булевар”",
+        "name:sr-Latn": "Dom zdravlja „Bulevar”",
+        "opening_hours": "Mo-Fr 07:00-20:00",
+        "phone": "+381214879520",
+        "ref:RS:kucni_broj": "5476622",
+        "website": "https://dzns.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8523654,
+          45.2544012
+        ]
+      },
+      "id": "node/5091686197"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6113621186",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "SH Fresenius Medical Care"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8082157,
+          45.2488044
+        ]
+      },
+      "id": "node/6113621186"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6118503885",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "int_name": "Klinika Dzinic",
+        "name": "Клиника Џинић",
+        "name:en": "Clinic Dzinic",
+        "name:sr": "Клиника Џинић",
+        "name:sr-Latn": "Klinika Džinić"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8095309,
+          45.2438517
+        ]
+      },
+      "id": "node/6118503885"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6432316889",
+        "addr:housenumber": "44",
+        "addr:postcode": "21000",
+        "addr:street": "Балзакова",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "int_name": "Dom zdravlja Medigrup dr Cvjetkovic",
+        "name": "Дом здравља Медигруп др Цвјетковић",
+        "name:en": "Health centre Medigroup dr Cvjetković",
+        "name:sr": "Дом здравља Медигруп др Цвјетковић",
+        "name:sr-Latn": "Dom zdravlja Medigroup dr Cvjetković",
+        "operator": "Medigroup"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8330422,
+          45.2369845
+        ]
+      },
+      "id": "node/6432316889"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6432316890",
+        "addr:housenumber": "26",
+        "addr:postcode": "21000",
+        "addr:street": "Цара Душана",
+        "amenity": "clinic",
+        "check_date": "2026-04-15",
+        "healthcare": "clinic",
+        "name": "Medigroup",
+        "name:en": "Medigroup",
+        "name:sr": "Медигруп",
+        "name:sr-Latn": "Medigroup",
+        "operator": "Medigroup",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "ref:RS:kucni_broj": "5495679",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8248592,
+          45.2455771
+        ]
+      },
+      "id": "node/6432316890"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6638720171",
+        "addr:housenumber": "20",
+        "addr:postcode": "21000",
+        "addr:street": "Радничка",
+        "amenity": "school",
+        "int_name": "E-Gimnazija",
+        "name": "Е-Гимназија",
+        "name:sr": "Е-Гимназија",
+        "name:sr-Latn": "E-Gimnazija",
+        "survey:date": "2014-07-30",
+        "website": "http://www.e-gimnazija.org/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8500384,
+          45.2494748
+        ]
+      },
+      "id": "node/6638720171"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8228234568",
+        "addr:housenumber": "1",
+        "addr:street": "Футошки пут",
+        "healthcare": "centre",
+        "healthcare:speciality": "physiotherapy;chiropractic;orthopaedics",
+        "name": "Scolio Centar",
+        "name:en": "Scolio Centar",
+        "name:sr": "Сколиоза Центар",
+        "name:sr-Latn": "Scolio Centar",
+        "phone": "+381 62 1516 330",
+        "website": "https://www.skoliozacentar.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8158236,
+          45.2480559
+        ]
+      },
+      "id": "node/8228234568"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8228234570",
+        "addr:housenumber": "20",
+        "addr:street": "Булевар Европе",
+        "description": "Novaka Radonjića 41 (Bul. Evrope, preko puta Zoned zgrade)",
+        "email": "studiomotus.ns@gmail.com;sladjana@motus.rs",
+        "healthcare": "centre",
+        "healthcare:speciality": "kinesitherapy;cosmetic;general_practice;rehabilitation;physiotherapy",
+        "name": "Studio Motus",
+        "name:en": "Studio Motus",
+        "name:sr": "Студио Мотус",
+        "name:sr-Latn": "Studio Motus",
+        "phone": "+381 63 1286007;+381 69 1310897",
+        "website": "https://motus.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8208966,
+          45.2430575
+        ]
+      },
+      "id": "node/8228234570"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/8229462489",
+        "addr:housenumber": "19",
+        "addr:street": "Лазе Телечког",
+        "amenity": "clinic",
+        "description": "Ordinacija opšte medicine, porodični lekar Slavica.",
+        "email": "ordinacija@drslavica.com",
+        "healthcare": "clinic",
+        "healthcare:speciality": "general",
+        "int_name": "Porodicni lekar Slavica",
+        "name": "Породични лекар Славица",
+        "name:en": "Family doctor Slavica",
+        "name:sr": "Породични лекар Славица",
+        "name:sr-Latn": "Porodični lekar Slavica",
+        "opening_hours": "Mo-Fr 08:00-18:00; Sa 08:00-12:00",
+        "opening_hours:covid19": "Mo-Fr 08:00-15:00",
+        "operator": "Slavica Berar",
+        "operator:type": "private",
+        "phone": "+381 21 6612999;+381 64 9393113"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.844874,
+          45.2567266
+        ]
+      },
+      "id": "node/8229462489"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9449941796",
+        "amenity": "social_facility",
+        "email": "info@svetigeorgije.co.rs",
+        "int_name": "Sveti Georgije",
+        "name": "Свети Георгије",
+        "name:sr": "Свети Георгије",
+        "name:sr-Latn": "Sveti Georgije",
+        "phone": "021/432-332",
+        "social_facility": "nursing_home",
+        "social_facility:for": "senior",
+        "website": "https://svetigeorgije.co.rs"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8821387,
+          45.246105
+        ]
+      },
+      "id": "node/9449941796"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9795398807",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "healthcare:speciality": "vascular_surgery",
+        "int_name": "Klinika za vaskularnu hirurgiju",
+        "name": "Клиника за васкуларну хирургију",
+        "name:sr": "Клиника за васкуларну хирургију",
+        "name:sr-Latn": "Klinika za vaskularnu hirurgiju"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8227641,
+          45.2501124
+        ]
+      },
+      "id": "node/9795398807"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10060213317",
+        "amenity": "school",
+        "int_name": "Kutak muzicki klub",
+        "name": "Кутак музички клуб",
+        "name:en": "Kutak Musical Club",
+        "name:sr": "Кутак музички клуб"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8469839,
+          45.2406741
+        ]
+      },
+      "id": "node/10060213317"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10981157085",
+        "amenity": "social_facility",
+        "int_name": "Narodna kuhinja Crkvenog krsta Novog Sada",
+        "name": "Народна кухиња Црквеног крста Новог Сада",
+        "social_facility": "soup_kitchen"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8356929,
+          45.251456
+        ]
+      },
+      "id": "node/10981157085"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11494085814",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "healthcare:speciality": "paediatrics",
+        "name": "Iuventa"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8049288,
+          45.2541651
+        ]
+      },
+      "id": "node/11494085814"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11827427769",
+        "amenity": "clinic",
+        "name": "Dziniz"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8224797,
+          45.2362338
+        ]
+      },
+      "id": "node/11827427769"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12199463057",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "int_name": "Euromedik",
+        "name": "Еуромедик",
+        "opening_hours": "Mo-Fr 07:00-21:00; Sa 07:00-15:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8462833,
+          45.258183
+        ]
+      },
+      "id": "node/12199463057"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12405021845",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "int_name": "NK poliklinika plus",
+        "name": "НК поликлиника плус",
+        "name:sr": "НК поликлиника плус",
+        "name:sr-Latn": "NK poliklinika plus"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8528563,
+          45.2545709
+        ]
+      },
+      "id": "node/12405021845"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12655933301",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "name": "Dom Zdravlja „Vizim”",
+        "opening_hours": "Mo-Sa 09:00-21:00",
+        "operator": "Vizim",
+        "operator:type": "private"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8017627,
+          45.2462618
+        ]
+      },
+      "id": "node/12655933301"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12806314501",
+        "addr:housenumber": "7",
+        "addr:postcode": "21000",
+        "addr:street": "Јеврејска",
+        "amenity": "school",
+        "int_name": "Gimnazija „Tvrdjava”",
+        "internet_access": "wlan",
+        "name": "Гимназија „Тврђава”"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8409414,
+          45.2534041
+        ]
+      },
+      "id": "node/12806314501"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12950111406",
+        "amenity": "clinic",
+        "check_date": "2025-10-16",
+        "check_date:opening_hours": "2025-10-16",
+        "healthcare": "clinic",
+        "name": "MediGroup",
+        "opening_hours": "Mo-Fr 07:00-21:00; Sa 08:00-13:00; Su off"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8238107,
+          45.2593869
+        ]
+      },
+      "id": "node/12950111406"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13045867881",
+        "amenity": "kindergarten",
+        "name": "Dream land",
+        "website": "https://dream-land.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8499295,
+          45.2585228
+        ]
+      },
+      "id": "node/13045867881"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13149575677",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "name": "Ginekološka bolnica Gins",
+        "opening_hours": "Mo-Su 08:00-20:00",
+        "website": "http://www.gins.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8076206,
+          45.242717
+        ]
+      },
+      "id": "node/13149575677"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13149575678",
+        "amenity": "kindergarten",
+        "int_name": "Vrtic „Duga”",
+        "name": "Вртић „Дуга”",
+        "name:sr": "Вртић „Дуга”",
+        "name:sr-Latn": "Vrtić „Duga”",
+        "website": "https://dugavrt.com/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8400225,
+          45.2580415
+        ]
+      },
+      "id": "node/13149575678"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13149575679",
+        "amenity": "kindergarten",
+        "name": "Vrtić „Komenski”",
+        "website": "https://dugavrt.com/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8358289,
+          45.250214
+        ]
+      },
+      "id": "node/13149575679"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13158584895",
+        "addr:housenumber": "2a",
+        "addr:street": "Булевар Европе",
+        "amenity": "clinic",
+        "contact:facebook": "https://www.facebook.com/drandjelic.rs",
+        "contact:instagram": "https://www.instagram.com/ordinacijaandjelic/",
+        "contact:linkedin": "https://www.linkedin.com/company/ginekolo%C5%A1ka-ordinacija-an%C4%91eli%C4%87-gynecological-practice-andjelic/",
+        "contact:youtube": "https://www.youtube.com/c/drMirjanaAndjelic",
+        "email": "ordinacija@drandjelic.rs",
+        "healthcare:speciality": "gynaecology;radiology;neurology;haematology;endocrinology;internal;",
+        "int_name": "Poliklinika Andjelic i saradnici",
+        "name": "Поликлиника Анђелић и сарадници",
+        "name:sr": "Поликлиника Анђелић и сарадници",
+        "name:sr-Latn": "Poliklinika Anđelić i saradnici",
+        "opening_hours": "Mo-Tu 14:00-20:00; We-Fr 09:00-16:00; Sa-Su off",
+        "phone": "+381 21 301 06 81;+381 62 787 578",
+        "website": "https://drandjelic.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.824868,
+          45.2399737
+        ]
+      },
+      "id": "node/13158584895"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13246238501",
+        "addr:housenumber": "86a",
+        "addr:street": "Петефи Шандора",
+        "amenity": "kindergarten",
+        "name": "Maštolend"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8068972,
+          45.2402853
+        ]
+      },
+      "id": "node/13246238501"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13477000143",
+        "addr:housenumber": "15a",
+        "addr:street": "Лазе Лазаревића",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "healthcare:speciality": "vascular_surgery",
+        "int_name": "Hirurski centar Popovic",
+        "level": "0;1",
+        "name": "Хируршки центар Поповић",
+        "name:sr": "Хируршки центар Поповић",
+        "name:sr-Latn": "Hirurški centar Popović",
+        "opening_hours": "Mo,Th 12:00-20:00; Tu,We,Fr 09:00-17:00",
+        "phone": "+381 69 1055055",
+        "website": "https://vcp.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8223227,
+          45.2371528
+        ]
+      },
+      "id": "node/13477000143"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13516257772",
+        "addr:housenumber": "7",
+        "addr:street": "Марка Миљанова",
+        "amenity": "clinic",
+        "check_date": "2026-02-01",
+        "healthcare": "clinic",
+        "healthcare:speciality": "urology;gynaecology;cardiology",
+        "level": "0",
+        "name": "Atina",
+        "name:sr": "Атина",
+        "name:sr-Latn": "Atina",
+        "opening_hours": "Mo-Fr 08:00-21:00; Sa 08:00-13:00; Su off",
+        "operator:type": "private",
+        "phone": "+381 60 3823150",
+        "website": "https://www.poliklinikaatina.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8510243,
+          45.2616269
+        ]
+      },
+      "id": "node/13516257772"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13686857680",
+        "amenity": "clinic",
+        "contact:email": "info@newhospital.rs",
+        "contact:facebook": "https://www.facebook.com/NewHospitalNoviSad",
+        "contact:instagram": "https://www.instagram.com/new.hospital/",
+        "contact:linkedin": "https://www.linkedin.com/company/new-hospital-novi-sad/",
+        "contact:phone": "+381 21 3000505;+381 69 8400505",
+        "contact:website": "https://newhospital.rs/",
+        "contact:youtube": "https://www.youtube.com/@new_hospital",
+        "healthcare": "clinic",
+        "name": "New Hospital"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.806182,
+          45.2711296
+        ]
+      },
+      "id": "node/13686857680"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13776079846",
+        "amenity": "clinic",
+        "contact:email": "poliklinikagaletic@gmail.com",
+        "contact:facebook": "https://www.facebook.com/PoliklinikaGaleticNS/",
+        "contact:instagram": "https://www.instagram.com/poliklinika_galetic/",
+        "contact:phone": "+381 21 557211;+381 62 557211",
+        "contact:website": "https://drgaletic.rs/",
+        "healthcare": "clinic",
+        "name": "Galetić",
+        "opening_hours": "Mo-Fr 08:00-20:00; Sa 08:00-15:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8109071,
+          45.2581774
+        ]
+      },
+      "id": "node/13776079846"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13784734003",
+        "amenity": "hospital",
+        "healthcare": "hospital",
+        "name": "Institut za kardiovaskularne bolesti Vojvodine",
+        "name:sr": "Институт за кардиоваскуларне болести Војводине",
+        "name:sr-Latn": "Institut za kardiovaskularne bolesti Vojvodine",
+        "phone": "+381 21 4805700"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.855441,
+          45.2187962
+        ]
+      },
+      "id": "node/13784734003"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13784734004",
+        "amenity": "hospital",
+        "check_date": "2026-07-30",
+        "healthcare": "hospital",
+        "name": "Institut za onkologiju Vojvodine",
+        "name:sr": "Институт за онкологију Војводине",
+        "name:sr-Latn": "Institut za onkologiju Vojvodine",
+        "phone": "+381 21 4805100"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.855909,
+          45.2169396
+        ]
+      },
+      "id": "node/13784734004"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13784734005",
+        "amenity": "hospital",
+        "check_date": "2026-07-30",
+        "healthcare": "hospital",
+        "int_name": "Institut za plucne bolesti Vojvodine",
+        "name": "Институт за плућне болести Војводине",
+        "name:sr": "Институт за плућне болести Војводине",
+        "name:sr-Latn": "Institut za plućne bolesti Vojvodine",
+        "phone": "+381 21 4805100"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8568866,
+          45.2179569
+        ]
+      },
+      "id": "node/13784734005"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/13820562278",
+        "addr:floor": "G",
+        "addr:housenumber": "38",
+        "addr:street": "Футошка",
+        "amenity": "kindergarten",
+        "check_date": "2026-05-12",
+        "contact:telegram": "https://t.me/bananalama_ns",
+        "education": "kindergarten",
+        "level": "0",
+        "name": "Banana Lama",
+        "website": "https://bananalama.ru/bananasad",
+        "wheelchair": "no"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8340917,
+          45.2505837
+        ]
+      },
+      "id": "node/13820562278"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/14274677639",
+        "addr:housenumber": "57",
+        "addr:street": "Футошка",
+        "amenity": "clinic",
+        "healthcare": "clinic",
+        "mapillary": "1965990357526266",
+        "name": "Global Prevent",
+        "opening_hours": "Mo-Fr 07:00-21:00; Sa 08:00-14:00",
+        "operator": "Global Prevent",
+        "operator:type": "private",
+        "website": "https://globalprevent.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8243111,
+          45.2490999
+        ]
+      },
+      "id": "node/14274677639"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/14274836800",
+        "addr:housenumber": "7",
+        "addr:street": "Богдана Шупута",
+        "amenity": "kindergarten",
+        "education": "kindergarten",
+        "email": "pufamilija@gmail.com",
+        "name": "Familija",
+        "name:sr": "Фамилија",
+        "phone": "+381213830808",
+        "preschool": "yes",
+        "website": "https://vrticfamilija.rs/"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.8107535,
+          45.246812
+        ]
+      },
+      "id": "node/14274836800"
+    }
+  ]
+}

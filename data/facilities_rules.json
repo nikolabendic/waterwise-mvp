@@ -1,0 +1,51 @@
+{
+  "exclude": [
+    {"id": "way/139939889", "name": "Poliklinika MC", "reason": "private_assumed"},
+    {"id": "way/297828572", "name": "Specijalna bolnica Vita", "reason": "private_assumed"},
+    {"id": "way/298430849", "name": "Parks", "reason": "private_assumed"},
+    {"id": "way/298503044", "name": "Dr Nikolić", "reason": "private_assumed"},
+    {"id": "node/1542352809", "name": "Genesis", "reason": "private_assumed"},
+    {"id": "node/4031231090", "name": "Healthmedic", "reason": "private_assumed"},
+    {"id": "node/4340867289", "name": "Ferona Bolnica", "reason": "private_assumed"},
+    {"id": "node/4773450630", "name": "Sveti Luka", "reason": "private_assumed"},
+    {"id": "node/4990645021", "name": "Ordinacija Jakovljević", "reason": "private_assumed"},
+    {"id": "node/6118503885", "name": "Klinika Džinić", "reason": "private_assumed"},
+    {"id": "node/6432316889", "name": "Medigroup dr Cvjetković", "reason": "private_assumed"},
+    {"id": "node/6432316890", "name": "Medigroup (Cara Dušana)", "reason": "private_assumed"},
+    {"id": "node/8228234568", "name": "Scolio Centar", "reason": "private_assumed"},
+    {"id": "node/8228234570", "name": "Studio Motus", "reason": "private_assumed"},
+    {"id": "node/11494085814", "name": "Iuventa", "reason": "private_assumed"},
+    {"id": "node/11827427769", "name": "Dziniz", "reason": "private_assumed"},
+    {"id": "node/12199463057", "name": "Euromedik", "reason": "private_assumed"},
+    {"id": "node/12405021845", "name": "NK poliklinika plus", "reason": "private_assumed"},
+    {"id": "node/12950111406", "name": "MediGroup", "reason": "private_assumed"},
+    {"id": "node/13149575677", "name": "Ginekološka bolnica Gins", "reason": "private_assumed"},
+    {"id": "node/13158584895", "name": "Poliklinika Anđelić", "reason": "private_assumed"},
+    {"id": "node/13477000143", "name": "Hirurški centar Popović", "reason": "private_assumed"},
+    {"id": "node/13686857680", "name": "New Hospital", "reason": "private_assumed"},
+    {"id": "node/13776079846", "name": "Galetić", "reason": "private_assumed"},
+    {"id": "way/135575807", "name": "Centar za osnovnu policijsku obuku", "reason": "not_a_school"},
+    {"id": "node/10060213317", "name": "Kutak muzički klub", "reason": "not_a_school"},
+    {"id": "way/332713062", "name": "Clever School", "reason": "deleted_from_registry_2026-09-05"},
+    {"id": "way/293186220", "name": "Centar za socijalni rad", "reason": "administrative_office"},
+    {"id": "node/13784734003", "name": "Institut za kardiovaskularne bolesti (tačka)", "reason": "duplicate_of_way/990216095"},
+    {"id": "way/312042277", "name": "(bolnica bez imena)", "reason": "duplicate_of_way/312042273"}
+  ],
+  "groups": {
+    "KCV": {
+      "name": "Univerzitetski klinički centar Vojvodine (kampus Hajduk Veljkova)",
+      "category": "hospital",
+      "members": [
+        "way/43320082", "relation/305461", "relation/12092155", "way/43320085",
+        "way/43320087", "way/43320156", "way/43320279", "way/43320286",
+        "way/43326932", "way/43341956", "way/43342378", "way/43342383",
+        "way/43345554", "way/696431878", "node/4990638424", "node/4990641226",
+        "node/9795398807"
+      ]
+    }
+  },
+  "category_override": {
+    "way/43645340": "hospital"
+  },
+  "keep_despite_private": ["node/6113621186"]
+}
