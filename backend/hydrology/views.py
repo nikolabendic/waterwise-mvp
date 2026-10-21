@@ -8,6 +8,11 @@ class StationViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Station.objects.all()
     serializer_class = StationSerializer
 
+    def list(self, request, *args, **kwargs):
+        serializer = self.get_serializer(self.get_queryset(), many=True)
+        return Response({"results": serializer.data})
+    
+
 from datetime import timedelta
 
 from rest_framework.response import Response
