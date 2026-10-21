@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import DataSourcesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('hydrology.urls')),
-        path('api/v1/', include('events.urls')),
+    path('api/v1/', include('events.urls')),
+    path('api/v1/data-sources/', DataSourcesView.as_view()),
 ]
