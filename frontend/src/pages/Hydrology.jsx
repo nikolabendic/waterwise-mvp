@@ -1,241 +1,246 @@
 import React, { useState, useEffect } from 'react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { Droplets, Thermometer, TrendingDown, TrendingUp, Minus, Activity, RefreshCw } from 'lucide-react';
+import { Waves, Thermometer, Wind, RefreshCw, Calendar, MapPin } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const fallbackHistory = [
-  { day: '08. Okt', level: 260 },
-  { day: '09. Okt', level: 255 },
-  { day: '10. Okt', level: 252 },
-  { day: '11. Okt', level: 248 },
-  { day: '12. Okt', level: 246 },
-  { day: '13. Okt', level: 245 },
-  { day: '14. Okt', level: 243 },
+// Početni rezervni podaci (fallback)
+const initialLatest = {
+  station: 'Novi Sad',
+  river: 'Dunav',
+  timestamp: 'Danas',
+  water_level_cm: -85,
+  water_temperature_c: 18,
+  flow_m3_s: 860.0
+};
+
+const initialHistory = [
+  { timestamp: '20.10.', water_level_cm: -90, water_temperature_c: 16.2, flow_m3_s: 840 },
+  { timestamp: '21.10.', water_level_cm: -88, water_temperature_c: 16.0, flow_m3_s: 850 },
+  { timestamp: '22.10.', water_level_cm: -86, water_temperature_c: 15.8, flow_m3_s: 860 }
 ];
 
 export default function Hydrology() {
-  const [selectedPeriod, setSelectedPeriod] = useState('7d');
-  
-  
-  const [stationId] = useState('RHMZ-NS'); 
+  const [latestData, setLatestData] = useState(initialLatest);
+  const [historyData, setHistoryData] = useState(initialHistory);
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('water_level_cm'); // 'water_level_cm', 'water_temperature_c', 'flow_m3_s'
 
- 
-  const [latestData, setLatestData] = useState(null);
-  const [historyData, setHistoryData] = useState(fallbackHistory);
-  const [loading, setLoading] = useState(true);
-
-
-  useEffect(() => {
-    const fetchLatest = () => {
-      fetch(`http://127.0.0.1:8000/api/v1/hydrology/latest/?station_id=${stationId}`)
-        .then((res) => {
-          if (!res.ok) throw new Error('Mrežna greška pri učitavanju trenutnih podataka');
-          return res.json();
-        })
-        .then((data) => {
-          setLatestData(data);
-        })
-        .catch((err) => {
-          console.warn('Greška pri dohvaćanju /api/v1/hydrology/latest/:', err);
-        });
-    };
-
-   
-    fetchLatest();
-
-    
-    const interval = setInterval(fetchLatest, 300000);
-
-   
-    return () => clearInterval(interval);
-  }, [stationId]);
-
- 
-  useEffect(() => {
+  const fetchHydrologyData = async () => {
     setLoading(true);
-    fetch(`http://127.0.0.1:8000/api/v1/hydrology/history/?station_id=${stationId}&period=${selectedPeriod}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Mrežna greška pri učitavanju istorije');
-        return res.json();
-      })
-      .then((resData) => {
-        if (resData.data && Array.isArray(resData.data)) {
-       
-          const formatted = resData.data.map((item) => {
-            const date = new Date(item.timestamp);
-            const label = selectedPeriod === '24h' 
-              ? date.toLocaleTimeString('sr-RS', { hour: '2-digit', minute: '2-digit' })
-              : date.toLocaleDateString('sr-RS', { day: '2-digit', month: 'short' });
+    const baseUrl = import.meta.env.VITE_API_URL || 'http://82.117.203.34:8000/api/v1';
 
-            return {
-              day: label,
-              level: item.water_level_cm,
-            };
+    try {
+      // 1. Povlačenje najnovijih merenja za stanicu Novi Sad (RHMZ-NS)
+      const latestRes = await fetch(`${baseUrl}/hydrology/latest/?station_id=RHMZ-NS`);
+      if (latestRes.ok) {
+        const data = await latestRes.json();
+        if (data) {
+          setLatestData({
+            station: data?.station?.name || data?.station_id || 'Novi Sad',
+            river: data?.station?.river || 'Dunav',
+            timestamp: data?.timestamp ? new Date(data.timestamp).toLocaleString('sr-RS') : 'Trenutno',
+            water_level_cm: data?.water_level_cm ?? -86,
+            water_temperature_c: data?.water_temperature_c ?? 15.8,
+            flow_m3_s: data?.flow_m3_s ?? 860.0
           });
-          setHistoryData(formatted);
         }
-      })
-      .catch((err) => {
-        console.warn('Greška pri dohvaćanju /api/v1/hydrology/history/, koriste se fallback podaci:', err);
-        setHistoryData(fallbackHistory);
-      })
-      .finally(() => setLoading(false));
-  }, [stationId, selectedPeriod]);
+      }
 
- 
-  const measurements = latestData?.measurements || {};
-  const trends = latestData?.trends || {};
-  const thresholds = latestData?.thresholds || {};
-
-  const currentLevel = measurements.water_level_cm ?? -92;
-  const currentTemp = measurements.water_temperature_c ?? 16.0;
-  const currentFlow = measurements.flow_m3_s ?? 805.0;
-  const levelChange = trends.water_level_change_24h_cm;
-  const direction = trends.water_level_direction || 'rising';
-
- 
-  const lastUpdated = latestData?.measurement_time 
-    ? new Date(latestData.measurement_time).toLocaleString('sr-RS', { dateStyle: 'medium', timeStyle: 'short' })
-    : 'Danas, 06:00h';
-
- 
-  const renderTrendIcon = () => {
-    if (direction === 'rising') return <TrendingUp size={20} color="#e11d48" />;
-    if (direction === 'stable') return <Minus size={20} color="#64748b" />;
-    return <TrendingDown size={20} color="#0284c7" />;
+      // 2. Povlačenje istorijskih podataka za grafik (7 dana)
+      const historyRes = await fetch(`${baseUrl}/hydrology/history/?station_id=RHMZ-NS&period=7d`);
+      if (historyRes.ok) {
+        const hData = await historyRes.json();
+        const results = Array.isArray(hData) ? hData : (hData?.results || []);
+        
+        if (results.length > 0) {
+          const formattedHistory = results.map(item => ({
+            timestamp: item?.timestamp ? new Date(item.timestamp).toLocaleDateString('sr-RS', { day: '2-digit', month: '2-digit' }) : '',
+            water_level_cm: item?.water_level_cm ?? 0,
+            water_temperature_c: item?.water_temperature_c ?? 0,
+            flow_m3_s: item?.flow_m3_s ?? 0
+          }));
+          setHistoryData(formattedHistory);
+        }
+      }
+    } catch (err) {
+      console.log('API /hydrology/ nedostupan, koriste se inicijalni podaci.');
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchHydrologyData();
+  }, []);
 
   return (
     <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
-      {}
-      <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+      {/* Zaglavlje */}
+      <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: '700', color: '#0f172a', marginBottom: '0.25rem' }}>
-            Hidrološki Pregled & Nadzor - {latestData?.station_name || 'Novi Sad'}
+            Hidrološki podaci -  {latestData.river}
           </h1>
-
           <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0 }}>
-            Praćenje parametara reke {latestData?.river || 'Dunav'} sa zvanične merne stanice ({stationId}).
+            Real-time praćenje vodostaja, temperature vode i protoka reke Dunav.
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#fff', padding: '0.35rem 0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.85rem', color: '#475569' }}>
-          <RefreshCw size={14} color="#0284c7" style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }} />
-          <span>Ažurirano: <b>{lastUpdated}</b></span>
-        </div>
+        <button 
+          onClick={fetchHydrologyData}
+          disabled={loading}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.5rem 1rem',
+            backgroundColor: '#fff',
+            border: '1px solid #cbd5e1',
+            borderRadius: '8px',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            fontSize: '0.875rem',
+            color: '#475569',
+            fontWeight: '500'
+          }}
+        >
+          <RefreshCw size={16} />
+          {loading ? 'Učitavanje...' : 'Osveži podatke'}
+        </button>
       </div>
 
-      {}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
-        
-        {}
-        <div style={{ backgroundColor: '#fff', padding: '1.25rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+      {/* Kartice sa trenutnim merenjima */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+        {/* Vodostaj */}
+        <div style={{ backgroundColor: '#fff', padding: '1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#64748b', fontSize: '0.875rem', fontWeight: '500' }}>Trenutni vodostaj</span>
-            <Droplets size={20} color="#0284c7" />
+            <span style={{ color: '#64748b', fontSize: '0.875rem', fontWeight: '500' }}>Vodostaj</span>
+            <Waves size={22} color="#0284c7" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '700', color: '#0f172a', marginTop: '0.5rem' }}>
-            {currentLevel} <span style={{ fontSize: '1rem', fontWeight: 'normal', color: '#64748b' }}>cm</span>
+          <div style={{ fontSize: '2rem', fontWeight: '700', color: '#0f172a', marginTop: '0.5rem' }}>
+            {latestData.water_level_cm !== null ? `${latestData.water_level_cm} cm` : '---'}
           </div>
-          <span style={{ fontSize: '0.8rem', color: '#16a34a', display: 'inline-flex', alignItems: 'center', gap: '2px', marginTop: '0.25rem' }}>
-            Bezbedna zona (Redovna odbrana: {thresholds.flood_defense_level_cm || 450} cm)
+          <span style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.25rem', display: 'block' }}>
+            Ažurirano: {latestData.timestamp}
           </span>
         </div>
 
-        {}
-        <div style={{ backgroundColor: '#fff', padding: '1.25rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        {/* Temperatura vode */}
+        <div style={{ backgroundColor: '#fff', padding: '1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: '#64748b', fontSize: '0.875rem', fontWeight: '500' }}>Temperatura vode</span>
-            <Thermometer size={20} color="#f97316" />
+            <Thermometer size={22} color="#e11d48" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '700', color: '#0f172a', marginTop: '0.5rem' }}>
-            {currentTemp} <span style={{ fontSize: '1rem', fontWeight: 'normal', color: '#64748b' }}>°C</span>
+          <div style={{ fontSize: '2rem', fontWeight: '700', color: '#0f172a', marginTop: '0.5rem' }}>
+            {latestData.water_temperature_c !== null ? `${latestData.water_temperature_c} °C` : '---'}
           </div>
-          <span style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem', display: 'block' }}>
-            Senzorsko merenje uživo
+          <span style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.25rem', display: 'block' }}>
+            Ažurirano: {latestData.timestamp}
           </span>
         </div>
 
-        {}
-        <div style={{ backgroundColor: '#fff', padding: '1.25rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        {/* Protok */}
+        <div style={{ backgroundColor: '#fff', padding: '1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#64748b', fontSize: '0.875rem', fontWeight: '500' }}>Trend (24h)</span>
-            {renderTrendIcon()}
+            <span style={{ color: '#64748b', fontSize: '0.875rem', fontWeight: '500' }}>Protok reke</span>
+            <Wind size={22} color="#059669" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '700', color: '#0f172a', marginTop: '0.5rem' }}>
-            {levelChange !== null && levelChange !== undefined ? (levelChange > 0 ? `+${levelChange}` : levelChange) : '+2'}{' '}
-            <span style={{ fontSize: '1rem', fontWeight: 'normal', color: '#64748b' }}>cm / 24h</span>
+          <div style={{ fontSize: '2rem', fontWeight: '700', color: '#0f172a', marginTop: '0.5rem' }}>
+            {latestData.flow_m3_s !== null ? `${latestData.flow_m3_s} m³/s` : '---'}
           </div>
-          <span style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem', display: 'block', textTransform: 'capitalize' }}>
-            Smer: {direction === 'falling' ? 'Pad' : direction === 'rising' ? 'Rast vodostaja' : 'Stabilno'}
-          </span>
-        </div>
-
-        {}
-        <div style={{ backgroundColor: '#fff', padding: '1.25rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#64748b', fontSize: '0.875rem', fontWeight: '500' }}>Protok vode</span>
-            <Activity size={20} color="#16a34a" />
-          </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '700', color: '#0f172a', marginTop: '0.5rem' }}>
-            {currentFlow.toLocaleString()} <span style={{ fontSize: '1rem', fontWeight: 'normal', color: '#64748b' }}>m³/s</span>
-          </div>
-          <span style={{ fontSize: '0.8rem', color: '#16a34a', marginTop: '0.25rem', display: 'block' }}>
-            Stabilan hidrološki režim
+          <span style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.25rem', display: 'block' }}>
+            Ažurirano: {latestData.timestamp}
           </span>
         </div>
       </div>
 
-      {}
-      <div style={{ backgroundColor: '#fff', padding: '1.5rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', marginBottom: '1.5rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#0f172a', margin: 0 }}>
-              Kretanje vodostaja ({latestData?.river || 'Dunav'})
-            </h3>
-            <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>Prikaz istorije vodostaja u centimetrima po danima</p>
-          </div>
+      {/* Grafik istorijskih podataka */}
+      <div style={{ backgroundColor: '#fff', padding: '1.5rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#0f172a', margin: 0 }}>
+            Istorijski pregled (7 dana)
+          </h3>
 
-          {}
-          <div style={{ display: 'flex', gap: '0.25rem', backgroundColor: '#f1f5f9', padding: '0.25rem', borderRadius: '6px' }}>
-            {['24h', '7d', '30d'].map((period) => (
-              <button
-                key={period}
-                onClick={() => setSelectedPeriod(period)}
-                style={{
-                  padding: '0.3rem 0.75rem',
-                  borderRadius: '4px',
-                  border: 'none',
-                  fontSize: '0.8rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  backgroundColor: selectedPeriod === period ? '#fff' : 'transparent',
-                  color: selectedPeriod === period ? '#0284c7' : '#64748b',
-                  boxShadow: selectedPeriod === period ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
-                }}
-              >
-                {period}
-              </button>
-            ))}
+          {/* Tabovi za izbor parametra na grafiku */}
+          <div style={{ display: 'flex', gap: '0.5rem', backgroundColor: '#f1f5f9', padding: '0.25rem', borderRadius: '8px' }}>
+            <button 
+              onClick={() => setActiveTab('water_level_cm')}
+              style={{
+                padding: '0.4rem 0.8rem',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.85rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                backgroundColor: activeTab === 'water_level_cm' ? '#fff' : 'transparent',
+                color: activeTab === 'water_level_cm' ? '#0284c7' : '#64748b',
+                boxShadow: activeTab === 'water_level_cm' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+              }}
+            >
+              Vodostaj (cm)
+            </button>
+            <button 
+              onClick={() => setActiveTab('water_temperature_c')}
+              style={{
+                padding: '0.4rem 0.8rem',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.85rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                backgroundColor: activeTab === 'water_temperature_c' ? '#fff' : 'transparent',
+                color: activeTab === 'water_temperature_c' ? '#e11d48' : '#64748b',
+                boxShadow: activeTab === 'water_temperature_c' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+              }}
+            >
+              Temperatura (°C)
+            </button>
+            <button 
+              onClick={() => setActiveTab('flow_m3_s')}
+              style={{
+                padding: '0.4rem 0.8rem',
+                borderRadius: '6px',
+                border: 'none',
+                fontSize: '0.85rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                backgroundColor: activeTab === 'flow_m3_s' ? '#fff' : 'transparent',
+                color: activeTab === 'flow_m3_s' ? '#059669' : '#64748b',
+                boxShadow: activeTab === 'flow_m3_s' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+              }}
+            >
+              Protok (m³/s)
+            </button>
           </div>
         </div>
 
-        <div style={{ width: '100%', height: '320px' }}>
+        {/* Recharts Grafik */}
+        <div style={{ width: '100%', height: '350px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={historyData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorLevel" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0284c7" stopOpacity={0.4}/>
+                  <stop offset="5%" stopColor="#0284c7" stopOpacity={0.8}/>
                   <stop offset="95%" stopColor="#0284c7" stopOpacity={0}/>
                 </linearGradient>
+                <linearGradient id="colorTemp" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#e11d48" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#e11d48" stopOpacity={0}/>
+                </linearGradient>
+                <linearGradient id="colorFlow" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#059669" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#059669" stopOpacity={0}/>
+                </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="day" stroke="#94a3b8" fontSize={12} />
-              <YAxis domain={['dataMin - 10', 'dataMax + 10']} stroke="#94a3b8" fontSize={12} unit=" cm" />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#0f172a', borderRadius: '8px', border: 'none', color: '#fff', fontSize: '0.85rem' }}
-                itemStyle={{ color: '#38bdf8' }}
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+              <XAxis dataKey="timestamp" stroke="#94a3b8" fontSize={12} tickLine={false} />
+              <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} />
+              <Tooltip />
+              <Area 
+                type="monotone" 
+                dataKey={activeTab} 
+                stroke={activeTab === 'water_level_cm' ? '#0284c7' : activeTab === 'water_temperature_c' ? '#e11d48' : '#059669'} 
+                fillOpacity={1} 
+                fill={`url(#${activeTab === 'water_level_cm' ? 'colorLevel' : activeTab === 'water_temperature_c' ? 'colorTemp' : 'colorFlow'})`} 
               />
-              <Area type="monotone" dataKey="level" stroke="#0284c7" strokeWidth={3} fillOpacity={1} fill="url(#colorLevel)" name="Vodostaj (cm)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
