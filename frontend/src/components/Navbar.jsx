@@ -1,4 +1,4 @@
-// src/components/Navbar.jsx
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Map, Waves, AlertTriangle, Activity, Cpu } from 'lucide-react';

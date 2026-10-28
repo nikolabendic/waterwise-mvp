@@ -1,4 +1,4 @@
-// src/pages/AiForecastSimulation.jsx
+
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { 
@@ -146,7 +146,7 @@ export default function AiForecastSimulation() {
   return (
     <div style={{ padding: '1.5rem 2rem', maxWidth: '1440px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif' }}>
       
-      {/* Naslov sekcije i Eksperimentalni model obaveštenje */}
+      {}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: '700', margin: 0, color: '#0f172a' }}>
@@ -167,7 +167,7 @@ export default function AiForecastSimulation() {
         </div>
       </div>
 
-      {/* Top KPI kartice */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0284c7', fontSize: '0.75rem', fontWeight: '600' }}>
@@ -210,10 +210,10 @@ export default function AiForecastSimulation() {
         </div>
       </div>
 
-      {/* Grid: AI Prognoza + Izbor scenarija */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
         
-        {/* 1. AI prognoza potreba za vodom */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <div>
@@ -253,7 +253,7 @@ export default function AiForecastSimulation() {
           </div>
         </div>
 
-        {/* 2. Izaberite scenario */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: '700', margin: 0 }}>
@@ -266,7 +266,7 @@ export default function AiForecastSimulation() {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             
-            {/* Scenario 1 */}
+            {}
             <div 
               onClick={() => setSelectedScenario('normal')}
               style={{
@@ -287,7 +287,7 @@ export default function AiForecastSimulation() {
               <div style={{ fontSize: '0.7rem', color: '#059669', fontWeight: '600' }}>{lang === 'SR' ? '100% kapacitet' : '100% capacity'}</div>
             </div>
 
-            {/* Scenario 2 */}
+            {}
             <div 
               onClick={() => setSelectedScenario('summer')}
               style={{
@@ -308,7 +308,7 @@ export default function AiForecastSimulation() {
               <div style={{ fontSize: '0.7rem', color: '#059669', fontWeight: '600' }}>{lang === 'SR' ? '100% kapacitet' : '100% capacity'}</div>
             </div>
 
-            {/* Scenario 3 */}
+            {}
             <div 
               onClick={() => setSelectedScenario('reduced')}
               style={{
@@ -329,7 +329,7 @@ export default function AiForecastSimulation() {
               <div style={{ fontSize: '0.7rem', color: '#dc2626', fontWeight: '600' }}>{lang === 'SR' ? '80% kapacitet' : '80% capacity'}</div>
             </div>
 
-            {/* Scenario 4 */}
+            {}
             <div 
               onClick={() => setSelectedScenario('stress')}
               style={{
@@ -355,10 +355,10 @@ export default function AiForecastSimulation() {
 
       </div>
 
-      {/* Grid: Rezultati simulacije & Ključni rezultati */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
         
-        {/* 3. Rezultati simulacije */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <div>
@@ -391,7 +391,7 @@ export default function AiForecastSimulation() {
           </div>
         </div>
 
-        {/* Ključni rezultati */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <h3 style={{ fontSize: '1rem', fontWeight: '700', margin: '0 0 1rem 0' }}>
             {lang === 'SR' ? `Ključni rezultati (${currentScenario.title})` : `Key Results (${currentScenario.title})`}
@@ -434,10 +434,10 @@ export default function AiForecastSimulation() {
 
       </div>
 
-      {/* Grid: Objašnjenje + Izvori podataka */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
         
-        {/* 4. Objašnjenje i preporuke */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
             <Zap size={18} color="#0284c7" />
@@ -458,7 +458,7 @@ export default function AiForecastSimulation() {
           </div>
         </div>
 
-        {/* Izvori podataka i pouzdanost */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <h3 style={{ fontSize: '1rem', fontWeight: '700', margin: '0 0 0.75rem 0' }}>
             {lang === 'SR' ? 'Izvori podataka i pouzdanost' : 'Data Sources & Reliability'}

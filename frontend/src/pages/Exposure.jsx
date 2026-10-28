@@ -1,4 +1,4 @@
-// src/pages/Exposure.jsx
+
 import React, { useState } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { 
@@ -78,7 +78,7 @@ export default function Exposure() {
   return (
     <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1700px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
-      {/* 1. HEADER */}
+      {}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -91,7 +91,7 @@ export default function Exposure() {
           </p>
         </div>
 
-        {/* Selected Event Widget */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '0.5rem 0.85rem', borderRadius: '10px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '0.65rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <div style={{ width: '30px', height: '30px', borderRadius: '8px', backgroundColor: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#dc2626', flexShrink: 0 }}>
             <ShieldAlert size={16} />
@@ -113,7 +113,7 @@ export default function Exposure() {
         </div>
       </div>
 
-      {/* 2. SIMULATOR CARD */}
+      {}
       <div style={{ backgroundColor: '#fff', padding: '1.25rem 1.5rem', borderRadius: '12px', border: '1px solid #0284c7', boxShadow: '0 4px 12px rgba(2, 132, 199, 0.06)', marginBottom: '1.25rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0284c7', marginBottom: '0.85rem' }}>
           <Calculator size={18} />
@@ -182,10 +182,10 @@ export default function Exposure() {
         </div>
       </div>
 
-      {/* 3. CENTRAL SECTION: MAP, CRITICAL FACILITIES & ADDITIONAL STATISTICS */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.3fr) minmax(0, 1.2fr) 340px', gap: '1.25rem', marginBottom: '1.25rem', alignItems: 'stretch' }}>
         
-        {/* 1. MAP CARD */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
             <MapPin size={18} color="#0284c7" />
@@ -225,7 +225,7 @@ export default function Exposure() {
           </div>
         </div>
 
-        {/* 2. CRITICAL FACILITIES CARD */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
@@ -271,7 +271,7 @@ export default function Exposure() {
           </div>
         </div>
 
-        {/* 3. ADDITIONAL STATISTICS CARD */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
@@ -307,7 +307,7 @@ export default function Exposure() {
 
       </div>
 
-      {/* 4. BOTTOM SECTION (3 COLUMNS: RADIUS COMPARISON, METHODOLOGY, FURTHER ACTIONS) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', alignItems: 'stretch' }}>
         
         {/* 1. RADIUS COMPARISON */}
@@ -343,7 +343,7 @@ export default function Exposure() {
           </table>
         </div>
 
-        {/* 2. METHODOLOGY & SOURCES */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
@@ -377,7 +377,7 @@ export default function Exposure() {
           </div>
         </div>
 
-        {/* 3. FURTHER ACTIONS */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>

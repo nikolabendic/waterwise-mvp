@@ -1,4 +1,4 @@
-// src/pages/Disruptions.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { 
@@ -17,7 +17,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Dvojezični podaci prilagođeni oktobru 2026.
+
 const getInitialEvents = (lang) => [
   { 
     id: 1, 
@@ -157,7 +157,7 @@ export default function Disruptions() {
   return (
     <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1750px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
-      {/* 1. ZAGLAVLJE EKRANA */}
+      {}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -170,7 +170,7 @@ export default function Disruptions() {
           </p>
         </div>
 
-        {/* Indikator ažurnosti postavljen na aktuelni datum 27. oktobar 2026. */}
+        {}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', color: '#64748b', backgroundColor: '#fff', padding: '0.4rem 0.8rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
           <span>{lang === 'SR' ? 'Poslednje ažuriranje:' : 'Last update:'} <strong>{lang === 'SR' ? 'danas, 27. okt 2026, 18:00' : 'today, Oct 27, 2026, 18:00'}</strong></span>
@@ -179,7 +179,7 @@ export default function Disruptions() {
         </div>
       </div>
 
-      {/* 2. GORNJE 4 KPI KARTICE (KLIKABILNE) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
         
         <div 
@@ -272,7 +272,7 @@ export default function Disruptions() {
 
       </div>
 
-      {/* 3. FILTER TRAKA */}
+      {}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
         
         <div style={{ flex: 1, minWidth: '280px', position: 'relative' }}>
@@ -334,10 +334,10 @@ export default function Disruptions() {
 
       </div>
 
-      {/* 4. GLAVNI CONTAINER: TABELA + ZNATNO ŠIRI DESNI PANEL (620px) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 620px', gap: '1.25rem', alignItems: 'start' }}>
         
-        {/* TABELA */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
             <thead>
@@ -424,7 +424,7 @@ export default function Disruptions() {
           </table>
         </div>
 
-        {/* ZNATNO ŠIRI DESNI PANEL (620px) */}
+        {}
         {selectedEvent && (
           <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             

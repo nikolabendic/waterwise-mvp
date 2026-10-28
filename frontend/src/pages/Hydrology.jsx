@@ -1,4 +1,4 @@
-// src/pages/Hydrology.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { 
@@ -10,7 +10,7 @@ import {
   CartesianGrid, Tooltip, ReferenceLine 
 } from 'recharts';
 
-// Aktuelni podaci na dan 27. oktobar 2026.
+
 const initialLatest = {
   station: 'Novi Sad',
   river: 'Dunav',
@@ -22,7 +22,7 @@ const initialLatest = {
   flow_m3_s: 1910
 };
 
-// 1. Podaci za 24h (Satni prikaz za 27. oktobar 2026.)
+
 const data24h = [
   { date: '00:00', level: 245, forecast: null, confidenceMin: null, confidenceMax: null },
   { date: '04:00', level: 245, forecast: null, confidenceMin: null, confidenceMax: null },
@@ -34,7 +34,6 @@ const data24h = [
   { date: '22:00', level: null, forecast: 242, confidenceMin: 238, confidenceMax: 246 }
 ];
 
-// 2. Podaci za 7 dana (21. okt - 27. okt + Prognoza do 30. okt) - PODRAZUMEVANI PRIKAZ
 const data7d = [
   { date: '21. okt', level: 265, forecast: null, confidenceMin: null, confidenceMax: null },
   { date: '22. okt', level: 258, forecast: null, confidenceMin: null, confidenceMax: null },
@@ -48,7 +47,7 @@ const data7d = [
   { date: '30. okt', level: null, forecast: 238, confidenceMin: 225, confidenceMax: 251 }
 ];
 
-// 3. Podaci za 30 dana (Mesec oktobar)
+
 const data30d = [
   { date: '1. okt', level: 295, forecast: null, confidenceMin: null, confidenceMax: null },
   { date: '5. okt', level: 282, forecast: null, confidenceMin: null, confidenceMax: null },
@@ -66,19 +65,19 @@ export default function Hydrology() {
   const t = context?.t || {};
 
   const [latestData, setLatestData] = useState(initialLatest);
-  const [period, setPeriod] = useState('7d'); // Podrazumevano postavljeno na '7d'
+  const [period, setPeriod] = useState('7d');
   const [customDate, setCustomDate] = useState('');
   const [customChartData, setCustomChartData] = useState(null);
   const dateInputRef = useRef(null);
 
-  // Rukovanje otvaranjem kalendara
+ 
   const handleCalendarClick = () => {
     if (dateInputRef.current) {
       dateInputRef.current.showPicker ? dateInputRef.current.showPicker() : dateInputRef.current.click();
     }
   };
 
-  // Promena datuma na kalendaru
+
   const handleDateChange = (e) => {
     const selectedDateStr = e.target.value;
     if (!selectedDateStr) return;
@@ -90,7 +89,7 @@ export default function Hydrology() {
     const day = selectedDate.getDate();
     const month = selectedDate.toLocaleString(lang === 'SR' ? 'sr-RS' : 'en-US', { month: 'short' });
 
-    // Dinamički generisan opseg oko izabranog datuma
+    
     const generatedData = [
       { date: `${day - 3}. ${month}`, level: 255, forecast: null, confidenceMin: null, confidenceMax: null },
       { date: `${day - 2}. ${month}`, level: 250, forecast: null, confidenceMin: null, confidenceMax: null },
@@ -104,7 +103,7 @@ export default function Hydrology() {
     setCustomChartData(generatedData);
   };
 
-  // Selektovanje odgovarajućeg skupa podataka
+ 
   let currentChartData = data7d;
   let referenceXPoint = '27. okt';
 
@@ -122,7 +121,7 @@ export default function Hydrology() {
   return (
     <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1650px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
-      {/* 1. ZAGLAVLJE EKRANA */}
+      {}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -145,10 +144,10 @@ export default function Hydrology() {
         </div>
       </div>
 
-      {/* 2. GORNJE 4 KPI KARTICE (Kompaktnije i umerenije) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
         
-        {/* Trenutni vodostaj */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '0.75rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: '#64748b', fontSize: '0.73rem', fontWeight: '700', textTransform: 'uppercase' }}>
@@ -169,7 +168,7 @@ export default function Hydrology() {
           </div>
         </div>
 
-        {/* Temperatura vode */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '0.75rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: '#64748b', fontSize: '0.73rem', fontWeight: '700', textTransform: 'uppercase' }}>
@@ -185,7 +184,7 @@ export default function Hydrology() {
           </div>
         </div>
 
-        {/* Trend vodostaja (24h) */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '0.75rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: '#64748b', fontSize: '0.73rem', fontWeight: '700', textTransform: 'uppercase' }}>
@@ -201,7 +200,7 @@ export default function Hydrology() {
           </div>
         </div>
 
-        {/* Protok vode */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '0.75rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: '#64748b', fontSize: '0.73rem', fontWeight: '700', textTransform: 'uppercase' }}>
@@ -219,10 +218,10 @@ export default function Hydrology() {
 
       </div>
 
-      {/* 3. GLAVNI GRAFIKON: KRETANJE VODOSTAJA DUNAVA */}
+      {}
       <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', marginBottom: '1.25rem' }}>
         
-        {/* Zaglavlje i Interaktivna Dugmad sa Kalendarom */}
+        {}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div>
             <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#0f172a', margin: 0 }}>
@@ -256,7 +255,7 @@ export default function Hydrology() {
               ))}
             </div>
 
-            {/* NEVIDLJIVI INPUT ZA KALENDAR */}
+            {}
             <input 
               type="date" 
               ref={dateInputRef} 
@@ -264,7 +263,7 @@ export default function Hydrology() {
               style={{ position: 'absolute', opacity: 0, width: 0, height: 0, pointerEvents: 'none' }} 
             />
 
-            {/* DUGME IZABERI PERIOD SA FUNKCIONALNim KALENDAROM */}
+            {}
             <button 
               onClick={handleCalendarClick}
               style={{ 
@@ -291,7 +290,7 @@ export default function Hydrology() {
           </div>
         </div>
 
-        {/* Recharts Grafikon */}
+        {}
         <div style={{ width: '100%', height: '280px', position: 'relative' }}>
           
           <div style={{ position: 'absolute', right: '10%', top: '10px', fontSize: '0.72rem', color: '#9333ea', fontWeight: '600', zIndex: 10 }}>
@@ -323,7 +322,7 @@ export default function Hydrology() {
           </ResponsiveContainer>
         </div>
 
-        {/* Legenda */}
+        {}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '0.75rem', fontSize: '0.75rem', color: '#475569' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#0284c7' }}></span>
@@ -341,10 +340,10 @@ export default function Hydrology() {
 
       </div>
 
-      {/* 4. DONJE 3 KARTICE ANALIZE */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.25rem' }}>
         
-        {/* KARTICA 1: PROGNOZA ZA NAREDNA 72 SATA */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.85rem' }}>
             <TrendingDown size={16} color="#0284c7" />
@@ -382,7 +381,7 @@ export default function Hydrology() {
           </div>
         </div>
 
-        {/* KARTICA 2: HIDROLOŠKI KONTEKST */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '1rem' }}>
             <Waves size={16} color="#0284c7" />
@@ -416,7 +415,7 @@ export default function Hydrology() {
           </div>
         </div>
 
-        {/* KARTICA 3: NAPOMENE I METODOLOGIJA */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>

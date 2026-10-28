@@ -1,4 +1,4 @@
-// src/pages/Dashboard.jsx
+
 import React, { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 import { 
@@ -20,7 +20,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Podaci za Gradsko vodosnabdevanje (različiti periodi)
+
 const supplyData1d = [
   { date: '04:00', production: 4200, demand: 3900 },
   { date: '08:00', production: 5800, demand: 5500 },
@@ -49,7 +49,7 @@ const supplyData30d = [
   { date: '27. okt', production: 110200, demand: 104300 },
 ];
 
-// Podaci za Trend vodostaja Dunava (različiti periodi)
+
 const waterLevelData24h = [
   { date: '00:00', level: 245 },
   { date: '04:00', level: 245 },
@@ -89,10 +89,10 @@ export default function Dashboard() {
 
   const noviSadCenter = [45.2550, 19.8250];
 
-  // Dinamičko preuzimanje skupa podataka za vodosnabdevanje
+ 
   const currentSupplyData = supplyPeriod === '1d' ? supplyData1d : supplyPeriod === '30d' ? supplyData30d : supplyData7d;
 
-  // Dinamičko preuzimanje skupa podataka za vodostaj
+ 
   const currentWaterLevelData = trendPeriod === '24h' ? waterLevelData24h : trendPeriod === '30d' ? waterLevelData30d : waterLevelData7d;
 
   const recentEvents = [
@@ -125,7 +125,7 @@ export default function Dashboard() {
   return (
     <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1650px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
-      {/* 1. ZAGLAVLJE */}
+      {}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
         <div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -149,10 +149,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* 2. GORNJI KPI RED (6 KARTICA) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0.85rem', marginBottom: '1.25rem' }}>
         
-        {/* Vodostaj Dunava */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b', fontSize: '0.75rem', fontWeight: '700' }}>
             <span>{t?.water_level || (lang === 'SR' ? 'Vodostaj Dunava' : 'Danube Water Level')}</span>
@@ -166,7 +166,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Padavine */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b', fontSize: '0.75rem', fontWeight: '700' }}>
             <span>{t?.precipitation || (lang === 'SR' ? 'Padavine (7 dana)' : 'Precipitation (7 days)')}</span>
@@ -180,7 +180,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Temperatura */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b', fontSize: '0.75rem', fontWeight: '700' }}>
             <span>{t?.air_temp || (lang === 'SR' ? 'Temperatura (7 dana)' : 'Temperature (7 days)')}</span>
@@ -194,7 +194,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Aktivni prekidi */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b', fontSize: '0.75rem', fontWeight: '700' }}>
             <span>{t?.active_disruptions || (lang === 'SR' ? 'Aktivni prekidi' : 'Active Outages')}</span>
@@ -208,7 +208,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Pregled hidroloških uslova */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b', fontSize: '0.75rem', fontWeight: '700' }}>
             <span>{t?.hydro_overview || (lang === 'SR' ? 'Pregled hidroloških uslova' : 'Hydrological Overview')}</span>
@@ -224,7 +224,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Status podataka */}
+        {}
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b', fontSize: '0.75rem', fontWeight: '700' }}>
             <span>{t?.data_status || (lang === 'SR' ? 'Status podataka' : 'Data Status')}</span>
@@ -240,10 +240,10 @@ export default function Dashboard() {
 
       </div>
 
-      {/* 3. SREDNJI MAIN GRID (GIS MAPA + GRADSKO VODOSNABDEVANJE) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
         
-        {/* LEVA STRANA: GIS MAPA SA LEGENDOM */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ marginBottom: '0.75rem' }}>
             <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#0f172a', margin: 0 }}>
@@ -285,7 +285,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* DESNA STRANA: GRADSKO VODOSNABDEVANJE (Sa ispravnim prebacivanjem 1d / 7d / 30d) */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           
           <div>
@@ -327,7 +327,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* KONTROLE DUGMADI ZA PERIOD ZA GRADSKO VODOSNABDEVANJE (1d, 7d, 30d) */}
+            {}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
               <div style={{ display: 'flex', gap: '0.25rem', backgroundColor: '#f1f5f9', padding: '0.2rem', borderRadius: '6px' }}>
                 {[
@@ -383,10 +383,10 @@ export default function Dashboard() {
 
       </div>
 
-      {/* 4. DONJI GRID (TREND VODOSTAJA DUNAVA + NEDAVNI DOGAĐAJI) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
         
-        {/* LEVA STRANA: TREND VODOSTAJA DUNAVA SA DUGMADIMA ZA 24h, 7d, 30d */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: '700', color: '#0f172a', margin: 0 }}>
@@ -434,7 +434,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* DESNA STRANA: NEDAVNI DOGAĐAJI */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>

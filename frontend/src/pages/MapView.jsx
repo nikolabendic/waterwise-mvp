@@ -1,4 +1,4 @@
-// src/pages/MapView.jsx
+
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
@@ -109,7 +109,7 @@ export default function MapView() {
   return (
     <div style={{ padding: '1.25rem 1.75rem', maxWidth: '1600px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
-      {/* 1. ZAGLAVLJE EKRANA */}
+      {}
       <div style={{ marginBottom: '1.25rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
           {lang === 'SR' ? 'GIS prostorni pregled – Novi Sad' : 'GIS Spatial Overview – Novi Sad'}
@@ -121,13 +121,13 @@ export default function MapView() {
         </p>
       </div>
 
-      {/* 2. MAIN GRID: MAPA + DESNI PANEL (Povećana visina i prostranije kartice) */}
+      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 390px', gap: '1.25rem', height: '700px' }}>
         
-        {/* LEVA STRANA: MAPA */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
           
-          {/* POLJE ZA PRETRAGU */}
+          {}
           <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 1000, width: '310px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', padding: '0.45rem 0.75rem' }}>
             <Search size={16} color="#64748b" style={{ marginRight: '0.5rem' }} />
             <input 
@@ -139,7 +139,7 @@ export default function MapView() {
             />
           </div>
 
-          {/* CONTROL PANEL ZA SLOJEVE */}
+          {}
           <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 1000, backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', padding: '0.6rem 0.8rem', width: '200px', fontSize: '0.75rem' }}>
             <div style={{ fontWeight: '700', color: '#0f172a', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span>{lang === 'SR' ? 'Slojevi mape' : 'Map Layers'}</span>
@@ -169,7 +169,7 @@ export default function MapView() {
             </div>
           </div>
 
-          {/* LEAFLET MAPA */}
+          {}
           <div style={{ flex: 1, width: '100%', position: 'relative' }}>
             <MapContainer center={noviSadCenter} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
               <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -205,7 +205,7 @@ export default function MapView() {
             </MapContainer>
           </div>
 
-          {/* LEGENDA NA DNU MAPE */}
+          {}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#fff', padding: '0.6rem 1rem', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem', color: '#475569', flexWrap: 'wrap', gap: '0.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
               <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#dc2626' }}></span>
@@ -231,7 +231,7 @@ export default function MapView() {
 
         </div>
 
-        {/* DESNA STRANA: PANEL ANALIZA IZABRANE LOKACIJE (Povećane visine i padding) */}
+        {}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.35rem 1.45rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflowY: 'auto' }}>
           
           <div>
@@ -277,7 +277,7 @@ export default function MapView() {
                   <div><strong>{lang === 'SR' ? 'Opis:' : 'Description:'}</strong> {selectedEvent.description}</div>
                 </div>
 
-                {/* SLIDER RADIJUSA ANALIZE */}
+                {}
                 <div style={{ backgroundColor: '#f8fafc', padding: '0.85rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                     <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
@@ -307,7 +307,7 @@ export default function MapView() {
                   </div>
                 </div>
 
-                {/* STANOVNIŠTVO U ZONI ANALIZE */}
+                {}
                 <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
                   <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                     <Users size={16} color="#0284c7" />
@@ -318,7 +318,7 @@ export default function MapView() {
                   </div>
                 </div>
 
-                {/* KRITIČNE USTANOVE */}
+                {}
                 <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
                   <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.5rem' }}>
                     <Building2 size={16} color="#0284c7" />
@@ -347,7 +347,7 @@ export default function MapView() {
             )}
           </div>
 
-          {/* OSTALE INFORMACIJE NA DNU */}
+          {}
           <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '0.75rem', marginTop: '0.75rem', fontSize: '0.73rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem 0.5rem', color: '#475569' }}>
               <div><strong>{lang === 'SR' ? 'Ulica:' : 'Street:'}</strong></div>
