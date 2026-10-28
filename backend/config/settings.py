@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'hydrology',
     'events',
     'facilities',
+    'forecasting'
 
 ]
 
@@ -135,3 +136,5 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+WATERWISE_ARTIFACT_DIR = BASE_DIR / 'forecasting' / 'artifacts'

@@ -1,0 +1,37 @@
+{
+  "split": {
+    "train": 977,
+    "validation": 210,
+    "test": 210,
+    "method": "chronological"
+  },
+  "validation": {
+    "weekday_baseline": {
+      "mae_m3_per_day": 2833.69,
+      "rmse_m3_per_day": 3387.31
+    },
+    "mlp_backprop": {
+      "mae_m3_per_day": 1669.02,
+      "rmse_m3_per_day": 1990.86
+    },
+    "random_forest": {
+      "mae_m3_per_day": 1376.97,
+      "rmse_m3_per_day": 1778.68
+    }
+  },
+  "test": {
+    "weekday_baseline": {
+      "mae_m3_per_day": 2307.11,
+      "rmse_m3_per_day": 2874.76
+    },
+    "mlp_backprop": {
+      "mae_m3_per_day": 1608.13,
+      "rmse_m3_per_day": 2050.81
+    },
+    "random_forest": {
+      "mae_m3_per_day": 1548.9,
+      "rmse_m3_per_day": 1961.35
+    }
+  },
+  "selected_model": "random_forest"
+}

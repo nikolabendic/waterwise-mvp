@@ -1,0 +1,294 @@
+{
+  "normal": {
+    "scenario": "normal",
+    "data_type": "synthetic",
+    "daily": [
+      {
+        "date": "2026-10-29",
+        "required_m3": 95437.73,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 106687.73,
+        "delivered_m3": 95437.73,
+        "storage_end_m3": 186250.0,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-30",
+        "required_m3": 96403.03,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 105965.53,
+        "delivered_m3": 96403.03,
+        "storage_end_m3": 195812.5,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-31",
+        "required_m3": 93685.34,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 101813.46,
+        "delivered_m3": 93685.34,
+        "storage_end_m3": 203940.63,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-01",
+        "required_m3": 93332.07,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 100240.98,
+        "delivered_m3": 93332.07,
+        "storage_end_m3": 210849.53,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-02",
+        "required_m3": 95167.33,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 101039.9,
+        "delivered_m3": 95167.33,
+        "storage_end_m3": 216722.1,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-03",
+        "required_m3": 94282.16,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 99273.84,
+        "delivered_m3": 94282.16,
+        "storage_end_m3": 221713.79,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-04",
+        "required_m3": 96040.33,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 100283.26,
+        "delivered_m3": 96040.33,
+        "storage_end_m3": 225956.72,
+        "unmet_m3": 0
+      }
+    ],
+    "summary": {
+      "storage_end_m3": 225956.72,
+      "total_unmet_m3": 0
+    }
+  },
+  "peak": {
+    "scenario": "peak",
+    "data_type": "synthetic",
+    "daily": [
+      {
+        "date": "2026-10-29",
+        "required_m3": 109753.39,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 120000.0,
+        "delivered_m3": 109753.39,
+        "storage_end_m3": 185246.61,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-30",
+        "required_m3": 110863.48,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 120000.0,
+        "delivered_m3": 110863.48,
+        "storage_end_m3": 194383.13,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-31",
+        "required_m3": 107738.14,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 116080.67,
+        "delivered_m3": 107738.14,
+        "storage_end_m3": 202725.66,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-01",
+        "required_m3": 107331.88,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 114423.03,
+        "delivered_m3": 107331.88,
+        "storage_end_m3": 209816.81,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-02",
+        "required_m3": 109442.43,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 115469.91,
+        "delivered_m3": 109442.43,
+        "storage_end_m3": 215844.29,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-03",
+        "required_m3": 108424.48,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 113547.84,
+        "delivered_m3": 108424.48,
+        "storage_end_m3": 220967.64,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-04",
+        "required_m3": 110446.38,
+        "capacity_m3_per_day": 120000.0,
+        "production_m3": 114801.23,
+        "delivered_m3": 110446.38,
+        "storage_end_m3": 225322.5,
+        "unmet_m3": 0
+      }
+    ],
+    "summary": {
+      "storage_end_m3": 225322.5,
+      "total_unmet_m3": 0
+    }
+  },
+  "reduced": {
+    "scenario": "reduced",
+    "data_type": "synthetic",
+    "daily": [
+      {
+        "date": "2026-10-29",
+        "required_m3": 95437.73,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 95437.73,
+        "storage_end_m3": 175562.27,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-30",
+        "required_m3": 96403.03,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 96403.03,
+        "storage_end_m3": 175159.24,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-31",
+        "required_m3": 93685.34,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 93685.34,
+        "storage_end_m3": 177473.9,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-01",
+        "required_m3": 93332.07,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 93332.07,
+        "storage_end_m3": 180141.83,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-02",
+        "required_m3": 95167.33,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 95167.33,
+        "storage_end_m3": 180974.5,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-03",
+        "required_m3": 94282.16,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 94282.16,
+        "storage_end_m3": 182692.34,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-04",
+        "required_m3": 96040.33,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 96040.33,
+        "storage_end_m3": 182652.01,
+        "unmet_m3": 0
+      }
+    ],
+    "summary": {
+      "storage_end_m3": 182652.01,
+      "total_unmet_m3": 0
+    }
+  },
+  "combined": {
+    "scenario": "combined",
+    "data_type": "synthetic",
+    "daily": [
+      {
+        "date": "2026-10-29",
+        "required_m3": 109753.39,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 109753.39,
+        "storage_end_m3": 161246.61,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-30",
+        "required_m3": 110863.48,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 110863.48,
+        "storage_end_m3": 146383.13,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-10-31",
+        "required_m3": 107738.14,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 107738.14,
+        "storage_end_m3": 134644.99,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-01",
+        "required_m3": 107331.88,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 107331.88,
+        "storage_end_m3": 123313.1,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-02",
+        "required_m3": 109442.43,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 109442.43,
+        "storage_end_m3": 109870.68,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-03",
+        "required_m3": 108424.48,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 108424.48,
+        "storage_end_m3": 97446.19,
+        "unmet_m3": 0
+      },
+      {
+        "date": "2026-11-04",
+        "required_m3": 110446.38,
+        "capacity_m3_per_day": 96000.0,
+        "production_m3": 96000.0,
+        "delivered_m3": 110446.38,
+        "storage_end_m3": 82999.81,
+        "unmet_m3": 0
+      }
+    ],
+    "summary": {
+      "storage_end_m3": 82999.81,
+      "total_unmet_m3": 0
+    }
+  }
+}
