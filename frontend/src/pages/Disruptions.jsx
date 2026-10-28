@@ -6,9 +6,10 @@ import {
   MapPin, Calendar, RotateCcw, ChevronRight, X, 
   ExternalLink, Share2, ShieldCheck, AlertTriangle 
 } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { fetchEvents } from '../services/api';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -17,13 +18,22 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+function MapUpdater({ center }) {
+  const map = useMap();
+  useEffect(() => {
+    if (center && center[0] && center[1]) {
+      map.setView(center, 14, { animate: true });
+    }
+  }, [center, map]);
+  return null;
+}
 
 const getInitialEvents = (lang) => [
   { 
     id: 1, 
     title: lang === 'SR' ? 'Prekid vodosnabdevanja' : 'Water Supply Interruption', 
-    location: 'Janka Čmelika', 
-    fullAddress: 'Janka Čmelika, Novi Sad',
+    location: lang === 'SR' ? 'Janka Čmelika' : 'Janka Čmelika St.', 
+    fullAddress: lang === 'SR' ? 'Janka Čmelika, Novi Sad' : 'Janka Čmelika St., Novi Sad',
     lat: 45.2630, 
     lng: 19.8170, 
     date: '24.10.2026.', 
@@ -40,8 +50,8 @@ const getInitialEvents = (lang) => [
   { 
     id: 2, 
     title: lang === 'SR' ? 'Havarija na mreži' : 'Network Accident', 
-    location: 'Bulevar kneza Miloša', 
-    fullAddress: 'Bulevar kneza Miloša, Novi Sad',
+    location: lang === 'SR' ? 'Bulevar kneza Miloša' : 'Knez Miloš Blvd.', 
+    fullAddress: lang === 'SR' ? 'Bulevar kneza Miloša, Novi Sad' : 'Knez Miloš Blvd., Novi Sad',
     lat: 45.2530, 
     lng: 19.7980, 
     date: '26.10.2026.', 
@@ -102,15 +112,40 @@ export default function Disruptions() {
   const [events, setEvents] = useState(getInitialEvents(lang));
   const [selectedEvent, setSelectedEvent] = useState(events[0]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [typeFilter, setTypeFilter] = useState('Svi tipovi');
-  const [statusFilter, setStatusFilter] = useState('Svi statusi');
+  const [typeFilter, setTypeFilter] = useState(lang === 'SR' ? 'Svi tipovi' : 'All types');
+  const [statusFilter, setStatusFilter] = useState(lang === 'SR' ? 'Svi statusi' : 'All statuses');
   const [customDate, setCustomDate] = useState('');
   const dateInputRef = useRef(null);
 
   useEffect(() => {
-    const updatedEvents = getInitialEvents(lang);
-    setEvents(updatedEvents);
-    setSelectedEvent(updatedEvents[0]);
+    fetchEvents().then(data => {
+      if (data && data.length > 0) {
+        const mapped = data.map((ev, index) => ({
+          id: ev.id || index + 1,
+          title: ev.title || (lang === 'SR' ? 'Prekid vodosnabdevanja' : 'Water Supply Interruption'),
+          location: ev.location?.address || (lang === 'SR' ? 'Centar' : 'Downtown'),
+          fullAddress: `${ev.location?.address || 'Novi Sad'}, Novi Sad`,
+          lat: ev.location?.latitude || (45.2520 + (index * 0.005)),
+          lng: ev.location?.longitude || (19.8250 + (index * 0.005)),
+          date: '28.10.2026.',
+          time: '08:00 - 16:00',
+          duration: lang === 'SR' ? '8 sati' : '8 hours',
+          status: ev.status === 'ongoing' ? (lang === 'SR' ? 'U toku' : 'Ongoing') : (lang === 'SR' ? 'Završen' : 'Completed'),
+          type: ev.event_type || (lang === 'SR' ? 'Planirani radovi' : 'Planned works'),
+          source: ev.source?.name || 'JKP Vodovod',
+          sourcePublish: '28.10.2026, 08:00',
+          verification: lang === 'SR' ? 'Potvrđeno javnim izvorom' : 'Confirmed by public source',
+          description: ev.description || (lang === 'SR' ? 'Radovi na vodovodnoj mreži.' : 'Water network maintenance.'),
+          note: lang === 'SR' ? 'Redovan nadzor u toku.' : 'Regular monitoring in progress.'
+        }));
+        setEvents(mapped);
+        setSelectedEvent(mapped[0]);
+      } else {
+        const initial = getInitialEvents(lang);
+        setEvents(initial);
+        setSelectedEvent(initial[0]);
+      }
+    });
   }, [lang]);
 
   const handleCardClick = (filterValue) => {
@@ -157,7 +192,7 @@ export default function Disruptions() {
   return (
     <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1750px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
-      {}
+      {/* ZAGLAVLJE */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
@@ -170,111 +205,67 @@ export default function Disruptions() {
           </p>
         </div>
 
-        {}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.78rem', color: '#64748b', backgroundColor: '#fff', padding: '0.4rem 0.8rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
-          <span>{lang === 'SR' ? 'Poslednje ažuriranje:' : 'Last update:'} <strong>{lang === 'SR' ? 'danas, 27. okt 2026, 18:00' : 'today, Oct 27, 2026, 18:00'}</strong></span>
+          <span>{lang === 'SR' ? 'Poslednje ažuriranje:' : 'Last update:'} <strong>{lang === 'SR' ? 'danas, 28. okt 2026, 18:00' : 'today, Oct 28, 2026, 18:00'}</strong></span>
           <span style={{ color: '#cbd5e1' }}>|</span>
           <span>{lang === 'SR' ? 'Izvor:' : 'Source:'} <strong style={{ color: '#0284c7' }}>JKP Vodovod i kanalizacija <ExternalLink size={12} style={{ display: 'inline' }} /></strong></span>
         </div>
       </div>
 
-      {}
+      {/* STATISTIKA */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
-        
         <div 
           onClick={() => setStatusFilter(lang === 'SR' ? 'Svi statusi' : 'All statuses')}
-          style={{ 
-            backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', 
-            border: (statusFilter === 'Svi statusi' || statusFilter === 'All statuses') ? '2px solid #0284c7' : '1px solid #e2e8f0', 
-            boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer', transition: 'all 0.15s ease' 
-          }}
+          style={{ backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', border: (statusFilter === 'Svi statusi' || statusFilter === 'All statuses') ? '2px solid #0284c7' : '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer' }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>
-              {lang === 'SR' ? 'Ukupno zabeleženo' : 'Total Recorded'}
-            </span>
+            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>{lang === 'SR' ? 'Ukupno zabeleženo' : 'Total Recorded'}</span>
             <FileText size={20} color="#0284c7" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>
-            {events.length}
-          </div>
-          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>
-            {lang === 'SR' ? 'u izabranom periodu' : 'in selected period'}
-          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>{events.length}</div>
+          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>{lang === 'SR' ? 'u izabranom periodu' : 'in selected period'}</div>
         </div>
 
         <div 
           onClick={() => handleCardClick(plannedLabel)}
-          style={{ 
-            backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', 
-            border: statusFilter === plannedLabel ? '2px solid #0284c7' : '1px solid #e2e8f0', 
-            boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer', transition: 'all 0.15s ease' 
-          }}
+          style={{ backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', border: statusFilter === plannedLabel ? '2px solid #0284c7' : '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer' }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>
-              {lang === 'SR' ? 'Planirane aktivnosti' : 'Planned Activities'}
-            </span>
+            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>{lang === 'SR' ? 'Planirane aktivnosti' : 'Planned Activities'}</span>
             <Clock size={20} color="#0284c7" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>
-            {events.filter(e => e.status === plannedLabel).length}
-          </div>
-          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>
-            {lang === 'SR' ? 'u narednih 7 dana' : 'in next 7 days'}
-          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>{events.filter(e => e.status === plannedLabel).length}</div>
+          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>{lang === 'SR' ? 'u narednih 7 dana' : 'in next 7 days'}</div>
         </div>
 
         <div 
           onClick={() => handleCardClick(ongoingLabel)}
-          style={{ 
-            backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', 
-            border: statusFilter === ongoingLabel ? '2px solid #0284c7' : '1px solid #e2e8f0', 
-            boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer', transition: 'all 0.15s ease' 
-          }}
+          style={{ backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', border: statusFilter === ongoingLabel ? '2px solid #0284c7' : '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer' }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>
-              {lang === 'SR' ? 'U toku' : 'Ongoing'}
-            </span>
+            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>{lang === 'SR' ? 'U toku' : 'Ongoing'}</span>
             <Wrench size={20} color="#0284c7" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>
-            {events.filter(e => e.status === ongoingLabel).length}
-          </div>
-          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>
-            {lang === 'SR' ? 'trenutno aktivnih događaja' : 'currently active events'}
-          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>{events.filter(e => e.status === ongoingLabel).length}</div>
+          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>{lang === 'SR' ? 'trenutno aktivnih događaja' : 'currently active events'}</div>
         </div>
 
         <div 
           onClick={() => handleCardClick(completedLabel)}
-          style={{ 
-            backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', 
-            border: statusFilter === completedLabel ? '2px solid #0284c7' : '1px solid #e2e8f0', 
-            boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer', transition: 'all 0.15s ease' 
-          }}
+          style={{ backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', border: statusFilter === completedLabel ? '2px solid #0284c7' : '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer' }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>
-              {lang === 'SR' ? 'Završeni događaji' : 'Completed Events'}
-            </span>
+            <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>{lang === 'SR' ? 'Završeni događaji' : 'Completed Events'}</span>
             <CheckCircle size={20} color="#16a34a" />
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>
-            {events.filter(e => e.status === completedLabel).length}
-          </div>
-          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>
-            {lang === 'SR' ? 'u izabranom periodu' : 'in selected period'}
-          </div>
+          <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>{events.filter(e => e.status === completedLabel).length}</div>
+          <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>{lang === 'SR' ? 'u izabranom periodu' : 'in selected period'}</div>
         </div>
-
       </div>
 
-      {}
+      {/* PRETRAGA I FILTERI */}
       <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
-        
         <div style={{ flex: 1, minWidth: '280px', position: 'relative' }}>
           <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
           <input 
@@ -331,13 +322,12 @@ export default function Disruptions() {
           <RotateCcw size={14} />
           <span>{lang === 'SR' ? 'Resetuj filtre' : 'Reset filters'}</span>
         </button>
-
       </div>
 
-      {}
+      {/* TABELA I DETALJI */}
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 620px', gap: '1.25rem', alignItems: 'start' }}>
         
-        {}
+        {/* TABELA */}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem' }}>
             <thead>
@@ -398,10 +388,7 @@ export default function Disruptions() {
 
                     <td style={{ padding: '0.85rem 1rem' }}>
                       <span style={{ 
-                        padding: '0.2rem 0.55rem', 
-                        borderRadius: '6px', 
-                        fontSize: '0.72rem', 
-                        fontWeight: '700',
+                        padding: '0.2rem 0.55rem', borderRadius: '6px', fontSize: '0.72rem', fontWeight: '700',
                         backgroundColor: isCompleted ? '#dcfce7' : isOngoing ? '#fee2e2' : '#fef3c7',
                         color: isCompleted ? '#166534' : isOngoing ? '#991b1b' : '#b45309'
                       }}>
@@ -424,10 +411,9 @@ export default function Disruptions() {
           </table>
         </div>
 
-        {}
+        {/* DETALJI */}
         {selectedEvent && (
           <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                 <FileText size={18} color="#0284c7" />
@@ -536,14 +522,14 @@ export default function Disruptions() {
 
             <div style={{ height: '200px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e2e8f0', position: 'relative' }}>
               <MapContainer 
-                center={[selectedEvent.lat, selectedEvent.lng]} 
+                center={[selectedEvent.lat || 45.2520, selectedEvent.lng || 19.8250]} 
                 zoom={14} 
                 scrollWheelZoom={false} 
                 style={{ height: '100%', width: '100%' }}
-                key={selectedEvent.id}
               >
+                <MapUpdater center={[selectedEvent.lat || 45.2520, selectedEvent.lng || 19.8250]} />
                 <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker position={[selectedEvent.lat, selectedEvent.lng]}>
+                <Marker position={[selectedEvent.lat || 45.2520, selectedEvent.lng || 19.8250]}>
                   <Popup>
                     <strong>{selectedEvent.location}</strong><br />
                     {selectedEvent.title} ({selectedEvent.date})

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
@@ -8,6 +8,7 @@ import {
   Layers, ChevronDown 
 } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
+import { fetchEvents, fetchStations, fetchFacilities } from '../services/api';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -16,6 +17,22 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+const createColoredIcon = (colorHex) => {
+  return L.divIcon({
+    className: 'custom-div-icon',
+    html: `<div style="background-color: ${colorHex}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></div>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7]
+  });
+};
+
+const icons = {
+  unplanned: createColoredIcon('#dc2626'),
+  planned: createColoredIcon('#d97706'),
+  station: createColoredIcon('#0284c7'),
+  facility: createColoredIcon('#9333ea')
+};
+
 export default function MapView() {
   const context = useOutletContext();
   const lang = context?.lang || 'EN';
@@ -23,69 +40,11 @@ export default function MapView() {
 
   const noviSadCenter = [45.2520, 19.8250];
 
-  const sampleEvents = [
-    { 
-      id: 101, 
-      title: lang === 'SR' ? 'Havarija – Bulevar oslobođenja' : 'Accident – Bulevar oslobođenja', 
-      location: lang === 'SR' ? 'Bulevar oslobođenja (kod Futoške pijace), Novi Sad' : 'Bulevar oslobođenja (near Futoška market), Novi Sad',
-      municipality: 'Novi Sad - Podbara / Rotkvarija',
-      lat: 45.2520, 
-      lng: 19.8360, 
-      publishTime: '27. okt 2026, 08:00 – 16:00',
-      status: lang === 'SR' ? 'Aktivni prekid' : 'Active outage',
-      typeTag: lang === 'SR' ? 'Približna lokacija' : 'Approximate location',
-      source: 'JKP Vodovod i kanalizacija',
-      description: lang === 'SR' ? 'Zamena ventila na distributivnoj mreži u zoni Futoške pijace.' : 'Valve replacement on the distribution network near Futoška market.',
-      radius: 500, 
-      popAffected: '5.100',
-      hospitals: 1,
-      schools: 2,
-      social: 0,
-      type: 'unplanned'
-    },
-    { 
-      id: 102, 
-      title: lang === 'SR' ? 'Prekid – Bulevar Slobodana Jovanovića' : 'Outage – Bulevar Slobodana Jovanovića', 
-      location: lang === 'SR' ? 'Bulevar Slobodana Jovanovića (Novo Naselje)' : 'Bulevar Slobodana Jovanovića (Novo Naselje)', 
-      municipality: 'Novi Sad - Novo Naselje',
-      lat: 45.2538, 
-      lng: 19.8020, 
-      publishTime: '27. okt 2026, 09:00 – 17:00',
-      status: lang === 'SR' ? 'Aktivni prekid' : 'Active outage',
-      typeTag: lang === 'SR' ? 'Približna lokacija' : 'Approximate location',
-      source: 'JKP Vodovod i kanalizacija',
-      description: lang === 'SR' ? 'Hitna sanacija distributivnog cevovoda usled pucanja magistrale.' : 'Emergency repair of the main distribution pipe due to a burst pipe.',
-      radius: 400, 
-      popAffected: '4.500',
-      hospitals: 1,
-      schools: 3,
-      social: 1,
-      type: 'unplanned'
-    },
-    { 
-      id: 103, 
-      title: lang === 'SR' ? 'Planirani radovi – Bulevar Evrope' : 'Planned Work – Bulevar Evrope', 
-      location: lang === 'SR' ? 'Bulevar Evrope (segment kod Detelinare)' : 'Bulevar Evrope (Detelinara segment)', 
-      municipality: 'Novi Sad - Detelinara',
-      lat: 45.2588, 
-      lng: 19.8130, 
-      publishTime: '28. okt 2026, 08:00 – 18:00',
-      status: lang === 'SR' ? 'Planirani radovi' : 'Planned maintenance',
-      typeTag: lang === 'SR' ? 'Planirano' : 'Planned',
-      source: 'JKP Vodovod i kanalizacija',
-      description: lang === 'SR' ? 'Priključak novih korisnika na vodovodnu mrežu.' : 'Connecting new consumers to the water supply network.',
-      radius: 350, 
-      popAffected: '3.200',
-      hospitals: 0,
-      schools: 2,
-      social: 0,
-      type: 'planned'
-    }
-  ];
-
-  const [selectedEventId, setSelectedEventId] = useState(101);
-  const selectedEvent = sampleEvents.find(e => e.id === selectedEventId) || sampleEvents[0];
-  const [analysisRadius, setAnalysisRadius] = useState(selectedEvent.radius || 500);
+  const [events, setEvents] = useState([]);
+  const [stations, setStations] = useState([]);
+  const [facilities, setFacilities] = useState([]);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [analysisRadius, setAnalysisRadius] = useState(500);
   const [searchQuery, setSearchQuery] = useState('');
 
   const [layers, setLayers] = useState({
@@ -96,6 +55,86 @@ export default function MapView() {
     populationGrid: false,
     cityLimit: false
   });
+
+  useEffect(() => {
+    fetchEvents().then(data => {
+      if (data && data.length > 0) {
+        const mappedEvents = data.map((ev, index) => ({
+          id: ev.id || index,
+          title: ev.title || 'Događaj',
+          location: ev.location?.address ? `${ev.location.address}, ${ev.location.municipality || 'Novi Sad'}` : 'Novi Sad',
+          municipality: ev.location?.municipality || 'Novi Sad',
+          lat: ev.location?.latitude || (45.2520 + (index * 0.005)),
+          lng: ev.location?.longitude || (19.8250 + (index * 0.005)),
+          publishTime: ev.source?.published_at ? `${ev.source.published_at}` : (lang === 'SR' ? '28. okt 2026' : 'Oct 28, 2026'),
+          status: ev.status === 'ongoing' ? (lang === 'SR' ? 'Aktivni prekid' : 'Active outage') : (lang === 'SR' ? 'Planirani radovi' : 'Planned maintenance'),
+          typeTag: ev.location?.location_accuracy || 'Približna lokacija',
+          source: ev.source?.name || 'JKP Vodovod i kanalizacija',
+          description: ev.description || ev.title,
+          radius: 500,
+          basePopulation: 4500, // Osnovna baza stanovnika za 500m
+          type: ev.event_type?.includes('planned') ? 'planned' : 'unplanned'
+        }));
+        setEvents(mappedEvents);
+        setSelectedEventId(mappedEvents[0].id);
+        setAnalysisRadius(mappedEvents[0].radius || 500);
+      } else {
+        setEvents([
+          {
+            id: 101,
+            title: lang === 'SR' ? 'Havarija – Bulevar oslobođenja' : 'Accident – Bulevar oslobođenja',
+            location: 'Bulevar oslobođenja, Novi Sad',
+            lat: 45.2520,
+            lng: 19.8360,
+            status: lang === 'SR' ? 'Aktivni prekid' : 'Active outage',
+            description: lang === 'SR' ? 'Zamena ventila na distributivnoj mreži.' : 'Valve replacement.',
+            radius: 500,
+            basePopulation: 5100,
+            type: 'unplanned'
+          }
+        ]);
+        setSelectedEventId(101);
+        setAnalysisRadius(500);
+      }
+    });
+
+    fetchStations().then(data => {
+      if (data) setStations(data);
+    });
+
+    fetchFacilities().then(data => {
+      const rawFacs = Array.isArray(data) ? data : (data?.results || []);
+      if (rawFacs.length > 0) {
+        const mappedFacs = rawFacs.map((fac, idx) => ({
+          id: fac.id || `fac-${idx}`,
+          name: fac.name || (lang === 'SR' ? 'Kritična ustanova' : 'Critical Facility'),
+          category: fac.category || 'facility',
+          address: fac.address || 'Novi Sad',
+          lat: fac.latitude || (45.24 + (idx * 0.003)),
+          lng: fac.longitude || (19.81 + (idx * 0.003))
+        }));
+        setFacilities(mappedFacs);
+      } else {
+        setFacilities([
+          { id: 'f1', name: 'Klinički centar Vojvodine (KCV)', category: 'hospital', address: 'Hajduk Veljkova 1-9', lat: 45.2530, lng: 19.8315 },
+          { id: 'f2', name: 'Osnovna škola "Đura Jakšić"', category: 'school', address: 'Trg mladenaca 5', lat: 45.2505, lng: 19.8450 }
+        ]);
+      }
+    }).catch(err => {
+      console.error('Facilities fetch error:', err);
+      setFacilities([
+        { id: 'f1', name: 'Klinički centar Vojvodine (KCV)', category: 'hospital', address: 'Hajduk Veljkova 1-9', lat: 45.2530, lng: 19.8315 },
+        { id: 'f2', name: 'Osnovna škola "Đura Jakšić"', category: 'school', address: 'Trg mladenaca 5', lat: 45.2505, lng: 19.8450 }
+      ]);
+    });
+  }, [lang]);
+
+  const selectedEvent = events.find(e => e.id === selectedEventId) || events[0];
+
+  // Dinamički izračunat broj stanovnika na osnovu odnosa radijusa i bazne vrednosti
+  const calculatedPopulation = selectedEvent 
+    ? Math.round((selectedEvent.basePopulation || 4500) * Math.pow(analysisRadius / 500, 2)).toLocaleString('sr-RS')
+    : '0';
 
   const toggleLayer = (layerKey) => {
     setLayers(prev => ({ ...prev, [layerKey]: !prev[layerKey] }));
@@ -109,7 +148,6 @@ export default function MapView() {
   return (
     <div style={{ padding: '1.25rem 1.75rem', maxWidth: '1600px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
-      {}
       <div style={{ marginBottom: '1.25rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
           {lang === 'SR' ? 'GIS prostorni pregled – Novi Sad' : 'GIS Spatial Overview – Novi Sad'}
@@ -121,13 +159,11 @@ export default function MapView() {
         </p>
       </div>
 
-      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 390px', gap: '1.25rem', height: '700px' }}>
         
-        {}
+        {/* LEVA STRANA: MAPA */}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
           
-          {}
           <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 1000, width: '310px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', padding: '0.45rem 0.75rem' }}>
             <Search size={16} color="#64748b" style={{ marginRight: '0.5rem' }} />
             <input 
@@ -139,7 +175,6 @@ export default function MapView() {
             />
           </div>
 
-          {}
           <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 1000, backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', padding: '0.6rem 0.8rem', width: '200px', fontSize: '0.75rem' }}>
             <div style={{ fontWeight: '700', color: '#0f172a', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <span>{lang === 'SR' ? 'Slojevi mape' : 'Map Layers'}</span>
@@ -149,32 +184,31 @@ export default function MapView() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
               <label onClick={() => toggleLayer('activeDisruptions')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#dc2626' }}></span>
-                {lang === 'SR' ? 'Aktivni prekidi (3)' : 'Active outages (3)'}
+                {lang === 'SR' ? 'Aktivni prekidi' : 'Active outages'}
               </label>
 
               <label onClick={() => toggleLayer('plannedWorks')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#d97706' }}></span>
-                {lang === 'SR' ? 'Planirani radovi (2)' : 'Planned works (2)'}
+                {lang === 'SR' ? 'Planirani radovi' : 'Planned works'}
               </label>
 
               <label onClick={() => toggleLayer('stations')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0284c7' }}></span>
-                {lang === 'SR' ? 'Hidrološke stanice (4)' : 'Hydro stations (4)'}
+                {lang === 'SR' ? 'Hidrološke stanice' : 'Hydro stations'}
               </label>
 
               <label onClick={() => toggleLayer('criticalFacilities')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#9333ea' }}></span>
-                {lang === 'SR' ? 'Kritične ustanove (6)' : 'Critical facilities (6)'}
+                {lang === 'SR' ? 'Kritične ustanove' : 'Critical facilities'}
               </label>
             </div>
           </div>
 
-          {}
           <div style={{ flex: 1, width: '100%', position: 'relative' }}>
             <MapContainer center={noviSadCenter} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
               <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-              {selectedEvent && (
+              {selectedEvent && selectedEvent.lat && selectedEvent.lng && (
                 <Circle
                   center={[selectedEvent.lat, selectedEvent.lng]}
                   radius={analysisRadius}
@@ -188,10 +222,11 @@ export default function MapView() {
                 />
               )}
 
-              {sampleEvents.map((ev) => (
+              {layers.activeDisruptions && events.filter(e => e.type === 'unplanned').map((ev) => ev.lat && ev.lng && (
                 <Marker 
-                  key={ev.id} 
+                  key={`unplanned-${ev.id}`} 
                   position={[ev.lat, ev.lng]} 
+                  icon={icons.unplanned}
                   eventHandlers={{ click: () => handleSelectEvent(ev) }}
                 >
                   <Popup>
@@ -202,10 +237,57 @@ export default function MapView() {
                   </Popup>
                 </Marker>
               ))}
+
+              {layers.plannedWorks && events.filter(e => e.type === 'planned').map((ev) => ev.lat && ev.lng && (
+                <Marker 
+                  key={`planned-${ev.id}`} 
+                  position={[ev.lat, ev.lng]} 
+                  icon={icons.planned}
+                  eventHandlers={{ click: () => handleSelectEvent(ev) }}
+                >
+                  <Popup>
+                    <div style={{ padding: '0.2rem' }}>
+                      <strong style={{ color: '#d97706', fontSize: '0.85rem' }}>{ev.title}</strong>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>{ev.location}</div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+
+              {layers.stations && stations.map((st, idx) => st.latitude && st.longitude && (
+                <Marker
+                  key={`station-${st.station_id || idx}`}
+                  position={[st.latitude, st.longitude]}
+                  icon={icons.station}
+                >
+                  <Popup>
+                    <div style={{ padding: '0.2rem' }}>
+                      <strong style={{ color: '#0284c7', fontSize: '0.85rem' }}>{st.name || 'RHMZ stanica'}</strong>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>Reka: {st.river || 'Dunav'}</div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+
+              {layers.criticalFacilities && facilities.map((fac, idx) => fac.lat && fac.lng && (
+                <Marker
+                  key={`facility-${fac.id || idx}`}
+                  position={[fac.lat, fac.lng]}
+                  icon={icons.facility}
+                >
+                  <Popup>
+                    <div style={{ padding: '0.2rem' }}>
+                      <strong style={{ color: '#9333ea', fontSize: '0.85rem' }}>{fac.name}</strong>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>Kategorija: {fac.category}</div>
+                      <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>{fac.address}</div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+
             </MapContainer>
           </div>
 
-          {}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#fff', padding: '0.6rem 1rem', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem', color: '#475569', flexWrap: 'wrap', gap: '0.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
               <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#dc2626' }}></span>
@@ -223,15 +305,11 @@ export default function MapView() {
               <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#9333ea' }}></span>
               {lang === 'SR' ? 'Kritična ustanova' : 'Critical facility'}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-              <span style={{ border: '1px dashed #ef4444', backgroundColor: 'rgba(239, 68, 68, 0.15)', padding: '1px 5px', borderRadius: '4px' }}></span>
-              {lang === 'SR' ? 'Zona analize' : 'Analysis zone'}
-            </div>
           </div>
 
         </div>
 
-        {}
+        {/* DESNA STRANA: ANALIZA IZABRANE LOKACIJE */}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.35rem 1.45rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflowY: 'auto' }}>
           
           <div>
@@ -264,11 +342,8 @@ export default function MapView() {
                   <span style={{ backgroundColor: '#fee2e2', color: '#991b1b', fontSize: '0.72rem', fontWeight: '700', padding: '0.2rem 0.5rem', borderRadius: '6px' }}>
                     {selectedEvent.status}
                   </span>
-                  <span style={{ backgroundColor: '#fef3c7', color: '#b45309', fontSize: '0.72rem', fontWeight: '600', padding: '0.2rem 0.5rem', borderRadius: '6px' }}>
-                    {selectedEvent.typeTag}
-                  </span>
                   <span style={{ backgroundColor: '#f1f5f9', color: '#475569', fontSize: '0.72rem', padding: '0.2rem 0.5rem', borderRadius: '6px' }}>
-                    {lang === 'SR' ? 'Izvor: JKP Vodovod' : 'Source: Public Waterworks'}
+                    {selectedEvent.source}
                   </span>
                 </div>
 
@@ -277,7 +352,6 @@ export default function MapView() {
                   <div><strong>{lang === 'SR' ? 'Opis:' : 'Description:'}</strong> {selectedEvent.description}</div>
                 </div>
 
-                {}
                 <div style={{ backgroundColor: '#f8fafc', padding: '0.85rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                     <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
@@ -307,39 +381,13 @@ export default function MapView() {
                   </div>
                 </div>
 
-                {}
                 <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
                   <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                     <Users size={16} color="#0284c7" />
                     <span>{lang === 'SR' ? 'Stanovništvo u zoni analize' : 'Population in analysis zone'}</span>
                   </div>
                   <div style={{ fontSize: '1.35rem', fontWeight: '800', color: '#0f172a', marginTop: '0.2rem' }}>
-                    {selectedEvent.popAffected} <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b' }}>{lang === 'SR' ? 'stanovnika' : 'residents'}</span>
-                  </div>
-                </div>
-
-                {}
-                <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
-                  <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.5rem' }}>
-                    <Building2 size={16} color="#0284c7" />
-                    <span>{lang === 'SR' ? 'Kritične ustanove' : 'Critical facilities'}</span>
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
-                    <div style={{ backgroundColor: '#f8fafc', padding: '0.5rem', borderRadius: '6px', textAlign: 'center', border: '1px solid #f1f5f9' }}>
-                      <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#dc2626' }}>{selectedEvent.hospitals}</div>
-                      <div style={{ fontSize: '0.68rem', color: '#64748b' }}>{lang === 'SR' ? 'Zdravstvo' : 'Health'}</div>
-                    </div>
-
-                    <div style={{ backgroundColor: '#eff6ff', padding: '0.5rem', borderRadius: '6px', textAlign: 'center', border: '1px solid #dbeafe' }}>
-                      <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#1d4ed8' }}>{selectedEvent.schools}</div>
-                      <div style={{ fontSize: '0.68rem', color: '#1e40af' }}>{lang === 'SR' ? 'Škole/Vrtići' : 'Schools'}</div>
-                    </div>
-
-                    <div style={{ backgroundColor: '#f8fafc', padding: '0.5rem', borderRadius: '6px', textAlign: 'center', border: '1px solid #f1f5f9' }}>
-                      <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#9333ea' }}>{selectedEvent.social}</div>
-                      <div style={{ fontSize: '0.68rem', color: '#64748b' }}>{lang === 'SR' ? 'Soc. zaštita' : 'Social'}</div>
-                    </div>
+                    {calculatedPopulation} <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b' }}>{lang === 'SR' ? 'stanovnika' : 'residents'}</span>
                   </div>
                 </div>
 
@@ -347,17 +395,13 @@ export default function MapView() {
             )}
           </div>
 
-          {}
           <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '0.75rem', marginTop: '0.75rem', fontSize: '0.73rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem 0.5rem', color: '#475569' }}>
-              <div><strong>{lang === 'SR' ? 'Ulica:' : 'Street:'}</strong></div>
-              <div>{selectedEvent?.location?.split('(')[0] || 'Bulevar oslobođenja'}</div>
-
               <div><strong>{lang === 'SR' ? 'Opština:' : 'Municipality:'}</strong></div>
-              <div>Novi Sad</div>
+              <div>{selectedEvent?.municipality || 'Novi Sad'}</div>
 
               <div><strong>{lang === 'SR' ? 'Izvor:' : 'Source:'}</strong></div>
-              <div>JKP Vodovod i kanalizacija</div>
+              <div>{selectedEvent?.source || 'JKP Vodovod'}</div>
             </div>
           </div>
 
