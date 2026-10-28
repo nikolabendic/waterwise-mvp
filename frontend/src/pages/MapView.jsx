@@ -1,7 +1,13 @@
+// src/pages/MapView.jsx
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, LayersControl, LayerGroup, GeoJSON, Circle } from 'react-leaflet';
+import { useOutletContext } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
-import { Droplets, AlertTriangle, Building2, Info, Users, MapPin } from 'lucide-react';
+import { 
+  Search, Info, AlertTriangle, Users, Building2, MapPin, 
+  Layers, ChevronDown 
+} from 'lucide-react';
+import 'leaflet/dist/leaflet.css';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -10,256 +16,355 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const sampleStations = [
-  { id: 1, name: 'Novi Sad - Dunav', lat: 45.2572, lng: 19.8583, level: '243 cm', temp: '16.4 °C', status: 'Normalno', type: 'Merna Stanica' },
-];
-
-const sampleEvents = [
-  { 
-    id: 101, 
-    title: 'Prekid - Janka Čmelika', 
-    location: 'Ulica Janka Čmelika (Detelinara)', 
-    lat: 45.2588, 
-    lng: 19.8130, 
-    date: '02.07.2026.', 
-    status: 'Završen', 
-    note: 'Planirana zamena magistralnog cevovoda', 
-    radius: 350, 
-    popAffected: '~3.200 stanovnika' 
-  },
-  { 
-    id: 102, 
-    title: 'Prekid - Bulevar Slobodana Jovanovića', 
-    location: 'Bulevar Slobodana Jovanovića (Novo Naselje)', 
-    lat: 45.2538, 
-    lng: 19.8020, 
-    date: '02.10.2026.', 
-    status: 'Završen', 
-    note: 'Hitna sanacija vodovodne cevi na raskrsnici', 
-    radius: 400, 
-    popAffected: '~4.500 stanovnika' 
-  },
-  { 
-    id: 103, 
-    title: 'Havarija - Bulevar oslobođenja', 
-    location: 'Bulevar oslobođenja (kod Futoške pijace)', 
-    lat: 45.2520, 
-    lng: 19.8360, 
-    date: '31.07.2026.', 
-    status: 'Završen', 
-    note: 'Zamena ventila na distributivnoj mreži', 
-    radius: 500, 
-    popAffected: '~5.100 stanovnika' 
-  },
-  { 
-    id: 104, 
-    title: 'Radovi - Sremska Kamenica', 
-    location: 'Sremska Kamenica (Centar)', 
-    lat: 45.2250, 
-    lng: 19.8440, 
-    date: '02.07.2026.', 
-    status: 'Završen', 
-    note: 'Ispiranje i dezinfekcija rezervoara', 
-    radius: 300, 
-    popAffected: '~1.800 stanovnika' 
-  }
-];
-
-
-const criticalFacilitiesGeoJSON = {
-  type: 'FeatureCollection',
-  features: [
-    { 
-      type: 'Feature', 
-      properties: { name: 'Klinički centar Vojvodine (KCV)', type: 'Bolnica', priority: 'Kritičan' }, 
-      geometry: { type: 'Point', coordinates: [19.8236, 45.2492] } 
-    },
-    { 
-      type: 'Feature', 
-      properties: { name: 'Dom zdravlja Liman (Bulevar cara Lazara)', type: 'Zdravstvo', priority: 'Visok' }, 
-      geometry: { type: 'Point', coordinates: [19.8315, 45.2386] } 
-    },
-    { 
-      type: 'Feature', 
-      properties: { name: 'Dom zdravlja Novo Naselje', type: 'Zdravstvo', priority: 'Visok' }, 
-      geometry: { type: 'Point', coordinates: [19.7995, 45.2515] } 
-    },
-    { 
-      type: 'Feature', 
-      properties: { name: 'PU Radosno detinjstvo (Detelinara)', type: 'Vrtić', priority: 'Visok' }, 
-      geometry: { type: 'Point', coordinates: [19.8120, 45.2590] } 
-    }
-  ]
-};
-
-
-const populationGridGeoJSON = {
-  type: 'FeatureCollection',
-  features: [
-    {
-      type: 'Feature',
-      properties: { zone: 'Sektor Detelinara', popDensity: '8.500 stan/km²', popAffected: '~3.200' },
-      geometry: {
-        type: 'Polygon',
-        coordinates: [[[19.8050, 45.2550], [19.8200, 45.2550], [19.8200, 45.2650], [19.8050, 45.2650], [19.8050, 45.2550]]]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: { zone: 'Sektor Novo Naselje', popDensity: '7.800 stan/km²', popAffected: '~4.500' },
-      geometry: {
-        type: 'Polygon',
-        coordinates: [[[19.7920, 45.2480], [19.8100, 45.2480], [19.8100, 45.2570], [19.7920, 45.2570], [19.7920, 45.2480]]]
-      }
-    },
-    {
-      type: 'Feature',
-      properties: { zone: 'Sektor Liman', popDensity: '6.200 stan/km²', popAffected: '~5.400' },
-      geometry: {
-        type: 'Polygon',
-        coordinates: [[[19.8250, 45.2330], [19.8450, 45.2330], [19.8450, 45.2430], [19.8250, 45.2430], [19.8250, 45.2330]]]
-      }
-    }
-  ]
-};
-
 export default function MapView() {
-  const [noviSadCenter] = useState([45.2520, 19.8250]);
-  const [selectedFeature, setSelectedFeature] = useState(null);
+  const context = useOutletContext();
+  const lang = context?.lang || 'EN';
+  const t = context?.t || {};
+
+  const noviSadCenter = [45.2520, 19.8250];
+
+  const sampleEvents = [
+    { 
+      id: 101, 
+      title: lang === 'SR' ? 'Havarija – Bulevar oslobođenja' : 'Accident – Bulevar oslobođenja', 
+      location: lang === 'SR' ? 'Bulevar oslobođenja (kod Futoške pijace), Novi Sad' : 'Bulevar oslobođenja (near Futoška market), Novi Sad',
+      municipality: 'Novi Sad - Podbara / Rotkvarija',
+      lat: 45.2520, 
+      lng: 19.8360, 
+      publishTime: '27. okt 2026, 08:00 – 16:00',
+      status: lang === 'SR' ? 'Aktivni prekid' : 'Active outage',
+      typeTag: lang === 'SR' ? 'Približna lokacija' : 'Approximate location',
+      source: 'JKP Vodovod i kanalizacija',
+      description: lang === 'SR' ? 'Zamena ventila na distributivnoj mreži u zoni Futoške pijace.' : 'Valve replacement on the distribution network near Futoška market.',
+      radius: 500, 
+      popAffected: '5.100',
+      hospitals: 1,
+      schools: 2,
+      social: 0,
+      type: 'unplanned'
+    },
+    { 
+      id: 102, 
+      title: lang === 'SR' ? 'Prekid – Bulevar Slobodana Jovanovića' : 'Outage – Bulevar Slobodana Jovanovića', 
+      location: lang === 'SR' ? 'Bulevar Slobodana Jovanovića (Novo Naselje)' : 'Bulevar Slobodana Jovanovića (Novo Naselje)', 
+      municipality: 'Novi Sad - Novo Naselje',
+      lat: 45.2538, 
+      lng: 19.8020, 
+      publishTime: '27. okt 2026, 09:00 – 17:00',
+      status: lang === 'SR' ? 'Aktivni prekid' : 'Active outage',
+      typeTag: lang === 'SR' ? 'Približna lokacija' : 'Approximate location',
+      source: 'JKP Vodovod i kanalizacija',
+      description: lang === 'SR' ? 'Hitna sanacija distributivnog cevovoda usled pucanja magistrale.' : 'Emergency repair of the main distribution pipe due to a burst pipe.',
+      radius: 400, 
+      popAffected: '4.500',
+      hospitals: 1,
+      schools: 3,
+      social: 1,
+      type: 'unplanned'
+    },
+    { 
+      id: 103, 
+      title: lang === 'SR' ? 'Planirani radovi – Bulevar Evrope' : 'Planned Work – Bulevar Evrope', 
+      location: lang === 'SR' ? 'Bulevar Evrope (segment kod Detelinare)' : 'Bulevar Evrope (Detelinara segment)', 
+      municipality: 'Novi Sad - Detelinara',
+      lat: 45.2588, 
+      lng: 19.8130, 
+      publishTime: '28. okt 2026, 08:00 – 18:00',
+      status: lang === 'SR' ? 'Planirani radovi' : 'Planned maintenance',
+      typeTag: lang === 'SR' ? 'Planirano' : 'Planned',
+      source: 'JKP Vodovod i kanalizacija',
+      description: lang === 'SR' ? 'Priključak novih korisnika na vodovodnu mrežu.' : 'Connecting new consumers to the water supply network.',
+      radius: 350, 
+      popAffected: '3.200',
+      hospitals: 0,
+      schools: 2,
+      social: 0,
+      type: 'planned'
+    }
+  ];
+
+  const [selectedEventId, setSelectedEventId] = useState(101);
+  const selectedEvent = sampleEvents.find(e => e.id === selectedEventId) || sampleEvents[0];
+  const [analysisRadius, setAnalysisRadius] = useState(selectedEvent.radius || 500);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const [layers, setLayers] = useState({
+    activeDisruptions: true,
+    plannedWorks: true,
+    stations: true,
+    criticalFacilities: true,
+    populationGrid: false,
+    cityLimit: false
+  });
+
+  const toggleLayer = (layerKey) => {
+    setLayers(prev => ({ ...prev, [layerKey]: !prev[layerKey] }));
+  };
+
+  const handleSelectEvent = (ev) => {
+    setSelectedEventId(ev.id);
+    setAnalysisRadius(ev.radius || 500);
+  };
 
   return (
-    <div style={{ padding: '1.5rem', maxWidth: '1400px', margin: '0 auto' }}>
+    <div style={{ padding: '1.25rem 1.75rem', maxWidth: '1600px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
+      
+      {/* 1. ZAGLAVLJE EKRANA */}
       <div style={{ marginBottom: '1.25rem' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '700', color: '#0f172a', marginBottom: '0.25rem' }}>
-          GIS Prostorni Pregled Novi Sad
+        <h1 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
+          {lang === 'SR' ? 'GIS prostorni pregled – Novi Sad' : 'GIS Spatial Overview – Novi Sad'}
         </h1>
-        <p style={{ color: '#64748b', fontSize: '0.95rem', margin: 0 }}>
-          Kliknite na bilo koji marker na mapi kako biste prikazali tačnu lokaciju i žutu zonu uticaja.
+        <p style={{ color: '#64748b', fontSize: '0.875rem', margin: '0.2rem 0 0 0' }}>
+          {lang === 'SR' 
+            ? 'Pregled aktivnih i planiranih događaja, kritične infrastrukture i prostorne analize potencijalne izloženosti.'
+            : 'Overview of active and planned events, critical infrastructure, and spatial exposure analysis.'}
         </p>
       </div>
 
-      <div style={{ display: 'flex', gap: '1.25rem', height: '620px', flexWrap: 'wrap' }}>
-        {}
-        <div style={{ flex: '1 1 65%', height: '100%', minWidth: '320px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #cbd5e1', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', position: 'relative' }}>
-          <MapContainer center={noviSadCenter} zoom={13} style={{ height: '100%', width: '100%' }}>
-            <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {/* 2. MAIN GRID: MAPA + DESNI PANEL (Povećana visina i prostranije kartice) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 390px', gap: '1.25rem', height: '700px' }}>
+        
+        {/* LEVA STRANA: MAPA */}
+        <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
+          
+          {/* POLJE ZA PRETRAGU */}
+          <div style={{ position: 'absolute', top: '12px', left: '12px', zIndex: 1000, width: '310px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center', padding: '0.45rem 0.75rem' }}>
+            <Search size={16} color="#64748b" style={{ marginRight: '0.5rem' }} />
+            <input 
+              type="text" 
+              placeholder={lang === 'SR' ? "Pretraga lokacije, adrese..." : "Search location, address..."}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ border: 'none', outline: 'none', width: '100%', fontSize: '0.82rem', color: '#0f172a' }}
+            />
+          </div>
 
-            {}
-            {selectedFeature && selectedFeature.lat && selectedFeature.radius && (
-              <Circle
-                center={[selectedFeature.lat, selectedFeature.lng]}
-                radius={selectedFeature.radius}
-                pathOptions={{ color: '#d97706', fillColor: '#f59e0b', fillOpacity: 0.35, weight: 2, dashArray: '6, 6' }}
-              />
-            )}
-
-            <LayersControl position="topright">
-              <LayersControl.Overlay checked name="Događaji i Prekidi (JKP)">
-                <LayerGroup>
-                  {sampleEvents.map((ev) => (
-                    <Marker key={ev.id} position={[ev.lat, ev.lng]} eventHandlers={{ click: () => setSelectedFeature(ev) }}>
-                      <Popup>
-                        <b>{ev.title}</b><br />
-                        <span style={{ fontSize: '0.8rem', color: '#d97706', fontWeight: '600' }}>{ev.location}</span>
-                      </Popup>
-                    </Marker>
-                  ))}
-                </LayerGroup>
-              </LayersControl.Overlay>
-
-              <LayersControl.Overlay checked name="Hidrološke stanice">
-                <LayerGroup>
-                  {sampleStations.map((st) => (
-                    <Marker key={st.id} position={[st.lat, st.lng]} eventHandlers={{ click: () => setSelectedFeature(st) }}>
-                      <Popup><b>{st.name}</b><br />Vodostaj: {st.level}</Popup>
-                    </Marker>
-                  ))}
-                </LayerGroup>
-              </LayersControl.Overlay>
-
-              <LayersControl.Overlay checked name="Kritične ustanove">
-                <GeoJSON 
-                  data={criticalFacilitiesGeoJSON} 
-                  pointToLayer={(f, latlng) => L.circleMarker(latlng, { radius: 8, fillColor: '#0284c7', color: '#fff', weight: 2, fillOpacity: 0.9 })}
-                  onEachFeature={(f, l) => l.on('click', () => setSelectedFeature({ name: f.properties.name, note: `Kategorija: ${f.properties.type}`, status: f.properties.priority }))}
-                />
-              </LayersControl.Overlay>
-
-              <LayersControl.Overlay name="Population Grid (Slojevi Mreže)">
-                <GeoJSON 
-                  data={populationGridGeoJSON}
-                  style={{ color: '#0284c7', weight: 1, fillColor: '#38bdf8', fillOpacity: 0.15 }}
-                  onEachFeature={(f, l) => l.on('click', () => setSelectedFeature({ name: f.properties.zone, note: `Gustina: ${f.properties.popDensity}`, popAffected: f.properties.popAffected }))}
-                />
-              </LayersControl.Overlay>
-            </LayersControl>
-          </MapContainer>
-        </div>
-
-        {}
-        <div style={{ width: '320px', backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#0f172a', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
-              <Info size={18} color="#0284c7" />
-              <h3 style={{ fontSize: '1rem', fontWeight: '600', margin: 0 }}>Prostorna Analiza Odabira</h3>
+          {/* CONTROL PANEL ZA SLOJEVE */}
+          <div style={{ position: 'absolute', top: '12px', right: '12px', zIndex: 1000, backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #cbd5e1', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', padding: '0.6rem 0.8rem', width: '200px', fontSize: '0.75rem' }}>
+            <div style={{ fontWeight: '700', color: '#0f172a', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span>{lang === 'SR' ? 'Slojevi mape' : 'Map Layers'}</span>
+              <Layers size={13} color="#0284c7" />
             </div>
 
-            {selectedFeature ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+              <label onClick={() => toggleLayer('activeDisruptions')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#dc2626' }}></span>
+                {lang === 'SR' ? 'Aktivni prekidi (3)' : 'Active outages (3)'}
+              </label>
+
+              <label onClick={() => toggleLayer('plannedWorks')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#d97706' }}></span>
+                {lang === 'SR' ? 'Planirani radovi (2)' : 'Planned works (2)'}
+              </label>
+
+              <label onClick={() => toggleLayer('stations')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0284c7' }}></span>
+                {lang === 'SR' ? 'Hidrološke stanice (4)' : 'Hydro stations (4)'}
+              </label>
+
+              <label onClick={() => toggleLayer('criticalFacilities')} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: '#334155' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#9333ea' }}></span>
+                {lang === 'SR' ? 'Kritične ustanove (6)' : 'Critical facilities (6)'}
+              </label>
+            </div>
+          </div>
+
+          {/* LEAFLET MAPA */}
+          <div style={{ flex: 1, width: '100%', position: 'relative' }}>
+            <MapContainer center={noviSadCenter} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
+              <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+              {selectedEvent && (
+                <Circle
+                  center={[selectedEvent.lat, selectedEvent.lng]}
+                  radius={analysisRadius}
+                  pathOptions={{ 
+                    color: '#dc2626', 
+                    fillColor: '#ef4444', 
+                    fillOpacity: 0.2, 
+                    weight: 1.5, 
+                    dashArray: '4, 4' 
+                  }}
+                />
+              )}
+
+              {sampleEvents.map((ev) => (
+                <Marker 
+                  key={ev.id} 
+                  position={[ev.lat, ev.lng]} 
+                  eventHandlers={{ click: () => handleSelectEvent(ev) }}
+                >
+                  <Popup>
+                    <div style={{ padding: '0.2rem' }}>
+                      <strong style={{ color: '#dc2626', fontSize: '0.85rem' }}>{ev.title}</strong>
+                      <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>{ev.location}</div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+          </div>
+
+          {/* LEGENDA NA DNU MAPE */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#fff', padding: '0.6rem 1rem', borderTop: '1px solid #e2e8f0', fontSize: '0.72rem', color: '#475569', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#dc2626' }}></span>
+              {lang === 'SR' ? 'Aktivni prekid' : 'Active outage'}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#d97706' }}></span>
+              {lang === 'SR' ? 'Planirani radovi' : 'Planned works'}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#0284c7' }}></span>
+              {lang === 'SR' ? 'Hidrološka stanica' : 'Hydro station'}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#9333ea' }}></span>
+              {lang === 'SR' ? 'Kritična ustanova' : 'Critical facility'}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+              <span style={{ border: '1px dashed #ef4444', backgroundColor: 'rgba(239, 68, 68, 0.15)', padding: '1px 5px', borderRadius: '4px' }}></span>
+              {lang === 'SR' ? 'Zona analize' : 'Analysis zone'}
+            </div>
+          </div>
+
+        </div>
+
+        {/* DESNA STRANA: PANEL ANALIZA IZABRANE LOKACIJE (Povećane visine i padding) */}
+        <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.35rem 1.45rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', overflowY: 'auto' }}>
+          
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <MapPin size={18} color="#0284c7" />
+                <h3 style={{ fontSize: '1rem', fontWeight: '700', color: '#0f172a', margin: 0 }}>
+                  {lang === 'SR' ? 'Analiza izabrane lokacije' : 'Selected Location Analysis'}
+                </h3>
+              </div>
+              <ChevronDown size={16} color="#94a3b8" />
+            </div>
+
+            {selectedEvent && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.95rem' }}>
+                
                 <div>
-                  <label style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '700' }}>Naziv Lokacije / Objekta</label>
-                  <div style={{ fontSize: '1.05rem', fontWeight: '700', color: '#0f172a' }}>{selectedFeature.name || selectedFeature.title}</div>
+                  <div style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '700' }}>
+                    {lang === 'SR' ? 'IZABRANI DOGAĐAJ' : 'SELECTED EVENT'}
+                  </div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0f172a', marginTop: '0.15rem' }}>
+                    {selectedEvent.title}
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.15rem' }}>
+                    {selectedEvent.location}
+                  </div>
                 </div>
 
-                {selectedFeature.location && (
-                  <div>
-                    <label style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '700' }}>Ulica i Kvart</label>
-                    <div style={{ fontSize: '0.9rem', color: '#0284c7', fontWeight: '600' }}>{selectedFeature.location}</div>
-                  </div>
-                )}
+                <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                  <span style={{ backgroundColor: '#fee2e2', color: '#991b1b', fontSize: '0.72rem', fontWeight: '700', padding: '0.2rem 0.5rem', borderRadius: '6px' }}>
+                    {selectedEvent.status}
+                  </span>
+                  <span style={{ backgroundColor: '#fef3c7', color: '#b45309', fontSize: '0.72rem', fontWeight: '600', padding: '0.2rem 0.5rem', borderRadius: '6px' }}>
+                    {selectedEvent.typeTag}
+                  </span>
+                  <span style={{ backgroundColor: '#f1f5f9', color: '#475569', fontSize: '0.72rem', padding: '0.2rem 0.5rem', borderRadius: '6px' }}>
+                    {lang === 'SR' ? 'Izvor: JKP Vodovod' : 'Source: Public Waterworks'}
+                  </span>
+                </div>
 
-                {selectedFeature.radius && (
-                  <div style={{ backgroundColor: '#fef3c7', padding: '0.75rem', borderRadius: '8px', border: '1px solid #fde68a' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#b45309', fontSize: '0.8rem', fontWeight: '700' }}>
-                      <AlertTriangle size={15} /> Radijus uticaja: {selectedFeature.radius} m
-                    </div>
-                    <div style={{ fontSize: '0.82rem', color: '#92400e', marginTop: '0.25rem' }}>
-                      Žuta zona obuhvata ulice u okolini lokacije.
-                    </div>
-                  </div>
-                )}
+                <div style={{ fontSize: '0.82rem', color: '#334155', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                  <div><strong>{lang === 'SR' ? 'Datum i vreme objave:' : 'Date & time:'}</strong> {selectedEvent.publishTime}</div>
+                  <div><strong>{lang === 'SR' ? 'Opis:' : 'Description:'}</strong> {selectedEvent.description}</div>
+                </div>
 
-                {selectedFeature.popAffected && (
-                  <div style={{ backgroundColor: '#f0f9ff', padding: '0.75rem', borderRadius: '8px', border: '1px solid #bae6fd' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0369a1', fontSize: '0.8rem', fontWeight: '700' }}>
-                      <Users size={15} /> Procenjena ugrožena populacija
+                {/* SLIDER RADIJUSA ANALIZE */}
+                <div style={{ backgroundColor: '#f8fafc', padding: '0.85rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <span>{lang === 'SR' ? 'Zona prostorne analize' : 'Spatial analysis zone'}</span>
+                      <Info size={14} color="#94a3b8" />
                     </div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0c4a6e', marginTop: '0.1rem' }}>
-                      {selectedFeature.popAffected}
-                    </div>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#0284c7' }}>
+                      {analysisRadius} m
+                    </span>
                   </div>
-                )}
 
-                {selectedFeature.note && (
-                  <div>
-                    <label style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: '700' }}>Opis / Napomena</label>
-                    <div style={{ fontSize: '0.9rem', color: '#334155' }}>{selectedFeature.note}</div>
+                  <input 
+                    type="range" 
+                    min="200" 
+                    max="1000" 
+                    step="50"
+                    value={analysisRadius} 
+                    onChange={(e) => setAnalysisRadius(Number(e.target.value))}
+                    style={{ width: '100%', cursor: 'pointer', accentColor: '#0284c7' }}
+                  />
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#94a3b8', marginTop: '0.25rem' }}>
+                    <span>200 m</span>
+                    <span>500 m</span>
+                    <span>750 m</span>
+                    <span>1.000 m</span>
                   </div>
-                )}
-              </div>
-            ) : (
-              <div style={{ textAlign: 'center', color: '#94a3b8', padding: '3rem 1rem' }}>
-                <MapPin size={32} style={{ marginBottom: '0.5rem', opacity: 0.5 }} />
-                <p style={{ fontSize: '0.875rem', margin: 0 }}>Kliknite na bilo koji marker ili GeoJSON plavu tačku ustanove na mapi da vidite tačne detalje.</p>
+                </div>
+
+                {/* STANOVNIŠTVO U ZONI ANALIZE */}
+                <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
+                  <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <Users size={16} color="#0284c7" />
+                    <span>{lang === 'SR' ? 'Stanovništvo u zoni analize' : 'Population in analysis zone'}</span>
+                  </div>
+                  <div style={{ fontSize: '1.35rem', fontWeight: '800', color: '#0f172a', marginTop: '0.2rem' }}>
+                    {selectedEvent.popAffected} <span style={{ fontSize: '0.82rem', fontWeight: '600', color: '#64748b' }}>{lang === 'SR' ? 'stanovnika' : 'residents'}</span>
+                  </div>
+                </div>
+
+                {/* KRITIČNE USTANOVE */}
+                <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
+                  <div style={{ fontSize: '0.82rem', fontWeight: '700', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.5rem' }}>
+                    <Building2 size={16} color="#0284c7" />
+                    <span>{lang === 'SR' ? 'Kritične ustanove' : 'Critical facilities'}</span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+                    <div style={{ backgroundColor: '#f8fafc', padding: '0.5rem', borderRadius: '6px', textAlign: 'center', border: '1px solid #f1f5f9' }}>
+                      <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#dc2626' }}>{selectedEvent.hospitals}</div>
+                      <div style={{ fontSize: '0.68rem', color: '#64748b' }}>{lang === 'SR' ? 'Zdravstvo' : 'Health'}</div>
+                    </div>
+
+                    <div style={{ backgroundColor: '#eff6ff', padding: '0.5rem', borderRadius: '6px', textAlign: 'center', border: '1px solid #dbeafe' }}>
+                      <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#1d4ed8' }}>{selectedEvent.schools}</div>
+                      <div style={{ fontSize: '0.68rem', color: '#1e40af' }}>{lang === 'SR' ? 'Škole/Vrtići' : 'Schools'}</div>
+                    </div>
+
+                    <div style={{ backgroundColor: '#f8fafc', padding: '0.5rem', borderRadius: '6px', textAlign: 'center', border: '1px solid #f1f5f9' }}>
+                      <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#9333ea' }}>{selectedEvent.social}</div>
+                      <div style={{ fontSize: '0.68rem', color: '#64748b' }}>{lang === 'SR' ? 'Soc. zaštita' : 'Social'}</div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             )}
           </div>
 
-          <div style={{ backgroundColor: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #f1f5f9', fontSize: '0.8rem', color: '#64748b' }}>
-            Na pinovima su označene kritične lokacije u Novom Sadu.
+          {/* OSTALE INFORMACIJE NA DNU */}
+          <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '0.75rem', marginTop: '0.75rem', fontSize: '0.73rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.25rem 0.5rem', color: '#475569' }}>
+              <div><strong>{lang === 'SR' ? 'Ulica:' : 'Street:'}</strong></div>
+              <div>{selectedEvent?.location?.split('(')[0] || 'Bulevar oslobođenja'}</div>
+
+              <div><strong>{lang === 'SR' ? 'Opština:' : 'Municipality:'}</strong></div>
+              <div>Novi Sad</div>
+
+              <div><strong>{lang === 'SR' ? 'Izvor:' : 'Source:'}</strong></div>
+              <div>JKP Vodovod i kanalizacija</div>
+            </div>
           </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

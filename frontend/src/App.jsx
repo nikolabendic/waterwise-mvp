@@ -6,6 +6,7 @@ import MapView from './pages/MapView';
 import Hydrology from './pages/Hydrology';
 import Disruptions from './pages/Disruptions';
 import Exposure from './pages/Exposure';
+import AiForecastSimulation from './pages/AiForecastSimulation'; // Uvoz nove stranice
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="hydrology" element={<Hydrology />} />
           <Route path="disruptions" element={<Disruptions />} />
           <Route path="exposure" element={<Exposure />} />
+          <Route path="ai-simulation" element={<AiForecastSimulation />} />
         </Route>
       </Routes>
     </BrowserRouter>
