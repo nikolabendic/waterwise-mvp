@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import HttpResponse
 
 from events.models import WaterEvent
 from hydrology.models import Observation, Station
@@ -95,3 +96,48 @@ class DataSourcesView(APIView):
             })
 
         return Response({"sources": sources})
+
+ROUTES = [
+    ("Hidrologija", [
+        ("/api/v1/hydrology/stations/", "Lista stanica"),
+        ("/api/v1/hydrology/latest/?station_id=RHMZ-NS", "Zadnje merenje, nivo, temperatura, protok"),
+        ("/api/v1/hydrology/history/?station_id=RHMZ-NS&period=7d", "Istorija (24h, 7d, 30d)"),
+    ]),
+    ("Događaji", [
+        ("/api/v1/events/", "Lista događaja (filteri: status, event_type, search, date_from, date_to, limit, offset)"),
+        ("/api/v1/events/?status=planned", "Primer: samo planirani"),
+    ]),
+    ("Objekti", [
+        ("/api/v1/facilities/", "Kritični objekti (OSM)"),
+        ("/api/v1/facilities/?category=hospital", "Primer: samo bolnice"),
+    ]),
+    ("AI prognoza i scenariji (sintetički podaci)", [
+        ("/api/v1/water-demand/forecast/", "Prognoza za 7 dana"),
+        ("/api/v1/water-balance/scenarios/", "Definicije 4 scenarija"),
+        ("/api/v1/water-balance/?scenario=normal&period=7d", "Bilans: normal"),
+        ("/api/v1/water-balance/?scenario=peak&period=7d", "Bilans: peak"),
+        ("/api/v1/water-balance/?scenario=reduced&period=7d", "Bilans: reduced"),
+        ("/api/v1/water-balance/?scenario=combined&period=7d", "Bilans: combined"),
+        ("/api/v1/water-balance/compare/", "Poređenje rezerve za sva 4 scenarija"),
+        ("/api/v1/health/", "Provera da je prognoza dostupna"),
+    ]),
+    ("Izvori podataka", [
+        ("/api/v1/data-sources/", "Dostupnost i ograničenja svakog izvora"),
+    ]),
+]
+
+
+def api_index(request):
+    html = ["<!doctype html><html><head><meta charset='utf-8'>",
+            "<title>WaterWise API</title>",
+            "<style>body{font-family:system-ui,sans-serif;max-width:860px;margin:32px auto;padding:0 16px;color:#0f172a}",
+            "h1{margin-bottom:4px}h2{margin-top:28px;border-bottom:1px solid #e2e8f0;padding-bottom:4px}",
+            "li{margin:8px 0}a{color:#0369a1;font-family:ui-monospace,monospace}span{color:#475569}</style></head><body>",
+            "<h1>WaterWise API v1</h1><p>Klikni na rutu da vidiš JSON odgovor.</p>"]
+    for title, items in ROUTES:
+        html.append(f"<h2>{title}</h2><ul>")
+        for url, desc in items:
+            html.append(f"<li><a href='{url}'>{url}</a><br><span>{desc}</span></li>")
+        html.append("</ul>")
+    html.append("</body></html>")
+    return HttpResponse("".join(html))
