@@ -1,0 +1,78 @@
+{
+  "horizon_days": 7,
+  "target": "network_input_m3",
+  "unit": "m3/day",
+  "model_type": "random_forest",
+  "model_status": "experimental",
+  "trained_on": "synthetic",
+  "future_weather_type": "synthetic",
+  "forecast": [
+    {
+      "date": "2026-10-29",
+      "forecast_m3": 95437.73,
+      "data_type": "estimated"
+    },
+    {
+      "date": "2026-10-30",
+      "forecast_m3": 96403.03,
+      "data_type": "estimated"
+    },
+    {
+      "date": "2026-10-31",
+      "forecast_m3": 93685.34,
+      "data_type": "estimated"
+    },
+    {
+      "date": "2026-11-01",
+      "forecast_m3": 93332.07,
+      "data_type": "estimated"
+    },
+    {
+      "date": "2026-11-02",
+      "forecast_m3": 95167.33,
+      "data_type": "estimated"
+    },
+    {
+      "date": "2026-11-03",
+      "forecast_m3": 94282.16,
+      "data_type": "estimated"
+    },
+    {
+      "date": "2026-11-04",
+      "forecast_m3": 96040.33,
+      "data_type": "estimated"
+    }
+  ],
+  "validation": {
+    "weekday_baseline": {
+      "mae_m3_per_day": 2833.69,
+      "rmse_m3_per_day": 3387.31
+    },
+    "mlp_backprop": {
+      "mae_m3_per_day": 1669.02,
+      "rmse_m3_per_day": 1990.86
+    },
+    "random_forest": {
+      "mae_m3_per_day": 1376.97,
+      "rmse_m3_per_day": 1778.68
+    }
+  },
+  "test": {
+    "weekday_baseline": {
+      "mae_m3_per_day": 2307.11,
+      "rmse_m3_per_day": 2874.76
+    },
+    "mlp_backprop": {
+      "mae_m3_per_day": 1608.13,
+      "rmse_m3_per_day": 2050.81
+    },
+    "random_forest": {
+      "mae_m3_per_day": 1548.9,
+      "rmse_m3_per_day": 1961.35
+    }
+  },
+  "limitations": [
+    "Utility history is synthetic; test scores measure synthetic-data performance, not real-world forecasting accuracy.",
+    "Do not infer actual outages or environmental water scarcity from this prediction."
+  ]
+}
