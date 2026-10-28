@@ -7,6 +7,10 @@ from django.http import HttpResponse
 
 from events.models import WaterEvent
 from hydrology.models import Observation, Station
+from pathlib import Path
+from django.conf import settings
+from collections import Counter
+from zoneinfo import ZoneInfo
 
 from facilities.models import Facility
 
@@ -14,11 +18,87 @@ from facilities.models import Facility
 FACILITIES_SNAPSHOT = "2026-10-21T13:07:25Z"
 
 OUTDATED_AFTER = timedelta(days=3)  # TODO: dogovoriti
+BELGRADE = ZoneInfo("Europe/Belgrade")
 
 
 def iso(value):
     return value.isoformat() if value else None
 
+class DashboardSummaryView(APIView):
+    def get(self, request):
+        # Hidrologija: zadnje mjerenje + promjena u odnosu na ~24 h ranije
+        last = (Observation.objects
+                .filter(station_id="RHMZ-NS", water_level_cm__isnull=False)
+                .order_by("-timestamp").first())
+        hydrology = {
+            "station_id": "RHMZ-NS",
+            "water_level_cm": None,
+            "water_level_change_24h_cm": None,
+            "measurement_time": None,
+            "data_type": "observed",
+            "availability": "unavailable",
+        }
+        if last:
+            prev = (Observation.objects
+                    .filter(station_id="RHMZ-NS", water_level_cm__isnull=False,
+                            timestamp__lte=last.timestamp - timedelta(hours=24),
+                            timestamp__gte=last.timestamp - timedelta(hours=36))
+                    .order_by("-timestamp").first())
+            hydrology.update({
+                "water_level_cm": last.water_level_cm,
+                "water_level_change_24h_cm": (last.water_level_cm - prev.water_level_cm) if prev else None,
+                "measurement_time": last.timestamp.astimezone(BELGRADE).isoformat(timespec="seconds"),
+                "availability": "outdated" if timezone.now() - last.timestamp > OUTDATED_AFTER else "available",
+            })
+
+        # Vrijeme: nemamo stvaran izvor, pa su vrijednosti null (ne izmišljamo)
+        weather = {
+            "air_temperature_c": None,
+            "precipitation_7d_mm": None,
+            "source_name": None,
+            "data_type": None,
+            "availability": "unavailable",
+        }
+
+        # Događaji po statusu
+        counts = Counter(WaterEvent.objects.values_list("status", flat=True))
+        events = {
+            "total": sum(counts.values()),
+            "planned": counts.get("planned", 0),
+            "ongoing": counts.get("ongoing", 0),
+            "completed": counts.get("completed", 0),
+            "cancelled": counts.get("cancelled", 0),
+            "unknown": counts.get("unknown", 0),
+        }
+
+        # Status izvora: isti izvori kao u /data-sources/, plus AI prognoza (sintetička)
+        sources = DataSourcesView().get(request).data["sources"]
+        sources.append({"id": "ai_forecast", "data_type": "synthetic", "availability": "available"})
+        live = [s for s in sources if s["availability"] != "unavailable"]
+        kinds = Counter(s["data_type"] for s in live)
+        if not kinds:
+            mode = "unavailable"
+        elif len(kinds) == 1:
+            mode = next(iter(kinds))
+        else:
+            mode = "mixed"
+
+        return Response({
+            "city": "Novi Sad",
+            "hydrology": hydrology,
+            "weather": weather,
+            "events": events,
+            "environmental_outlook": {"status": "not_assessed", "methodology_available": False},
+            "data_status": {
+                "overall_mode": mode,
+                "observed_sources": kinds.get("observed", 0),
+                "reported_sources": kinds.get("reported", 0),
+                "estimated_sources": kinds.get("estimated", 0),
+                "synthetic_sources": kinds.get("synthetic", 0),
+                "unavailable_sources": len(sources) - len(live),
+            },
+            "generated_at": timezone.now().astimezone(BELGRADE).isoformat(timespec="seconds"),
+        })
 
 class DataSourcesView(APIView):
     def get(self, request):
@@ -79,21 +159,35 @@ class DataSourcesView(APIView):
             ],
         })
 
+        # Populacija (WorldPop)
+        pop_available = Path(settings.POPULATION_CELLS_FILE).is_file()
+        sources.append({
+            "id": "population",
+            "name": "Population grid",
+            "provider": "WorldPop, University of Southampton",
+            "source_url": "https://hub.worldpop.org/geodata/summary?id=75323",
+            "data_type": "estimated",
+            "availability": "available" if pop_available else "unavailable",
+            "last_updated": "2025-09-01",
+            "update_method": "manual",
+            "limitations": [
+                "Modelled estimate for 2021 (R2025A v1, alpha version), not a census count.",
+                "100 m grid cells; a cell is counted fully if its centre is inside the zone.",
+                "License CC BY 4.0, DOI 10.5258/SOTON/WP00839.",
+            ],
+        })
+
         # Izvori koje jos nemamo. Kad ih dodamo, ovde se menjaju.
-        for source_id, name in [
-            ("population", "Population grid"),
-            ("weather", "Weather data"),
-        ]:
-            sources.append({
-                "id": source_id,
-                "name": name,
-                "provider": "To be confirmed",
-                "source_url": None,
-                "data_type": None,
-                "availability": "unavailable",
-                "last_updated": None,
-                "update_method": None,
-            })
+        sources.append({
+            "id": "weather",
+            "name": "Weather data",
+            "provider": "To be confirmed",
+            "source_url": None,
+            "data_type": None,
+            "availability": "unavailable",
+            "last_updated": None,
+            "update_method": None,
+        })
 
         return Response({"sources": sources})
 
@@ -123,6 +217,7 @@ ROUTES = [
     ]),
     ("Izvori podataka", [
         ("/api/v1/data-sources/", "Dostupnost i ograničenja svakog izvora"),
+        ("/api/v1/dashboard/summary/", "Sažetak za Dashboard"),
     ]),
 ]
 
@@ -139,7 +234,7 @@ def api_index(request):
         for url, desc in items:
             html.append(f"<li><a href='{url}'>{url}</a><br><span>{desc}</span></li>")
         html.append("</ul>")
-        html.append(
+    html.append(
         "<h2>Izloženost (POST, ne otvara se klikom)</h2><ul><li>"
         "<code>POST /api/v1/exposure/analyze/</code><br>"
         "<span>Zona analize, procena stanovništva (WorldPop 2021) i objekti u krugu</span>"

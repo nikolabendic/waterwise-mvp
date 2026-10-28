@@ -16,12 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import DataSourcesView
+from .views import DataSourcesView, api_index, DashboardSummaryView
 from .views import DataSourcesView, api_index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', api_index),
+    path('api/v1/dashboard/summary/', DashboardSummaryView.as_view()),
     path('api/v1/', include('hydrology.urls')),
     path('api/v1/', include('events.urls')),
     path('api/v1/', include('exposure.urls')),
