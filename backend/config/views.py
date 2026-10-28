@@ -11,6 +11,7 @@ from pathlib import Path
 from django.conf import settings
 from collections import Counter
 from zoneinfo import ZoneInfo
+from .weather import get_weather
 
 from facilities.models import Facility
 
@@ -51,13 +52,14 @@ class DashboardSummaryView(APIView):
                 "availability": "outdated" if timezone.now() - last.timestamp > OUTDATED_AFTER else "available",
             })
 
-        # Vrijeme: nemamo stvaran izvor, pa su vrijednosti null (ne izmišljamo)
+        w = get_weather()
         weather = {
-            "air_temperature_c": None,
-            "precipitation_7d_mm": None,
-            "source_name": None,
-            "data_type": None,
-            "availability": "unavailable",
+            "air_temperature_c": w["air_temperature_c"] if w else None,
+            "precipitation_7d_mm": w["precipitation_7d_mm"] if w else None,
+            "source_name": "Open-Meteo (weather model data)" if w else None,
+            "data_type": "estimated" if w else None,
+            "availability": "available" if w else "unavailable",
+            "measurement_time": w["measurement_time"] if w else None,
         }
 
         # Događaji po statusu
@@ -177,16 +179,21 @@ class DataSourcesView(APIView):
             ],
         })
 
-        # Izvori koje jos nemamo. Kad ih dodamo, ovde se menjaju.
+                # Vrieme (Open-Meteo)
+        weather_ok = get_weather() is not None
         sources.append({
             "id": "weather",
             "name": "Weather data",
-            "provider": "To be confirmed",
-            "source_url": None,
-            "data_type": None,
-            "availability": "unavailable",
+            "provider": "Open-Meteo (CC BY 4.0)",
+            "source_url": "https://open-meteo.com/",
+            "data_type": "estimated" if weather_ok else None,
+            "availability": "available" if weather_ok else "unavailable",
             "last_updated": None,
-            "update_method": None,
+            "update_method": "automatic",
+            "limitations": [
+                "Model-based data for the city centre, not a measurement at a weather station.",
+                "Cached for 30 minutes.",
+            ],
         })
 
         return Response({"sources": sources})
