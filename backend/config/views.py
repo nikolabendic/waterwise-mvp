@@ -139,5 +139,11 @@ def api_index(request):
         for url, desc in items:
             html.append(f"<li><a href='{url}'>{url}</a><br><span>{desc}</span></li>")
         html.append("</ul>")
+        html.append(
+        "<h2>Izloženost (POST, ne otvara se klikom)</h2><ul><li>"
+        "<code>POST /api/v1/exposure/analyze/</code><br>"
+        "<span>Zona analize, procena stanovništva (WorldPop 2021) i objekti u krugu</span>"
+        "<pre>{\"event_id\": \"EVT-001\", \"radius_m\": 500}</pre></li></ul>"
+    )
     html.append("</body></html>")
     return HttpResponse("".join(html))
