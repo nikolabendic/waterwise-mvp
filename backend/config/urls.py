@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/v1/', api_index),
     path('api/v1/', include('hydrology.urls')),
     path('api/v1/', include('events.urls')),
+    path('api/v1/', include('exposure.urls')),
     path('api/v1/data-sources/', DataSourcesView.as_view()),
     path('api/v1/', include('facilities.urls')),
     path('api/v1/', include('forecasting.urls')),

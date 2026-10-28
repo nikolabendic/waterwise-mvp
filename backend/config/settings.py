@@ -138,3 +138,5 @@ CORS_ALLOWED_ORIGINS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 WATERWISE_ARTIFACT_DIR = BASE_DIR / 'forecasting' / 'artifacts'
+
+POPULATION_CELLS_FILE = BASE_DIR.parent / 'data' / 'population' / 'novi_sad_pop_2021_cells.csv'
