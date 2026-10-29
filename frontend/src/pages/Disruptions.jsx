@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { 
   FileText, Clock, Wrench, CheckCircle, Search, 
   MapPin, Calendar, RotateCcw, ChevronRight, X, 
-  ExternalLink, Share2, ShieldCheck, AlertTriangle 
+  ExternalLink, Share2, ShieldCheck, AlertTriangle, HelpCircle 
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -117,6 +116,26 @@ export default function Disruptions() {
   const [customDate, setCustomDate] = useState('');
   const dateInputRef = useRef(null);
 
+  // Pomoćna funkcija za mapiranje statusa iz API odziva
+  const mapApiStatus = (statusFromApi, lang) => {
+    switch (String(statusFromApi).toLowerCase()) {
+      case 'ongoing':
+      case 'u toku':
+        return lang === 'SR' ? 'U toku' : 'Ongoing';
+      case 'planned':
+      case 'planirano':
+        return lang === 'SR' ? 'Planirano' : 'Planned';
+      case 'completed':
+      case 'resolved':
+      case 'završen':
+      case 'zavrsen':
+        return lang === 'SR' ? 'Završen' : 'Completed';
+      case 'unknown':
+      default:
+        return lang === 'SR' ? 'Nepoznato' : 'Unknown';
+    }
+  };
+
   useEffect(() => {
     fetchEvents().then(data => {
       if (data && data.length > 0) {
@@ -127,13 +146,13 @@ export default function Disruptions() {
           fullAddress: `${ev.location?.address || 'Novi Sad'}, Novi Sad`,
           lat: ev.location?.latitude || (45.2520 + (index * 0.005)),
           lng: ev.location?.longitude || (19.8250 + (index * 0.005)),
-          date: '28.10.2026.',
-          time: '08:00 - 16:00',
-          duration: lang === 'SR' ? '8 sati' : '8 hours',
-          status: ev.status === 'ongoing' ? (lang === 'SR' ? 'U toku' : 'Ongoing') : (lang === 'SR' ? 'Završen' : 'Completed'),
+          date: ev.start_time ? new Date(ev.start_time).toLocaleDateString('sr-RS') : '28.10.2026.',
+          time: ev.time_window || '08:00 - 16:00',
+          duration: ev.duration || (lang === 'SR' ? '8 sati' : '8 hours'),
+          status: mapApiStatus(ev.status, lang),
           type: ev.event_type || (lang === 'SR' ? 'Planirani radovi' : 'Planned works'),
           source: ev.source?.name || 'JKP Vodovod',
-          sourcePublish: '28.10.2026, 08:00',
+          sourcePublish: ev.created_at ? new Date(ev.created_at).toLocaleString('sr-RS') : '28.10.2026, 08:00',
           verification: lang === 'SR' ? 'Potvrđeno javnim izvorom' : 'Confirmed by public source',
           description: ev.description || (lang === 'SR' ? 'Radovi na vodovodnoj mreži.' : 'Water network maintenance.'),
           note: lang === 'SR' ? 'Redovan nadzor u toku.' : 'Regular monitoring in progress.'
@@ -188,6 +207,7 @@ export default function Disruptions() {
   const plannedLabel = lang === 'SR' ? 'Planirano' : 'Planned';
   const ongoingLabel = lang === 'SR' ? 'U toku' : 'Ongoing';
   const completedLabel = lang === 'SR' ? 'Završen' : 'Completed';
+  const unknownLabel = lang === 'SR' ? 'Nepoznato' : 'Unknown';
 
   return (
     <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1750px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
@@ -213,8 +233,8 @@ export default function Disruptions() {
         </div>
       </div>
 
-      {/* STATISTIKA */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
+      {/* STATISTIKA (Sa dodanim karticama za sve statuse) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
         <div 
           onClick={() => setStatusFilter(lang === 'SR' ? 'Svi statusi' : 'All statuses')}
           style={{ backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', border: (statusFilter === 'Svi statusi' || statusFilter === 'All statuses') ? '2px solid #0284c7' : '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer' }}
@@ -245,7 +265,7 @@ export default function Disruptions() {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>{lang === 'SR' ? 'U toku' : 'Ongoing'}</span>
-            <Wrench size={20} color="#0284c7" />
+            <Wrench size={20} color="#dc2626" />
           </div>
           <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>{events.filter(e => e.status === ongoingLabel).length}</div>
           <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>{lang === 'SR' ? 'trenutno aktivnih događaja' : 'currently active events'}</div>
@@ -262,6 +282,21 @@ export default function Disruptions() {
           <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>{events.filter(e => e.status === completedLabel).length}</div>
           <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>{lang === 'SR' ? 'u izabranom periodu' : 'in selected period'}</div>
         </div>
+
+        {/* Dodata opcija za nepoznat status sa API-ja */}
+        {events.some(e => e.status === unknownLabel) && (
+          <div 
+            onClick={() => handleCardClick(unknownLabel)}
+            style={{ backgroundColor: '#fff', padding: '1rem 1.25rem', borderRadius: '12px', border: statusFilter === unknownLabel ? '2px solid #0284c7' : '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)', cursor: 'pointer' }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ color: '#64748b', fontSize: '0.78rem', fontWeight: '700' }}>{lang === 'SR' ? 'Nepoznato' : 'Unknown'}</span>
+              <HelpCircle size={20} color="#64748b" />
+            </div>
+            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', marginTop: '0.25rem' }}>{events.filter(e => e.status === unknownLabel).length}</div>
+            <div style={{ fontSize: '0.73rem', color: '#94a3b8', marginTop: '0.15rem' }}>{lang === 'SR' ? 'neutvrđen status' : 'unspecified status'}</div>
+          </div>
+        )}
       </div>
 
       {/* PRETRAGA I FILTERI */}
@@ -298,6 +333,7 @@ export default function Disruptions() {
           <option value={lang === 'SR' ? 'Završen' : 'Completed'}>{lang === 'SR' ? 'Završen' : 'Completed'}</option>
           <option value={lang === 'SR' ? 'Planirano' : 'Planned'}>{lang === 'SR' ? 'Planirano' : 'Planned'}</option>
           <option value={lang === 'SR' ? 'U toku' : 'Ongoing'}>{lang === 'SR' ? 'U toku' : 'Ongoing'}</option>
+          <option value={lang === 'SR' ? 'Nepoznato' : 'Unknown'}>{lang === 'SR' ? 'Nepoznato' : 'Unknown'}</option>
         </select>
 
         <input 
@@ -346,7 +382,22 @@ export default function Disruptions() {
                 const isSelected = selectedEvent?.id === event.id;
                 const isCompleted = event.status === 'Završen' || event.status === 'Completed';
                 const isOngoing = event.status === 'U toku' || event.status === 'Ongoing';
+                const isPlanned = event.status === 'Planirano' || event.status === 'Planned';
                 
+                // Određivanje stila značke na osnovu statusa
+                let badgeBg = '#f1f5f9';
+                let badgeColor = '#475569';
+                if (isCompleted) {
+                  badgeBg = '#dcfce7';
+                  badgeColor = '#166534';
+                } else if (isOngoing) {
+                  badgeBg = '#fee2e2';
+                  badgeColor = '#991b1b';
+                } else if (isPlanned) {
+                  badgeBg = '#fef3c7';
+                  badgeColor = '#b45309';
+                }
+
                 return (
                   <tr 
                     key={event.id} 
@@ -389,8 +440,8 @@ export default function Disruptions() {
                     <td style={{ padding: '0.85rem 1rem' }}>
                       <span style={{ 
                         padding: '0.2rem 0.55rem', borderRadius: '6px', fontSize: '0.72rem', fontWeight: '700',
-                        backgroundColor: isCompleted ? '#dcfce7' : isOngoing ? '#fee2e2' : '#fef3c7',
-                        color: isCompleted ? '#166534' : isOngoing ? '#991b1b' : '#b45309'
+                        backgroundColor: badgeBg,
+                        color: badgeColor
                       }}>
                         {event.status}
                       </span>
@@ -441,7 +492,11 @@ export default function Disruptions() {
                 </div>
               </div>
 
-              <span style={{ backgroundColor: '#dcfce7', color: '#166534', fontSize: '0.72rem', fontWeight: '700', padding: '0.2rem 0.55rem', borderRadius: '6px' }}>
+              <span style={{ 
+                backgroundColor: selectedEvent.status === 'Završen' || selectedEvent.status === 'Completed' ? '#dcfce7' : selectedEvent.status === 'U toku' || selectedEvent.status === 'Ongoing' ? '#fee2e2' : '#f1f5f9', 
+                color: selectedEvent.status === 'Završen' || selectedEvent.status === 'Completed' ? '#166534' : selectedEvent.status === 'U toku' || selectedEvent.status === 'Ongoing' ? '#991b1b' : '#475569', 
+                fontSize: '0.72rem', fontWeight: '700', padding: '0.2rem 0.55rem', borderRadius: '6px' 
+              }}>
                 {selectedEvent.status}
               </span>
             </div>
