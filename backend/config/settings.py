@@ -142,3 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 WATERWISE_ARTIFACT_DIR = BASE_DIR / 'forecasting' / 'artifacts'
 
 POPULATION_CELLS_FILE = BASE_DIR.parent / 'data' / 'population' / 'novi_sad_pop_2021_cells.csv'
+
+FRONTEND_DIR = BASE_DIR / 'frontend_build'
+WHITENOISE_ROOT = FRONTEND_DIR   # serves /assets/... straight from the build
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
