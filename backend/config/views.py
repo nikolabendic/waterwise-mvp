@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 
 from events.models import WaterEvent
 from hydrology.models import Observation, Station
@@ -249,3 +249,10 @@ def api_index(request):
     )
     html.append("</body></html>")
     return HttpResponse("".join(html))
+
+def spa_index(request, *args, **kwargs):
+    """Serve the React app's index.html for every front-end route (/, /map, /hydrology...)."""
+    index = settings.FRONTEND_DIR / "index.html"
+    if not index.is_file():
+        raise Http404("Frontend build not found.")
+    return HttpResponse(index.read_text(encoding="utf-8"))
