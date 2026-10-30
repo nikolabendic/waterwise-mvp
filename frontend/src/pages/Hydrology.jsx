@@ -1,13 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { 
-  Waves, Thermometer, TrendingDown, Wind, 
-  Info, ExternalLink, Calendar, ShieldAlert, AlertTriangle 
+import {
+  Waves, Thermometer, TrendingDown, TrendingUp, Wind,
+  Info, ExternalLink, Calendar, ShieldAlert, AlertTriangle
 } from 'lucide-react';
-import { 
-  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, 
-  CartesianGrid, Tooltip 
+import {
+  ResponsiveContainer, AreaChart, Area, XAxis, YAxis,
+  CartesianGrid, Tooltip
 } from 'recharts';
 import { fetchLatestHydrology, fetchHydrologyHistory } from '../services/api';
 
@@ -22,16 +22,17 @@ export default function Hydrology() {
     river: 'Dunav',
     timestamp: 'Učitavanje...',
     source: 'RHMZ',
-    water_level_cm: 243,
-    water_temp_c: 16.4,
-    trend_24h_cm: -2,
-    flow_m3_s: 1910
+    water_level_cm: null,
+    water_temp_c: null,
+    trend_24h_cm: null,
+    flow_m3_s: null
   });
 
   const [period, setPeriod] = useState('7d');
   const [chartData, setChartData] = useState([]);
   const [customDate, setCustomDate] = useState('');
   const dateInputRef = useRef(null);
+  const [stats30, setStats30] = useState(null);
 
   // Zvanična RHMZ prognoza state
   const [rhmzForecast, setRhmzForecast] = useState(null);
@@ -45,12 +46,12 @@ export default function Hydrology() {
         setLatestData({
           station: res.station_name || 'Novi Sad',
           river: res.river || 'Dunav',
-          timestamp: res.measurement_time ? new Date(res.measurement_time).toLocaleString('sr-RS', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : (lang === 'SR' ? '14. okt 2026, 18:00' : 'Oct 14, 2026, 18:00'),
+          timestamp: res.measurement_time ? new Date(res.measurement_time).toLocaleString(lang === 'SR' ? 'sr-Latn-RS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—',
           source: res.source?.name || 'RHMZ',
-          water_level_cm: res.measurements.water_level_cm ?? 243,
-          water_temp_c: res.measurements.water_temperature_c ?? 16.4,
-          trend_24h_cm: res.trends?.water_level_change_24h_cm ?? -2,
-          flow_m3_s: res.measurements.flow_m3_s ?? 1910
+          water_level_cm: res.measurements.water_level_cm ?? null,
+          water_temp_c: res.measurements.water_temperature_c ?? null,
+          trend_24h_cm: res.trends?.water_level_change_24h_cm ?? null,
+          flow_m3_s: res.measurements.flow_m3_s ?? null
         });
       }
     }).catch(err => console.error('Latest hydro error:', err));
@@ -62,7 +63,7 @@ export default function Hydrology() {
       let historyPoints = [];
       if (rawArray.length > 0) {
         historyPoints = rawArray.map(item => {
-          const dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString(lang === 'SR' ? 'sr-RS' : 'en-GB', { day: 'numeric', month: 'short' }) : (item.date || '-');
+          const dateStr = item.timestamp ? new Date(item.timestamp).toLocaleDateString(lang === 'SR' ? 'sr-Latn-RS' : 'en-GB', { day: 'numeric', month: 'short' }) : (item.date || '-');
           const val = item.water_level_cm ?? item.level ?? 0;
           return {
             date: dateStr,
@@ -71,15 +72,7 @@ export default function Hydrology() {
           };
         });
       } else {
-        historyPoints = [
-          { date: lang === 'SR' ? '24. okt' : 'Oct 24', level: 272, forecast: null },
-          { date: lang === 'SR' ? '25. okt' : 'Oct 25', level: 268, forecast: null },
-          { date: lang === 'SR' ? '26. okt' : 'Oct 26', level: 260, forecast: null },
-          { date: lang === 'SR' ? '27. okt' : 'Oct 27', level: 255, forecast: null },
-          { date: lang === 'SR' ? '28. okt' : 'Oct 28', level: 250, forecast: null },
-          { date: lang === 'SR' ? '29. okt' : 'Oct 29', level: 246, forecast: null },
-          { date: lang === 'SR' ? '30. okt' : 'Oct 30', level: 243, forecast: null },
-        ];
+        historyPoints = [];
       }
 
       fetch(`${API_BASE_URL}/hydrology/forecast/?station_id=RHMZ-NS`)
@@ -95,7 +88,7 @@ export default function Hydrology() {
           } else if (forecastData && (forecastData.forecast || Array.isArray(forecastData))) {
             setRhmzForecast(forecastData);
             const fList = forecastData.forecast || forecastData;
-            
+
             if (Array.isArray(fList) && fList.length > 0) {
               const lastHistory = historyPoints[historyPoints.length - 1];
               if (lastHistory) {
@@ -103,7 +96,7 @@ export default function Hydrology() {
               }
 
               const forecastChartPoints = fList.map(item => ({
-                date: item.date ? new Date(item.date).toLocaleDateString(lang === 'SR' ? 'sr-RS' : 'en-GB', { day: 'numeric', month: 'short' }) : '',
+                date: item.date ? new Date(item.date).toLocaleDateString(lang === 'SR' ? 'sr-Latn-RS' : 'en-GB', { day: 'numeric', month: 'short' }) : '',
                 level: null,
                 forecast: item.water_level_cm ?? item.level ?? 0
               }));
@@ -128,20 +121,24 @@ export default function Hydrology() {
       console.error('History hydro error:', err);
       setForecastError(true);
       setForecastLoading(false);
-      setChartData([
-        { date: '24. okt', level: 272, forecast: null },
-        { date: '25. okt', level: 268, forecast: null },
-        { date: '26. okt', level: 260, forecast: null },
-        { date: '27. okt', level: 255, forecast: null },
-        { date: '28. okt', level: 250, forecast: null },
-        { date: '29. okt', level: 246, forecast: null },
-        { date: '30. okt', level: 243, forecast: 243 },
-        { date: '31. okt', level: null, forecast: 241 },
-        { date: '1. nov', level: null, forecast: 239 },
-      ]);
+      setChartData([]);
     });
   }, [period, lang]);
 
+  // Hidrološki kontekst: statistika iz stvarnih RHMZ merenja za poslednjih 30 dana
+  useEffect(() => {
+    fetchHydrologyHistory('RHMZ-NS', '30d').then(res => {
+      const rows = (Array.isArray(res) ? res : (res?.data || []))
+        .filter(r => r.water_level_cm !== null && r.water_level_cm !== undefined);
+      if (rows.length === 0) { setStats30(null); return; }
+      const values = rows.map(r => r.water_level_cm);
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const avg = values.reduce((a, b) => a + b, 0) / values.length;
+      const datesOf = (v) => rows.filter(r => r.water_level_cm === v).map(r => new Date(r.timestamp));
+      setStats30({ avg, max, min, maxDates: datesOf(max), minDates: datesOf(min), count: rows.length });
+    }).catch(() => setStats30(null));
+  }, []);
   const handleCalendarClick = () => {
     if (dateInputRef.current) {
       dateInputRef.current.showPicker ? dateInputRef.current.showPicker() : dateInputRef.current.click();
@@ -155,12 +152,21 @@ export default function Hydrology() {
     setPeriod('custom');
   };
 
+  const dateLocale = lang === 'SR' ? 'sr-Latn-RS' : 'en-GB';
+  const fmtDay = (d) => d.toLocaleDateString(dateLocale, { day: 'numeric', month: 'short' });
+  const fmtDates = (dates) => {
+    if (!dates || dates.length === 0) return '';
+    return dates.length === 1 ? fmtDay(dates[0]) : `${fmtDay(dates[0])} – ${fmtDay(dates[dates.length - 1])}`;
+  };
+  const fmtCm = (v) => (v === null || v === undefined) ? '—' : `${v.toLocaleString(dateLocale, { maximumFractionDigits: 1 })} cm`;
+
   const forecastList = rhmzForecast?.forecast || (Array.isArray(rhmzForecast) ? rhmzForecast : []);
-  const issuedDateStr = rhmzForecast?.issued_date ? new Date(rhmzForecast.issued_date).toLocaleString(lang === 'SR' ? 'sr-RS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : null;
+
+  const issuedDateStr = rhmzForecast?.issued_date ? new Date(rhmzForecast.issued_date).toLocaleDateString(lang === 'SR' ? 'sr-Latn-RS' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }) : null;
 
   return (
     <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1650px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
-      
+
       {/* 1. ZAGLAVLJE EKRANA */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
@@ -168,7 +174,7 @@ export default function Hydrology() {
             {lang === 'SR' ? 'Hidrološki pregled i prognoza' : 'Hydrological Overview & Forecast'}
           </h1>
           <p style={{ color: '#64748b', fontSize: '0.875rem', margin: '0.2rem 0 0 0' }}>
-            {lang === 'SR' 
+            {lang === 'SR'
               ? 'Praćenje vodostaja Dunava, protoka vode i meteoroloških parametara na mernoj stanici Novi Sad.'
               : 'Monitoring Danube water level, water flow and meteorological parameters at Novi Sad station.'}
           </p>
@@ -186,7 +192,7 @@ export default function Hydrology() {
 
       {/* 2. GORNJE 4 DETALJNE KPI KARTICE */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
-        
+
         <div style={{ backgroundColor: '#fff', padding: '0.85rem 1rem', borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ color: '#64748b', fontSize: '0.73rem', fontWeight: '700', textTransform: 'uppercase' }}>
@@ -198,7 +204,11 @@ export default function Hydrology() {
             {latestData.water_level_cm} cm
           </div>
           <div style={{ fontSize: '0.72rem', color: '#059669', fontWeight: '600', marginTop: '0.2rem', display: 'flex', alignItems: 'center', gap: '3px' }}>
-            <span>↓ {latestData.trend_24h_cm} cm</span>
+            <span style={{ color: latestData.trend_24h_cm === null ? '#94a3b8' : '#475569' }}>
+              {latestData.trend_24h_cm === null
+                ? '—'
+                : `${latestData.trend_24h_cm > 0 ? '↑ +' : latestData.trend_24h_cm < 0 ? '↓ ' : '→ '}${latestData.trend_24h_cm} cm`}
+            </span>
           </div>
           <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: '0.1rem' }}>
             {lang === 'SR' ? 'u odnosu na prethodni dan' : 'compared to previous day'}
@@ -215,11 +225,11 @@ export default function Hydrology() {
           <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', marginTop: '0.2rem' }}>
             {latestData.water_temp_c} °C
           </div>
-          <div style={{ fontSize: '0.72rem', color: '#059669', fontWeight: '600', marginTop: '0.2rem' }}>
-            ↑ +0,2 °C
+          <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: '600', marginTop: '0.2rem' }}>
+            —
           </div>
-          <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: '0.1rem' }}>
-            {lang === 'SR' ? 'u odnosu na prethodni dan' : 'compared to previous day'}
+          <div style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '0.1rem' }}>
+            {lang === 'SR' ? 'promena nije dostupna' : 'change not available'}
           </div>
         </div>
 
@@ -228,13 +238,24 @@ export default function Hydrology() {
             <span style={{ color: '#64748b', fontSize: '0.73rem', fontWeight: '700', textTransform: 'uppercase' }}>
               {lang === 'SR' ? 'Trend vodostaja (24h)' : 'Water Level Trend (24h)'}
             </span>
-            <TrendingDown size={16} color="#0284c7" />
+            {latestData.trend_24h_cm > 0
+              ? <TrendingUp size={16} color="#0284c7" />
+              : <TrendingDown size={16} color="#0284c7" />}
           </div>
           <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', marginTop: '0.2rem' }}>
-            {latestData.trend_24h_cm} cm
+            {latestData.trend_24h_cm === null ? '—' : `${latestData.trend_24h_cm > 0 ? '+' : ''}${latestData.trend_24h_cm} cm`}
           </div>
-          <div style={{ fontSize: '0.72rem', color: '#64748b', marginTop: '0.4rem', lineHeight: '1.3' }}>
-            {lang === 'SR' ? 'Blagi pad u poslednja 24 sata' : 'Slight decrease in past 24 hours'}
+          <div style={{ fontSize: '0.72rem', color: latestData.trend_24h_cm === null ? '#94a3b8' : '#475569', fontWeight: '600', marginTop: '0.2rem' }}>
+            {latestData.trend_24h_cm === null
+              ? '—'
+              : latestData.trend_24h_cm > 0
+                ? (lang === 'SR' ? 'Raste' : 'Rising')
+                : latestData.trend_24h_cm < 0
+                  ? (lang === 'SR' ? 'Opada' : 'Falling')
+                  : (lang === 'SR' ? 'Stabilan' : 'Stable')}
+          </div>
+          <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: '0.1rem' }}>
+            {lang === 'SR' ? 'u poslednja 24 sata' : 'in the past 24 hours'}
           </div>
         </div>
 
@@ -246,13 +267,13 @@ export default function Hydrology() {
             <Wind size={16} color="#0284c7" />
           </div>
           <div style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', marginTop: '0.2rem' }}>
-            {latestData.flow_m3_s.toLocaleString()} m³/s
+            {latestData.flow_m3_s !== null ? latestData.flow_m3_s.toLocaleString() : '—'} m³/s
           </div>
-          <div style={{ fontSize: '0.72rem', color: '#059669', fontWeight: '600', marginTop: '0.2rem' }}>
-            ↓ -5%
+          <div style={{ fontSize: '0.72rem', color: '#94a3b8', fontWeight: '600', marginTop: '0.2rem' }}>
+            —
           </div>
-          <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: '0.1rem' }}>
-            {lang === 'SR' ? 'u odnosu na prethodnu nedelju' : 'compared to previous week'}
+          <div style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '0.1rem' }}>
+            {lang === 'SR' ? 'promena nije dostupna' : 'change not available'}
           </div>
         </div>
 
@@ -292,14 +313,14 @@ export default function Hydrology() {
               ))}
             </div>
 
-            <input 
-              type="date" 
-              ref={dateInputRef} 
-              onChange={handleDateChange} 
-              style={{ position: 'absolute', opacity: 0, width: 0, height: 0, pointerEvents: 'none' }} 
+            <input
+              type="date"
+              ref={dateInputRef}
+              onChange={handleDateChange}
+              style={{ position: 'absolute', opacity: 0, width: 0, height: 0, pointerEvents: 'none' }}
             />
 
-           
+
           </div>
         </div>
 
@@ -316,37 +337,43 @@ export default function Hydrology() {
         </div>
 
         {/* GRAFIKON  */}
-        <div style={{ width: '100%', height: '260px' }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 10, right: 20, left: -15, bottom: 0 }}>
-              <defs>
-                <linearGradient id="levelGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0284c7" stopOpacity={0.25}/>
-                  <stop offset="95%" stopColor="#0284c7" stopOpacity={0}/>
-                </linearGradient>
-                <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#9333ea" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#9333ea" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} />
-              <YAxis stroke="#94a3b8" fontSize={11} domain={['auto', 'auto']} unit=" cm" />
-              <Tooltip formatter={(val, name) => [`${val} cm`, name === 'level' ? (lang === 'SR' ? 'Izmereno' : 'Measured') : (lang === 'SR' ? 'RHMZ Prognoza' : 'RHMZ Forecast')]} />
-              
-              {/* Izmerene vrednosti (plavo) */}
-              <Area type="monotone" dataKey="level" stroke="#0284c7" strokeWidth={2.5} fill="url(#levelGrad)" dot={{ r: 3, fill: '#0284c7' }} connectNulls={false} name="level" />
-              
-              {/* Zvanična RHMZ prognoza (ljubičasto) bez razmaka */}
-              <Area type="monotone" dataKey="forecast" stroke="#9333ea" strokeWidth={2.5} strokeDasharray="4 4" fill="url(#forecastGrad)" dot={{ r: 3, fill: '#9333ea' }} connectNulls={false} name="forecast" />
-            </AreaChart>
-          </ResponsiveContainer>
+        {chartData.length === 0 && !forecastLoading ? (
+          <div style={{ height: '260px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.85rem', border: '1px dashed #e2e8f0', borderRadius: '8px' }}>
+            {lang === 'SR' ? 'Podaci trenutno nisu dostupni' : 'Data currently unavailable'}
+          </div>
+        ) : (
+          <div style={{ width: '100%', height: '260px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={chartData} margin={{ top: 10, right: 20, left: -15, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="levelGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#0284c7" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#0284c7" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="forecastGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#9333ea" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#9333ea" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} />
+                <YAxis stroke="#94a3b8" fontSize={11} domain={['auto', 'auto']} unit=" cm" />
+                <Tooltip formatter={(val, name) => [`${val} cm`, name === 'level' ? (lang === 'SR' ? 'Izmereno' : 'Measured') : (lang === 'SR' ? 'RHMZ Prognoza' : 'RHMZ Forecast')]} />
+
+                {/* Izmerene vrednosti (plavo) */}
+                <Area type="monotone" dataKey="level" stroke="#0284c7" strokeWidth={2.5} fill="url(#levelGrad)" dot={{ r: 3, fill: '#0284c7' }} connectNulls={false} name="level" />
+
+                {/* Zvanična RHMZ prognoza (ljubičasto) bez razmaka */}
+                <Area type="monotone" dataKey="forecast" stroke="#9333ea" strokeWidth={2.5} strokeDasharray="4 4" fill="url(#forecastGrad)" dot={{ r: 3, fill: '#9333ea' }} connectNulls={false} name="forecast" />
+              </AreaChart>
+                      </ResponsiveContainer>
         </div>
+        )}
       </div>
 
       {/* 4. DONJI SEGMENTI: 3 KARTICE JEDNA PORED DRUGE */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', alignItems: 'stretch' }}>
-        
+
         {/* 1. Zvanična RHMZ prognoza kartica */}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.1rem 1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
           <div>
@@ -380,7 +407,7 @@ export default function Hydrology() {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', marginTop: '0.5rem' }}>
                 {forecastList.map((item, index) => {
-                  const dayStr = item.date ? new Date(item.date).toLocaleDateString(lang === 'SR' ? 'sr-RS' : 'en-GB', { day: 'numeric', month: 'short' }) : `${lang === 'SR' ? 'Dan' : 'Day'} ${index + 1}`;
+                  const dayStr = item.date ? new Date(item.date).toLocaleDateString(lang === 'SR' ? 'sr-Latn-RS' : 'en-GB', { day: 'numeric', month: 'short' }) : `${lang === 'SR' ? 'Dan' : 'Day'} ${index + 1}`;
                   const levelVal = item.water_level_cm ?? item.level ?? 0;
                   return (
                     <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0.75rem', backgroundColor: '#f8fafc', borderRadius: '8px', border: '1px solid #f1f5f9' }}>
@@ -412,23 +439,33 @@ export default function Hydrology() {
               <Info size={18} color="#0284c7" />
               <h3 style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0f172a', margin: 0 }}>
                 {lang === 'SR' ? 'Hidrološki kontekst' : 'Hydrological Context'}
-              </h3> 
+              </h3>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.85rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid #f1f5f9' }}>
-                <span style={{ color: '#64748b' }}>{lang === 'SR' ? 'Prosečan vodostaj za ovaj period' : 'Average level for this period'}</span>
-                <strong style={{ color: '#0f172a' }}>256 cm</strong>
+                <span style={{ color: '#64748b' }}>{lang === 'SR' ? 'Prosečan vodostaj (30 dana)' : 'Average level (last 30 days)'}</span>
+                <strong style={{ color: stats30 ? '#0f172a' : '#94a3b8' }}>{fmtCm(stats30?.avg)}</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '0.5rem', borderBottom: '1px solid #f1f5f9' }}>
-                <span style={{ color: '#64748b' }}>{lang === 'SR' ? 'Najviši izmereni vodostaj (istorijski)' : 'Highest recorded level (historical)'}</span>
-                <strong style={{ color: '#0f172a' }}>716 cm <span style={{ fontWeight: 'normal', color: '#64748b', fontSize: '0.75rem' }}>(apr 2006)</span></strong>
+                <span style={{ color: '#64748b' }}>{lang === 'SR' ? 'Najviši vodostaj (30 dana)' : 'Highest level (last 30 days)'}</span>
+                <strong style={{ color: stats30 ? '#0f172a' : '#94a3b8' }}>
+                  {fmtCm(stats30?.max)} {stats30 && <span style={{ fontWeight: 'normal', color: '#64748b', fontSize: '0.75rem' }}>({fmtDates(stats30.maxDates)})</span>}
+                </strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#64748b' }}>{lang === 'SR' ? 'Najniži izmereni vodostaj (istorijski)' : 'Lowest recorded level (historical)'}</span>
-                <strong style={{ color: '#0f172a' }}>162 cm <span style={{ fontWeight: 'normal', color: '#64748b', fontSize: '0.75rem' }}>(avgust 2012)</span></strong>
+                <span style={{ color: '#64748b' }}>{lang === 'SR' ? 'Najniži vodostaj (30 dana)' : 'Lowest level (last 30 days)'}</span>
+                <strong style={{ color: stats30 ? '#0f172a' : '#94a3b8' }}>
+                  {fmtCm(stats30?.min)} {stats30 && <span style={{ fontWeight: 'normal', color: '#64748b', fontSize: '0.75rem' }}>({fmtDates(stats30.minDates)})</span>}
+                </strong>
               </div>
             </div>
+          </div>
+
+          <div style={{ fontSize: '0.68rem', color: '#94a3b8', marginTop: '0.75rem', borderTop: '1px solid #f1f5f9', paddingTop: '0.4rem' }}>
+            {stats30
+              ? (lang === 'SR' ? `Izračunato iz ${stats30.count} dnevnih RHMZ merenja.` : `Calculated from ${stats30.count} daily RHMZ measurements.`)
+              : (lang === 'SR' ? 'Podaci trenutno nisu dostupni.' : 'Data currently unavailable.')}
           </div>
         </div>
 
@@ -443,7 +480,7 @@ export default function Hydrology() {
             </div>
 
             <p style={{ color: '#475569', fontSize: '0.82rem', lineHeight: '1.4', margin: '0 0 0.75rem 0' }}>
-              {lang === 'SR' 
+              {lang === 'SR'
                 ? 'Podaci o vodostaju i prognozi preuzimaju se direktno iz zvaničnih izvora RHMZ Republike Srbije.'
                 : 'Water level and forecast data are retrieved directly from official RHMZ sources of the Republic of Serbia.'}
             </p>
