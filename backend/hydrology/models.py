@@ -38,3 +38,20 @@ class Observation(models.Model):
 
     def __str__(self):
         return f"{self.station_id} {self.timestamp:%Y-%m-%d}"
+
+class WaterLevelForecast(models.Model):
+    station = models.ForeignKey(Station, on_delete=models.CASCADE, related_name="forecasts")
+    issued_date = models.DateField()           # date shown in the page header
+    target_date = models.DateField()           # forecast day
+    water_level_cm = models.IntegerField()
+    source_url = models.URLField()
+    fetched_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["issued_date", "target_date"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["station", "issued_date", "target_date"],
+                name="uniq_waterlevelforecast_station_issued_target",
+            )
+        ]
