@@ -4,7 +4,7 @@
     "title": "Planirani radovi u ulici Slavka Rodića",
     "description": "Bez vode zbog planiranih radova na vodovodnoj mreži. Izvor navodi da blokada može biti produžena i proširena.",
     "event_type": "planned_maintenance",
-    "status": "unknown",
+    "status": "completed",
     "status_verified": false,
     "address": "Ulica Slavka Rodića",
     "municipality": "Sremska Kamenica",
@@ -25,7 +25,7 @@
     "title": "Sanacija havarije u Krilovoj ulici",
     "description": "Bez vode zbog sanacije havarije na vodovodnoj mreži. Izvor navodi da blokada može biti produžena i proširena.",
     "event_type": "emergency_repair",
-    "status": "unknown",
+    "status": "completed",
     "status_verified": false,
     "address": "Krilova ulica",
     "municipality": "Novi Sad",
@@ -38,15 +38,15 @@
     "actual_end_time": null,
     "source_name": "JKP Vodovod i kanalizacija Novi Sad",
     "source_url": "https://www.vikns.rs/najava-radova-sr/16794/",
-    "source_published_at": null,
+    "source_published_at": "2026-10-29",
     "data_type": "reported"
   },
-    {
+  {
     "id": "EVT-003",
     "title": "Sanacija havarije u ulici Omladinskog pokreta",
     "description": "Bez vode zbog sanacije havarije na vodovodnoj mreži. Izvor navodi da blokada može biti produžena i proširena.",
     "event_type": "emergency_repair",
-    "status": "unknown",
+    "status": "completed",
     "status_verified": false,
     "address": "Ulica Omladinskog pokreta",
     "municipality": "Novi Sad",
@@ -59,7 +59,7 @@
     "actual_end_time": null,
     "source_name": "JKP Vodovod i kanalizacija Novi Sad",
     "source_url": "https://www.vikns.rs/najava-radova-sr/servisne-informaci%d1%98e-za-26-10-2026/",
-    "source_published_at": null,
+    "source_published_at": "2026-10-26",
     "data_type": "reported"
   },
   {
@@ -67,7 +67,7 @@
     "title": "Sanacija havarije u Balzakovoj ulici",
     "description": "Bez vode zbog sanacije havarije na vodovodnoj mreži. Izvor navodi da blokada može biti produžena i proširena.",
     "event_type": "emergency_repair",
-    "status": "unknown",
+    "status": "completed",
     "status_verified": false,
     "address": "Balzakova ulica",
     "municipality": "Novi Sad",
@@ -80,7 +80,7 @@
     "actual_end_time": null,
     "source_name": "JKP Vodovod i kanalizacija Novi Sad",
     "source_url": "https://www.vikns.rs/najava-radova-sr/servisne-informaci%d1%98e-za-26-10-2026/",
-    "source_published_at": null,
+    "source_published_at": "2026-10-26",
     "data_type": "reported"
   },
   {
@@ -88,7 +88,7 @@
     "title": "Sanacija havarije u Svetosavskoj ulici",
     "description": "Bez vode zbog sanacije havarije u Svetosavskoj i okolnim ulicama. Izvor navodi da blokada može biti produžena i proširena.",
     "event_type": "emergency_repair",
-    "status": "unknown",
+    "status": "completed",
     "status_verified": false,
     "address": "Svetosavska ulica i okolne ulice",
     "municipality": "Sremska Kamenica",
@@ -101,7 +101,28 @@
     "actual_end_time": null,
     "source_name": "JKP Vodovod i kanalizacija Novi Sad",
     "source_url": "https://www.vikns.rs/najava-radova-sr/servisne-informaci%d1%98e-za-28-10-2026/",
-    "source_published_at": null,
+    "source_published_at": "2026-10-28",
+    "data_type": "reported"
+  },
+  {
+    "id": "EVT-006",
+    "title": "Sanacija havarije u ulici Vojvode Mišića",
+    "description": "Bez vode zbog sanacije havarije u ulici Vojvode Mišića i okolnim ulicama. Izvor navodi da blokada može biti produžena i proširena.",
+    "event_type": "emergency_repair",
+    "status": "ongoing",
+    "status_verified": false,
+    "address": "Ulica Vojvode Mišića i okolne ulice",
+    "municipality": "Sremska Kamenica",
+    "latitude": 45.22159034218625,
+    "longitude": 19.838987435609216,
+    "location_accuracy": "approximate",
+    "geocoding_method": "manual_osm",
+    "start_time": null,
+    "expected_end_time": "2026-10-30T14:00:00+01:00",
+    "actual_end_time": null,
+    "source_name": "JKP Vodovod i kanalizacija Novi Sad",
+    "source_url": "https://www.vikns.rs/najava-radova-sr/servisne-informaci%d1%98e-za-30-10-2026/",
+    "source_published_at": "2026-10-30",
     "data_type": "reported"
   }
 ]
