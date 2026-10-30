@@ -2,6 +2,9 @@ from rest_framework import viewsets
 from .models import Station
 from .serializer import StationSerializer
 
+from django.utils import timezone
+from .models import WaterLevelForecast
+
 # Create your views here.
 
 class StationViewSet(viewsets.ReadOnlyModelViewSet):
@@ -165,3 +168,44 @@ class LatestView(APIView):
                 },
             }
         )
+
+class ForecastView(APIView):
+    def get(self, request):
+        station_id = request.query_params.get("station_id")
+        if not station_id:
+            return error_response("missing_parameter", "station_id is required.", 400)
+
+        station = Station.objects.filter(id=station_id).first()
+        if station is None:
+            return error_response("station_not_found", "Unknown station_id.", 404)
+
+        latest = (WaterLevelForecast.objects.filter(station=station)
+                  .order_by("-issued_date").first())
+        if latest is None:
+            return error_response("forecast_unavailable",
+                                  "No forecast has been imported yet.", 404)
+
+        rows = (WaterLevelForecast.objects
+                .filter(station=station, issued_date=latest.issued_date)
+                .order_by("target_date"))
+        age_days = (timezone.localdate() - latest.issued_date).days
+
+        return Response({
+            "station_id": station.id,
+            "issued_date": latest.issued_date.isoformat(),
+            "unit": "cm",
+            "horizon_days": rows.count(),
+            "data_type": "official_forecast",
+            "is_official_forecast": True,
+            "availability": "available" if age_days <= 3 else "outdated",
+            "forecast": [
+                {"date": r.target_date.isoformat(), "water_level_cm": r.water_level_cm}
+                for r in rows
+            ],
+            "source": {"name": "RHMZ", "url": latest.source_url},
+            "limitations": [
+                "Official RHMZ forecast, reproduced as published; it is not produced by this project.",
+                "The source gives no uncertainty interval and no issue time (date only).",
+                "River level forecasts are short-range and can change when upstream conditions change.",
+            ],
+        })

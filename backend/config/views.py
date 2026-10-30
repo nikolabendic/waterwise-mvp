@@ -203,6 +203,7 @@ ROUTES = [
         ("/api/v1/hydrology/stations/", "Lista stanica"),
         ("/api/v1/hydrology/latest/?station_id=RHMZ-NS", "Zadnje merenje, nivo, temperatura, protok"),
         ("/api/v1/hydrology/history/?station_id=RHMZ-NS&period=7d", "Istorija (24h, 7d, 30d)"),
+        ("/api/v1/hydrology/forecast/?station_id=RHMZ-NS", "Zvanična RHMZ prognoza nivoa (4 dana)"),
     ]),
     ("Događaji", [
         ("/api/v1/events/", "Lista događaja (filteri: status, event_type, search, date_from, date_to, limit, offset)"),
