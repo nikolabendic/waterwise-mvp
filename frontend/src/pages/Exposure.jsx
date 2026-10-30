@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext, useNavigate } from 'react-router-dom';
 import { 
   Calculator, MapPin, Building2, Users, AlertTriangle, 
-  FileText, Download, ShieldAlert, ExternalLink, CheckCircle, Info, ChevronDown 
+  FileText, Download, ShieldAlert, ExternalLink, CheckCircle, Info, ChevronDown, Activity 
 } from 'lucide-react';
 import { MapContainer, TileLayer, Circle, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -17,7 +17,8 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Pomoćna funkcija za kreiranje prilagođenih markera u boji
+const API_BASE_URL = 'http://82.117.203.34:8000/api/v1';
+
 const createColoredIcon = (colorHex) => {
   return L.divIcon({
     className: 'custom-div-icon',
@@ -28,11 +29,10 @@ const createColoredIcon = (colorHex) => {
 };
 
 const icons = {
-  event: createColoredIcon('#dc2626'),    // Crvena - Događaj / Prekid
-  facility: createColoredIcon('#9333ea')  // Ljubičasta - Kritična ustanova
+  event: createColoredIcon('#dc2626'),
+  facility: createColoredIcon('#9333ea')
 };
 
-// Pomoćna komponenta za automatsko centriranje mape kada se promeni lokacija događaja
 function MapUpdater({ center }) {
   const map = useMap();
   useEffect(() => {
@@ -43,9 +43,8 @@ function MapUpdater({ center }) {
   return null;
 }
 
-// Haversine formula za izračunavanje rastojanja u metrima između dve tačke (lat/lng)
 function calculateDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371e3; // Radijus Zemlje u metrima
+  const R = 6371e3;
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
   const a = 
@@ -77,10 +76,10 @@ export default function Exposure() {
   const [selectedEventId, setSelectedEventId] = useState(1);
   const [customRadius, setCustomRadius] = useState(400);
   const [facilitiesList, setFacilitiesList] = useState([]);
+  
+  const [exposureAnalysis, setExposureAnalysis] = useState(null);
 
-  // Učitavanje događaja i kritičnih ustanova sa bekenda
   useEffect(() => {
-    // 1. Događaji
     fetchEvents().then(data => {
       if (data && data.length > 0) {
         const mapped = data.map((ev, index) => ({
@@ -99,7 +98,6 @@ export default function Exposure() {
       }
     });
 
-    // 2. Kritične ustanove sa API-ja
     fetchFacilities().then(data => {
       const rawFacs = Array.isArray(data) ? data : (data?.results || []);
       if (rawFacs.length > 0) {
@@ -113,15 +111,13 @@ export default function Exposure() {
         }));
         setFacilitiesList(mappedFacs);
       } else {
-        // Fallback ustanove ukoliko API vrati prazno
         setFacilitiesList([
           { id: 'f1', name: 'PU Radosno detinjstvo (Vrtić)', type: 'kindergarten', address: 'Novi Sad', lat: 45.2580, lng: 19.8220 },
           { id: 'f2', name: 'OŠ Dositej Obradović', type: 'school', address: 'Novi Sad', lat: 45.2600, lng: 19.8100 },
           { id: 'f3', name: 'Dom zdravlja Novi Sad - Liman', type: 'hospital', address: 'Novi Sad', lat: 45.2400, lng: 19.8400 }
         ]);
       }
-    }).catch(err => {
-      console.error('Facilities fetch error:', err);
+    }).catch(() => {
       setFacilitiesList([
         { id: 'f1', name: 'PU Radosno detinjstvo (Vrtić)', type: 'kindergarten', address: 'Novi Sad', lat: 45.2580, lng: 19.8220 },
         { id: 'f2', name: 'OŠ Dositej Obradović', type: 'school', address: 'Novi Sad', lat: 45.2600, lng: 19.8100 },
@@ -131,9 +127,31 @@ export default function Exposure() {
   }, [lang]);
 
   const currentEvent = eventsList.find(e => String(e.id) === String(selectedEventId)) || eventsList[0];
-  const calculatedPopulation = Math.round((currentEvent.basePop || 3000) * (customRadius / 400));
 
-  // Proračun udaljenosti i statusa ustanova u odnosu na izabrani događaj i radijus
+  useEffect(() => {
+    if (currentEvent && currentEvent.id) {
+      fetch(`${API_BASE_URL}/exposure/analyze/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_id: String(currentEvent.id),
+          radius_m: Number(customRadius)
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data) {
+            setExposureAnalysis(data);
+          }
+        })
+        .catch(err => console.error('Greska pri POST /exposure/analyze/:', err));
+    }
+  }, [selectedEventId, customRadius, currentEvent]);
+
+  const calculatedPopulation = exposureAnalysis?.population_estimate || Math.round((currentEvent.basePop || 3000) * (customRadius / 400));
+
   const evaluatedFacilities = facilitiesList.map(fac => {
     const dist = calculateDistance(currentEvent.lat, currentEvent.lng, fac.lat, fac.lng);
     let status = lang === 'SR' ? 'Van zone' : 'Outside';
@@ -156,13 +174,28 @@ export default function Exposure() {
     };
   }).sort((a, b) => a.distanceValue - b.distanceValue);
 
-  const handleDownloadPDF = () => {
-    alert(lang === 'SR' ? 'Generisanje PDF izveštaja o izloženosti...' : 'Generating exposure PDF report...');
-  };
-
   return (
-    <div style={{ padding: '1.25rem 1.5rem', maxWidth: '1700px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
+    <div className="exposure-container" style={{ padding: '1.25rem 1.5rem', maxWidth: '1700px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
       
+      <style>{`
+        @media (max-width: 1024px) {
+          .exposure-grid-3 {
+            grid-template-columns: 1fr !important;
+          }
+          .exposure-grid-2 {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .exposure-container {
+            padding: 0.75rem 1rem !important;
+          }
+          .simulator-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+
       {/* 1. ZAGLAVLJE */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
@@ -171,8 +204,8 @@ export default function Exposure() {
           </h1>
           <p style={{ color: '#64748b', fontSize: '0.875rem', margin: '0.2rem 0 0 0' }}>
             {lang === 'SR' 
-              ? 'Procena potencijalne izloženosti stanovništva i kritične infrastrukture unutar izabrane zone prekida.'
-              : 'Assessment of potential population exposure and critical infrastructure within the selected outage zone.'}
+              ? 'Procena potencijalne izloženosti stanovništva (WorldPop 2021) i kritične infrastrukture unutar izabrane zone prekida.'
+              : 'Assessment of potential population exposure (WorldPop 2021) and critical infrastructure within the selected outage zone.'}
           </p>
         </div>
 
@@ -196,11 +229,11 @@ export default function Exposure() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0284c7', marginBottom: '0.85rem' }}>
           <Calculator size={18} />
           <h2 style={{ fontSize: '0.98rem', fontWeight: '700', margin: 0 }}>
-            {lang === 'SR' ? 'Interaktivni simulator uticaja događaja' : 'Potential Exposure Impact Simulator'}
+            {lang === 'SR' ? 'Interaktivni simulator uticaja događaja (POST /exposure/analyze/)' : 'Potential Exposure Impact Simulator'}
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(260px, 1.2fr) minmax(280px, 1.4fr) minmax(240px, 1fr)', gap: '1.25rem', alignItems: 'center' }}>
+        <div className="simulator-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(260px, 1.2fr) minmax(280px, 1.4fr) minmax(240px, 1fr)', gap: '1.25rem', alignItems: 'center' }}>
           
           <div>
             <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: '700', color: '#64748b', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
@@ -238,7 +271,7 @@ export default function Exposure() {
           <div style={{ backgroundColor: '#f0f9ff', padding: '0.75rem 1rem', borderRadius: '10px', border: '1px solid #bae6fd' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.72rem', color: '#0369a1', fontWeight: '700', textTransform: 'uppercase' }}>
-                {lang === 'SR' ? 'Stanovništvo u zoni analize' : 'Population in Analysis Zone'}
+                {lang === 'SR' ? 'Stanovništvo (WorldPop 2021)' : 'Population (WorldPop 2021)'}
               </span>
               <Users size={15} color="#0284c7" />
             </div>
@@ -251,7 +284,7 @@ export default function Exposure() {
       </div>
 
       {/* 3. MAPA + KRITIČNE USTANOVE + STATISTIKA */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.3fr) minmax(0, 1.2fr) 340px', gap: '1.25rem', marginBottom: '1.25rem', alignItems: 'stretch' }}>
+      <div className="exposure-grid-3" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.3fr) minmax(0, 1.2fr) 340px', gap: '1.25rem', marginBottom: '1.25rem', alignItems: 'stretch' }}>
         
         {/* MAPA */}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column' }}>
@@ -278,7 +311,6 @@ export default function Exposure() {
                 pathOptions={{ fillColor: '#ef4444', fillOpacity: 0.15, color: '#dc2626', weight: 2 }} 
               />
               
-              {/* Marker izabranog događaja */}
               <Marker position={[currentEvent.lat || 45.2520, currentEvent.lng || 19.8250]} icon={icons.event}>
                 <Popup>
                   <strong style={{ color: '#dc2626' }}>{currentEvent.name}</strong><br />
@@ -286,7 +318,6 @@ export default function Exposure() {
                 </Popup>
               </Marker>
 
-              {/* Markeri kritičnih ustanova sa bekenda */}
               {evaluatedFacilities.map((fac, idx) => fac.lat && fac.lng && (
                 <Marker key={`fac-${fac.id || idx}`} position={[fac.lat, fac.lng]} icon={icons.facility}>
                   <Popup>
@@ -371,14 +402,14 @@ export default function Exposure() {
 
           <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px', padding: '0.5rem', color: '#166534', fontSize: '0.7rem', marginTop: '0.75rem', display: 'flex', gap: '0.3rem', alignItems: 'flex-start' }}>
             <CheckCircle size={13} style={{ flexShrink: 0, marginTop: '2px' }} />
-            <span>{lang === 'SR' ? 'Demografska struktura izvedena iz popisa.' : 'Demographic breakdown derived from census.'}</span>
+            <span>{lang === 'SR' ? 'Demografska struktura izvedena iz WorldPop 2021.' : 'Demographic breakdown derived from WorldPop 2021.'}</span>
           </div>
         </div>
 
       </div>
 
       {/* 4. DONJI RED */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', alignItems: 'stretch' }}>
+      <div className="exposure-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', alignItems: 'stretch' }}>
         
         {/* POREĐENJE RADIJUSA */}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)' }}>
@@ -399,9 +430,9 @@ export default function Exposure() {
             </thead>
             <tbody>
               {[
-                { radius: '250 m', pop: `~${Math.round(currentEvent.basePop * 0.6)}`, count: evaluatedFacilities.filter(f => f.distanceValue <= 250).length },
-                { radius: '500 m', pop: `~${Math.round(currentEvent.basePop * 1.2)}`, count: evaluatedFacilities.filter(f => f.distanceValue <= 500).length },
-                { radius: '1.000 m', pop: `~${Math.round(currentEvent.basePop * 2.4)}`, count: evaluatedFacilities.filter(f => f.distanceValue <= 1000).length },
+                { radius: '250 m', pop: `~${Math.round(calculatedPopulation * 0.6)}`, count: evaluatedFacilities.filter(f => f.distanceValue <= 250).length },
+                { radius: '500 m', pop: `~${Math.round(calculatedPopulation * 1.2)}`, count: evaluatedFacilities.filter(f => f.distanceValue <= 500).length },
+                { radius: '1.000 m', pop: `~${Math.round(calculatedPopulation * 2.4)}`, count: evaluatedFacilities.filter(f => f.distanceValue <= 1000).length },
               ].map((row, idx) => (
                 <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
                   <td style={{ padding: '0.45rem', fontWeight: '700', color: '#0f172a' }}>{row.radius}</td>
@@ -413,7 +444,7 @@ export default function Exposure() {
           </table>
         </div>
 
-        {/* METODOLOGIJA */}
+        {/* METODOLOGIJA*/}
         <div style={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.25rem', boxShadow: '0 1px 3px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
@@ -423,19 +454,19 @@ export default function Exposure() {
               </h3>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem', fontSize: '0.75rem', color: '#475569', lineHeight: '1.4' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.88rem', color: '#334155', lineHeight: '1.5' }}>
               <div>
-                <strong style={{ color: '#0f172a' }}>{lang === 'SR' ? 'Stanovništvo:' : 'Population:'}</strong> WorldPop Grid (2021)
+                <strong style={{ color: '#0f172a' }}>{lang === 'SR' ? 'Stanovništvo:' : 'Population:'}</strong> WorldPop Grid (2021) 
               </div>
               <div>
-                <strong style={{ color: '#0f172a' }}>{lang === 'SR' ? 'Kritični objekti:' : 'Critical Facilities:'}</strong> Zvanični registri / Bekend API
+                <strong style={{ color: '#0f172a' }}>{lang === 'SR' ? 'Kritični objekti:' : 'Critical Facilities:'}</strong> Zvanični registri 
               </div>
             </div>
           </div>
 
-          <div style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px', padding: '0.5rem', color: '#1d4ed8', fontSize: '0.7rem', marginTop: '0.75rem', display: 'flex', gap: '0.3rem', alignItems: 'flex-start' }}>
+          <div style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: '8px', padding: '0.5rem', color: '#1d4ed8', fontSize: '0.76rem', marginTop: '0.75rem', display: 'flex', gap: '0.3rem', alignItems: 'flex-start' }}>
             <Info size={13} style={{ flexShrink: 0, marginTop: '2px' }} />
-            <span>{lang === 'SR' ? 'Rezultati predstavljaju potencijalnu izloženost.' : 'Results represent potential spatial exposure.'}</span>
+            <span>{lang === 'SR' ? 'Rezultati predstavljaju server-side procenu izloženosti.' : 'Results represent server-side spatial exposure estimation.'}</span>
           </div>
         </div>
 
@@ -448,21 +479,21 @@ export default function Exposure() {
             </h3>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem', justifyContent: 'center', flex: 1 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', justifyContent: 'center', flex: 1 }}>
             <button 
-              onClick={() => navigate('/map')}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', backgroundColor: '#0284c7', color: '#fff', border: 'none', padding: '0.45rem 0.65rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: '700', cursor: 'pointer', justifyContent: 'center', width: '100%' }}
+              onClick={() => navigate('/disruptions')}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', backgroundColor: '#0284c7', color: '#fff', border: 'none', padding: '0.5rem 0.65rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: '700', cursor: 'pointer', justifyContent: 'center', width: '100%' }}
             >
-              <MapPin size={13} />
-              <span>{lang === 'SR' ? 'Prikaži zonu na GIS mapi' : 'Show zone on GIS map'}</span>
+              <Activity size={14} />
+              <span>{lang === 'SR' ? 'Pregledaj prekide i incidente (Disruptions)' : 'View Disruptions & Incidents'}</span>
             </button>
 
             <button 
-              onClick={handleDownloadPDF}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', backgroundColor: '#fff', color: '#475569', border: '1px solid #cbd5e1', padding: '0.45rem 0.65rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: '600', cursor: 'pointer', justifyContent: 'center', width: '100%' }}
+              onClick={() => navigate('/map')}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', backgroundColor: '#f1f5f9', color: '#334155', border: '1px solid #cbd5e1', padding: '0.5rem 0.65rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: '700', cursor: 'pointer', justifyContent: 'center', width: '100%' }}
             >
-              <Download size={13} />
-              <span>{lang === 'SR' ? 'Preuzmi rezultate (PDF)' : 'Download results (PDF)'}</span>
+              <MapPin size={14} />
+              <span>{lang === 'SR' ? 'Prikaži zonu na GIS mapi' : 'Show zone on GIS map'}</span>
             </button>
           </div>
         </div>

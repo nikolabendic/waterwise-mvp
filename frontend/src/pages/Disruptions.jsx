@@ -27,9 +27,7 @@ function MapUpdater({ center }) {
   return null;
 }
 
-/* ------------------------------------------------------------------ */
-/*  Rečnici: ključevi su vrednosti iz API-ja, tekst zavisi od jezika   */
-/* ------------------------------------------------------------------ */
+
 
 const TZ = 'Europe/Belgrade';
 
@@ -60,9 +58,7 @@ const ACCURACY_LABELS = {
 
 const SOURCE_HOME = 'https://www.vikns.rs/';
 
-/* ------------------------------------------------------------------ */
-/*  Pomoćne funkcije za datume (sve u vremenu Novog Sada)              */
-/* ------------------------------------------------------------------ */
+
 
 const fmtDate = (iso) =>
   iso ? new Date(iso).toLocaleDateString('sr-RS', { timeZone: TZ }) : null;

@@ -1,4 +1,4 @@
-// src/pages/AiForecastSimulation.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { 
@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { 
   ResponsiveContainer, AreaChart, Area, LineChart, Line, 
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend 
+  XAxis, YAxis, CartesianGrid, Tooltip 
 } from 'recharts';
 import { fetchEvents } from '../services/api';
 
@@ -19,13 +19,14 @@ export default function AiForecastSimulation() {
   
   const [selectedScenario, setSelectedScenario] = useState('normal');
   const [eventsCount, setEventsCount] = useState(4);
+  const [rawForecast, setRawForecast] = useState([]);
   const [forecastData, setForecastData] = useState([]);
   const [modelInfo, setModelInfo] = useState(null);
   const [isHealthOk, setIsHealthOk] = useState(true);
   
   // Stanja za podatke vodnog bilansa
   const [waterBalanceData, setWaterBalanceData] = useState(null);
-  const [scenarioComparisonData, setScenarioComparisonData] = useState([]);
+  const [reserveChartData, setReserveChartData] = useState([]);
   const [scenariosMetadata, setScenariosMetadata] = useState(null);
 
   useEffect(() => {
@@ -46,20 +47,13 @@ export default function AiForecastSimulation() {
       }
     });
 
-    // 3. Povlačenje AI prognoze
+    // 3. Povlačenje AI prognoze (sirovi podaci)
     fetch(`${API_BASE_URL}/water-demand/forecast/`)
       .then(res => res.json())
       .then(data => {
         if (data && data.forecast) {
           setModelInfo(data);
-          const formatted = data.forecast.map((item, idx) => ({
-            day: lang === 'SR' ? `Dan ${idx + 1}` : `Day ${idx + 1}`,
-            date: item.date ? item.date.split('-').reverse().join('.') : '',
-            demand: Math.round(item.forecast_m3 || 0),
-            lower: Math.round((item.forecast_m3 || 0) * 0.9),
-            upper: Math.round((item.forecast_m3 || 0) * 1.1)
-          }));
-          setForecastData(formatted);
+          setRawForecast(data.forecast);
         }
       })
       .catch(err => console.error('Greska pri povlacenju prognoze:', err));
@@ -72,47 +66,9 @@ export default function AiForecastSimulation() {
       })
       .catch(err => console.error('Greska pri povlacenju definicija scenarija:', err));
 
-    // 5. Povlačenje uporednih podataka rezervi za 2. grafik
-    fetch(`${API_BASE_URL}/water-balance/compare/`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          const chartData = data.map((item, idx) => ({
-            day: lang === 'SR' ? `Dan ${idx + 1}` : `Day ${idx + 1}`,
-            normal: Math.round(item.normal || item.normal_m3 || 0),
-            summer: Math.round(item.peak || item.peak_m3 || 0),
-            reduced: Math.round(item.reduced || item.reduced_m3 || 0),
-            stress: Math.round(item.combined || item.combined_m3 || 0),
-          }));
-          setScenarioComparisonData(chartData);
-        } else {
-          throw new Error('Fallback na paralelne pozive');
-        }
-      })
-      .catch(() => {
-        Promise.all([
-          fetch(`${API_BASE_URL}/water-balance/?scenario=normal&period=7d`).then(r => r.json()).catch(() => null),
-          fetch(`${API_BASE_URL}/water-balance/?scenario=peak&period=7d`).then(r => r.json()).catch(() => null),
-          fetch(`${API_BASE_URL}/water-balance/?scenario=reduced&period=7d`).then(r => r.json()).catch(() => null),
-          fetch(`${API_BASE_URL}/water-balance/?scenario=combined&period=7d`).then(r => r.json()).catch(() => null),
-        ]).then(([normalRes, peakRes, reducedRes, combinedRes]) => {
-          if (normalRes?.daily) {
-            const combinedChart = normalRes.daily.map((item, idx) => ({
-              day: lang === 'SR' ? `Dan ${idx + 1}` : `Day ${idx + 1}`,
-              date: item.date ? item.date.split('-').reverse().join('.') : '',
-              normal: Math.round(normalRes.daily[idx]?.storage_end_m3 || 0),
-              summer: Math.round(peakRes?.daily?.[idx]?.storage_end_m3 || 0),
-              reduced: Math.round(reducedRes?.daily?.[idx]?.storage_end_m3 || 0),
-              stress: Math.round(combinedRes?.daily?.[idx]?.storage_end_m3 || 0),
-            }));
-            setScenarioComparisonData(combinedChart);
-          }
-        });
-      });
-
   }, [lang]);
 
-  // 6. Povlačenje bilansa za izabrani scenario
+  // 5. Povlačenje bilansa za izabrani scenario
   useEffect(() => {
     const apiScenarioKey = selectedScenario === 'summer' ? 'peak' : selectedScenario === 'stress' ? 'combined' : selectedScenario;
     fetch(`${API_BASE_URL}/water-balance/?scenario=${apiScenarioKey}&period=7d`)
@@ -120,17 +76,37 @@ export default function AiForecastSimulation() {
       .then(data => {
         if (data) {
           setWaterBalanceData(data);
+          
+          if (data.daily && Array.isArray(data.daily)) {
+            // Podaci za gornji grafik (potražnja)
+            const formattedDemand = data.daily.map((item, idx) => {
+              const demandVal = Math.round(item.required_m3 || item.forecast_m3 || 0);
+              return {
+                day: lang === 'SR' ? `Dan ${idx + 1}` : `Day ${idx + 1}`,
+                date: item.date ? item.date.split('-').reverse().join('.') : '',
+                demand: demandVal,
+                lower: Math.round(demandVal * 0.95),
+                upper: Math.round(demandVal * 1.05)
+              };
+            });
+            setForecastData(formattedDemand);
+
+            // Podaci za središnji grafik rezerve za izabrani scenario
+            const formattedReserve = data.daily.map((item, idx) => ({
+              day: lang === 'SR' ? `Dan ${idx + 1}` : `Day ${idx + 1}`,
+              storage: Math.round(item.storage_end_m3 || 0)
+            }));
+            setReserveChartData(formattedReserve);
+          }
         }
       })
       .catch(err => console.error('Greska pri povlacenju vodnog bilansa:', err));
-  }, [selectedScenario]);
+  }, [selectedScenario, lang]);
 
-  // Ekstrakcija vrednosti prema TAČNOJ strukturi API odgovora
   const summaryStorageVal = Math.round(waterBalanceData?.summary?.storage_end_m3 || 0);
   const unmetDemandVal = Math.round(waterBalanceData?.summary?.total_unmet_m3 || 0);
   const initialStorage = waterBalanceData?.parameters?.initial_storage_m3 || 175000;
   
-  // Računanje proseka agregiranjem iz "daily" niza
   const dailyArray = waterBalanceData?.daily || [];
   const daysCount = dailyArray.length || 7;
 
@@ -142,7 +118,6 @@ export default function AiForecastSimulation() {
 
   const reserveDiffPct = initialStorage > 0 ? Math.round(((summaryStorageVal - initialStorage) / initialStorage) * 100) : 0;
 
-  // Konfiguracija scenarija
   const scenarios = {
     normal: {
       id: 'normal',
@@ -184,9 +159,34 @@ export default function AiForecastSimulation() {
 
   const currentScenarioConfig = scenarios[selectedScenario];
 
+  const getScenarioColor = () => {
+    switch (selectedScenario) {
+      case 'summer': return '#d97706';
+      case 'reduced': return '#059669';
+      case 'stress': return '#dc2626';
+      default: return '#0284c7';
+    }
+  };
+
   return (
-    <div style={{ padding: '1.5rem 2rem', maxWidth: '1440px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div className="ai-forecast-container" style={{ padding: '1.5rem 2rem', maxWidth: '1440px', margin: '0 auto', fontFamily: 'Inter, system-ui, sans-serif', boxSizing: 'border-box' }}>
       
+      <style>{`
+        @media (max-width: 960px) {
+          .responsive-grid-split {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .ai-forecast-container {
+            padding: 0.75rem 1rem !important;
+          }
+          .stats-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
+
       {/* ZAGLAVLJE */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
@@ -200,7 +200,7 @@ export default function AiForecastSimulation() {
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           {!isHealthOk && (
             <span style={{ backgroundColor: '#fef2f2', color: '#dc2626', padding: '0.4rem 0.8rem', borderRadius: '8px', fontSize: '0.75rem', fontWeight: '600', border: '1px solid #fecaca' }}>
               {lang === 'SR' ? 'API servis nedostupan' : 'API service unavailable'}
@@ -216,7 +216,7 @@ export default function AiForecastSimulation() {
       </div>
 
       {/* METRIKE MODELA */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
+      <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
         <div style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#0284c7', fontSize: '0.75rem', fontWeight: '600' }}>
             <Calendar size={16} /> {lang === 'SR' ? 'HORIZONT PROGNOZE' : 'FORECAST HORIZON'}
@@ -230,7 +230,7 @@ export default function AiForecastSimulation() {
             <Droplets size={16} /> {lang === 'SR' ? 'PREDVIĐENA POTRAŽNJA (DAN 1)' : 'PREDICTED DEMAND (DAY 1)'}
           </div>
           <div style={{ fontSize: '1.25rem', fontWeight: '700', marginTop: '0.25rem' }}>
-            {dailyArray[0]?.forecast_m3 ? Math.round(dailyArray[0].forecast_m3).toLocaleString() : forecastData[0]?.demand ? forecastData[0].demand.toLocaleString() : '0'}
+            {forecastData[0]?.demand ? forecastData[0].demand.toLocaleString() : '0'}
           </div>
           <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>m³/dan</div>
         </div>
@@ -263,17 +263,17 @@ export default function AiForecastSimulation() {
       </div>
 
       {/* SEKCIJA 1 I 2 */}
-      <div style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+      <div className="responsive-grid-split" style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
         
-        {/* GRAFIK 1 */}
+        {/* GRAFIK 1 (POTRAŽNJA) */}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
             <div>
               <h3 style={{ fontSize: '1rem', fontWeight: '700', margin: 0 }}>
-                {lang === 'SR' ? '1. AI prognoza potreba za vodom (API)' : '1. AI Water Demand Forecast (API)'}
+                {lang === 'SR' ? `1. AI prognoza potreba (${currentScenarioConfig.title})` : `1. AI Demand Forecast (${currentScenarioConfig.title})`}
               </h3>
               <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0 }}>
-                {lang === 'SR' ? 'Predviđeni dnevni ulaz vode u distributivnu mrežu (m³/dan) sa API-ja.' : 'Predicted daily water input into the distribution network from API.'}
+                {lang === 'SR' ? 'Predviđeni dnevni ulaz vode u mrežu za izabrani scenario.' : 'Predicted daily network water input for the selected scenario.'}
               </p>
             </div>
             <span style={{ backgroundColor: '#eff6ff', color: '#1d4ed8', fontSize: '0.75rem', fontWeight: '600', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>
@@ -286,16 +286,21 @@ export default function AiForecastSimulation() {
               <AreaChart data={forecastData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorUncertainty" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.05}/>
+                    <stop offset="5%" stopColor={getScenarioColor()} stopOpacity={0.25}/>
+                    <stop offset="95%" stopColor={getScenarioColor()} stopOpacity={0.02}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                 <XAxis dataKey="day" stroke="#94a3b8" fontSize={11} />
-                <YAxis stroke="#94a3b8" fontSize={11} domain={['auto', 'auto']} />
+                <YAxis 
+                  stroke="#94a3b8" 
+                  fontSize={11} 
+                  domain={['auto', 'auto']} 
+                  allowDecimals={false}
+                />
                 <Tooltip formatter={(value) => `${Number(value).toLocaleString()} m³`} />
                 <Area type="monotone" dataKey="upper" stroke="transparent" fill="url(#colorUncertainty)" />
-                <Line type="monotone" dataKey="demand" stroke="#0284c7" strokeWidth={3} dot={{ r: 4 }} name={lang === 'SR' ? 'Prognoza (m³/dan)' : 'Forecast (m³/day)'} />
+                <Line type="monotone" dataKey="demand" stroke={getScenarioColor()} strokeWidth={3} dot={{ r: 4 }} name={lang === 'SR' ? 'Prognoza (m³/dan)' : 'Forecast (m³/day)'} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -320,20 +325,20 @@ export default function AiForecastSimulation() {
               <div style={{ fontSize: '0.7rem', color: '#334155', marginTop: '0.5rem' }}>{scenarios.normal.demandTag}</div>
             </div>
 
-            <div onClick={() => setSelectedScenario('summer')} style={{ padding: '0.75rem', borderRadius: '8px', border: selectedScenario === 'summer' ? '2px solid #0284c7' : '1px solid #e2e8f0', backgroundColor: selectedScenario === 'summer' ? '#f0f9ff' : '#fff', cursor: 'pointer' }}>
+            <div onClick={() => setSelectedScenario('summer')} style={{ padding: '0.75rem', borderRadius: '8px', border: selectedScenario === 'summer' ? '2px solid #d97706' : '1px solid #e2e8f0', backgroundColor: selectedScenario === 'summer' ? '#fffbeb' : '#fff', cursor: 'pointer' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontWeight: '700', fontSize: '0.875rem' }}>{lang === 'SR' ? 'Letnji maksimum' : 'Summer Peak'}</span>
-                {selectedScenario === 'summer' && <CheckCircle size={16} color="#0284c7" />}
+                <span style={{ fontWeight: '700', fontSize: '0.875rem', color: '#d97706' }}>{lang === 'SR' ? 'Letnji maksimum' : 'Summer Peak'}</span>
+                {selectedScenario === 'summer' && <CheckCircle size={16} color="#d97706" />}
               </div>
               <div style={{ fontSize: '0.7rem', color: '#d97706' }}>{scenariosMetadata?.peak?.description || (lang === 'SR' ? '+15% potražnja' : '+15% demand')}</div>
             </div>
 
-            <div onClick={() => setSelectedScenario('reduced')} style={{ padding: '0.75rem', borderRadius: '8px', border: selectedScenario === 'reduced' ? '2px solid #0284c7' : '1px solid #e2e8f0', backgroundColor: selectedScenario === 'reduced' ? '#f0f9ff' : '#fff', cursor: 'pointer' }}>
+            <div onClick={() => setSelectedScenario('reduced')} style={{ padding: '0.75rem', borderRadius: '8px', border: selectedScenario === 'reduced' ? '2px solid #059669' : '1px solid #e2e8f0', backgroundColor: selectedScenario === 'reduced' ? '#f0fdf4' : '#fff', cursor: 'pointer' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontWeight: '700', fontSize: '0.875rem' }}>{lang === 'SR' ? 'Smanjena proizvodnja' : 'Reduced Production'}</span>
-                {selectedScenario === 'reduced' && <CheckCircle size={16} color="#0284c7" />}
+                <span style={{ fontWeight: '700', fontSize: '0.875rem', color: '#059669' }}>{lang === 'SR' ? 'Smanjena proizvodnja' : 'Reduced Production'}</span>
+                {selectedScenario === 'reduced' && <CheckCircle size={16} color="#059669" />}
               </div>
-              <div style={{ fontSize: '0.7rem', color: '#dc2626' }}>{scenariosMetadata?.reduced?.description || (lang === 'SR' ? '-20% kapacitet' : '-20% capacity')}</div>
+              <div style={{ fontSize: '0.7rem', color: '#059669' }}>{scenariosMetadata?.reduced?.description || (lang === 'SR' ? '-20% kapacitet' : '-20% capacity')}</div>
             </div>
 
             <div onClick={() => setSelectedScenario('stress')} style={{ padding: '0.75rem', borderRadius: '8px', border: selectedScenario === 'stress' ? '2px solid #dc2626' : '1px solid #e2e8f0', backgroundColor: selectedScenario === 'stress' ? '#fef2f2' : '#fff', cursor: 'pointer' }}>
@@ -348,31 +353,39 @@ export default function AiForecastSimulation() {
         </div>
       </div>
 
-      {/* SEKCIJA 3 I REZULTATI */}
-      <div style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
+      {/* SEKCIJA 3 (ODMAH PORED KARTICA REZULTATA) */}
+      <div className="responsive-grid-split" style={{ display: 'grid', gridTemplateColumns: '7fr 5fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
         
-        {/* GRAFIK 2 */}
+        {/* GRAFIK 3 (STANJE REZERVE VODE) */}
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <div>
               <h3 style={{ fontSize: '1rem', fontWeight: '700', margin: 0 }}>
-                {lang === 'SR' ? '3. Poređenje stanja rezerve vode po scenarijima' : '3. Water Reserve Comparison by Scenarios'}
+                {lang === 'SR' ? `3. Stanje rezerve vode (${currentScenarioConfig.title})` : `3. Water Reserve (${currentScenarioConfig.title})`}
               </h3>
             </div>
           </div>
 
           <div style={{ width: '100%', height: '220px' }}>
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={scenarioComparisonData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+              <LineChart data={reserveChartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                 <XAxis dataKey="day" stroke="#94a3b8" fontSize={11} />
-                <YAxis stroke="#94a3b8" fontSize={11} domain={['auto', 'auto']} />
+                <YAxis 
+                  stroke="#94a3b8" 
+                  fontSize={11} 
+                  domain={['auto', 'auto']} 
+                  allowDecimals={false}
+                />
                 <Tooltip formatter={(val) => `${Number(val).toLocaleString()} m³`} />
-                <Legend />
-                <Line type="monotone" dataKey="normal" name={lang === 'SR' ? 'Normalno' : 'Normal'} stroke="#0284c7" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="summer" name={lang === 'SR' ? 'Letnji maksimum' : 'Summer Peak'} stroke="#d97706" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="reduced" name={lang === 'SR' ? 'Smanjena proizvodnja' : 'Reduced Production'} stroke="#059669" strokeWidth={2} dot={{ r: 3 }} />
-                <Line type="monotone" dataKey="stress" name={lang === 'SR' ? 'Kombinovani stres' : 'Combined Stress'} stroke="#dc2626" strokeWidth={2} dot={{ r: 3 }} />
+                <Line 
+                  type="monotone" 
+                  dataKey="storage" 
+                  name={currentScenarioConfig.title} 
+                  stroke={getScenarioColor()} 
+                  strokeWidth={2.5} 
+                  dot={{ r: 4 }} 
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -426,7 +439,7 @@ export default function AiForecastSimulation() {
       </div>
 
       {/* OBJAŠNJENJE I OGRANIČENJA */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+      <div className="responsive-grid-split" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
         
         <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '1.25rem', border: '1px solid #e2e8f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
