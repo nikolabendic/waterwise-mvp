@@ -645,7 +645,7 @@ export default function Dashboard() {
                 <span style={{ backgroundColor: '#eff6ff', color: '#1d4ed8', fontSize: '0.72rem', fontWeight: '600', padding: '0.2rem 0.6rem', borderRadius: '4px' }}>
                   {tUI.supplyBadge}
                 </span>
-                <Link to="/ai-forecast" style={{ color: '#0284c7', fontSize: '0.8rem', fontWeight: '700', textDecoration: 'none' }}>
+                <Link to="/ai-simulation" style={{ color: '#0284c7', fontSize: '0.8rem', fontWeight: '700', textDecoration: 'none' }}>
                   {tUI.aiForecastLink}
                 </Link>
               </div>
